@@ -108,7 +108,7 @@
 		F627D39D16B97CA7000B06AF /* wooden-crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wooden-crate.jpg"; sourceTree = "<group>"; };
 		F645948F16B6AD9700B118C2 /* test.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = test.vert; sourceTree = "<group>"; };
 		F645949516B6B11400B118C2 /* test.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = test.frag; sourceTree = "<group>"; };
-		F687A40B16B4B63300878140 /* Ymir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ymir.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F687A40B16B4B63300878140 /* Racegame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Racegame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F687A40F16B4B63300878140 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		F687A41216B4B63300878140 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		F687A41316B4B63300878140 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -224,7 +224,7 @@
 		F687A40C16B4B63300878140 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F687A40B16B4B63300878140 /* Ymir.app */,
+				F687A40B16B4B63300878140 /* Racegame.app */,
 				F687A43316B4B73B00878140 /* GLFW.framework */,
 				F687A4D416B4B89800878140 /* GLEW.framework */,
 				F687A50116B4BA1100878140 /* GLM.framework */,
@@ -469,7 +469,7 @@
 			);
 			name = Racegame;
 			productName = GLTest;
-			productReference = F687A40B16B4B63300878140 /* Ymir.app */;
+			productReference = F687A40B16B4B63300878140 /* Racegame.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F687A43216B4B73B00878140 /* GLFW */ = {
@@ -726,7 +726,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "osx/Racegame/Racegame-Info.plist";
-				PRODUCT_NAME = Ymir;
+				PRODUCT_NAME = Racegame;
 				USER_HEADER_SEARCH_PATHS = src;
 				WRAPPER_EXTENSION = app;
 			};
@@ -739,7 +739,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "osx/Racegame/Racegame-Info.plist";
-				PRODUCT_NAME = Ymir;
+				PRODUCT_NAME = Racegame;
 				USER_HEADER_SEARCH_PATHS = src;
 				WRAPPER_EXTENSION = app;
 			};
