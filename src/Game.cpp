@@ -95,8 +95,6 @@ void Game::InitializeProgram()
 	std::for_each(shaderList.begin(), shaderList.end(), glDeleteShader);
 }
 
-
-
 void Game::InitializeVertexBuffer()
 {
 	glGenBuffers(1, positionBufferObject);

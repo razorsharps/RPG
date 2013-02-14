@@ -56,7 +56,7 @@ int main()
         if(glfwGetKey(GLFW_KEY_ESC))
             glfwCloseWindow();
 
-		myGame->display();
+		//myGame->display();
     }
     
     glfwTerminate();
