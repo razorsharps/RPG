@@ -67,7 +67,7 @@ GLuint Game::CreateShader(GLenum eShaderType, const std::string &strShaderFile)
 //If you need continuous updates of the screen, call glutPostRedisplay() at the end of the function.
 void Game::display()
 {
-	glClearColor(0.2f, 0.2f, 0.2f, 0.2f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(theProgram);
