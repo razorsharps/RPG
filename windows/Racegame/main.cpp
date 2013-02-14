@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+#include "../../src/Game.h"
+
 int main()
 {
     if(!glfwInit())
@@ -15,7 +17,6 @@ int main()
     glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
     if(!glfwOpenWindow(800, 600, 8, 8, 8, 8, 16, 0, GLFW_WINDOW))
         throw std::runtime_error("Failed to open glfw window.");
-    
     
     //GLFW settings
     glfwDisable(GLFW_MOUSE_CURSOR);
@@ -38,6 +39,11 @@ int main()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     
+	Game* myGame = new Game();
+
+	myGame->InitializeProgram();
+	myGame->InitializeVertexBuffer();
+
     //main loop
     while(glfwGetWindowParam(GLFW_OPENED))
     {
@@ -49,6 +55,8 @@ int main()
         
         if(glfwGetKey(GLFW_KEY_ESC))
             glfwCloseWindow();
+
+		myGame->display();
     }
     
     glfwTerminate();
