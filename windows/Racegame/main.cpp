@@ -47,7 +47,7 @@ int main()
     //main loop
     while(glfwGetWindowParam(GLFW_OPENED))
     {
-        glfwSwapBuffers();
+        //glfwSwapBuffers();
         
         GLenum error = glGetError();
         if(error != GL_NO_ERROR)
@@ -55,8 +55,8 @@ int main()
         
         if(glfwGetKey(GLFW_KEY_ESC))
             glfwCloseWindow();
-
-		//myGame->display();
+		
+		myGame->display();
     }
     
     glfwTerminate();

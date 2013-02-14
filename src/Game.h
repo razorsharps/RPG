@@ -33,9 +33,9 @@ const std::string strFragmentShader(
 
 class Game {
 	private:
-		GLuint* theProgram;
-		GLuint* positionBufferObject;
-		GLuint* vao;
+		GLuint theProgram;
+		GLuint positionBufferObject;
+		GLuint vao;
 	public:
 		void display();
 		GLuint CreateShader(GLenum,  const std::string &);

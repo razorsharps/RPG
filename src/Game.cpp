@@ -28,27 +28,6 @@ GLuint Game::CreateProgram(const std::vector<GLuint> &shaderList)
 	return program;
 }
 
-//Called to update the display.
-//You should call glutSwapBuffers after all of your rendering to display what you rendered.
-//If you need continuous updates of the screen, call glutPostRedisplay() at the end of the function.
-void Game::display()
-{
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glUseProgram(*theProgram);
-
-	glBindBuffer(GL_ARRAY_BUFFER, *positionBufferObject);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-
-	glDisableVertexAttribArray(0);
-	glUseProgram(0);
-
-	glfwSwapBuffers();
-}
 
 GLuint Game::CreateShader(GLenum eShaderType, const std::string &strShaderFile)
 {
@@ -83,6 +62,28 @@ GLuint Game::CreateShader(GLenum eShaderType, const std::string &strShaderFile)
 	return shader;
 }
 
+//Called to update the display.
+//You should call glutSwapBuffers after all of your rendering to display what you rendered.
+//If you need continuous updates of the screen, call glutPostRedisplay() at the end of the function.
+void Game::display()
+{
+	glClearColor(0.2f, 0.2f, 0.2f, 0.2f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glUseProgram(theProgram);
+
+	glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	glDisableVertexAttribArray(0);
+	glUseProgram(0);
+
+	glfwSwapBuffers();
+}
+
 void Game::InitializeProgram()
 {
 	std::vector<GLuint> shaderList;
@@ -90,19 +91,19 @@ void Game::InitializeProgram()
 	shaderList.push_back(CreateShader(GL_VERTEX_SHADER, strVertexShader));
 	shaderList.push_back(CreateShader(GL_FRAGMENT_SHADER, strFragmentShader));
 
-	*theProgram = CreateProgram(shaderList);
+	theProgram = CreateProgram(shaderList);
 
 	std::for_each(shaderList.begin(), shaderList.end(), glDeleteShader);
 }
 
 void Game::InitializeVertexBuffer()
 {
-	glGenBuffers(1, positionBufferObject);
+	glGenBuffers(1, &positionBufferObject);
 
-	glBindBuffer(GL_ARRAY_BUFFER, *positionBufferObject);
+	glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glGenVertexArrays(1, vao);
-	glBindVertexArray(*vao);
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 }
