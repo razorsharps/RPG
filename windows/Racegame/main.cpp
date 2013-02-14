@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "../../src/Game.h"
+#include "../../src/headers/Game.h"
 
 int main()
 {

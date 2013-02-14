@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\sources\Game.cpp" />
     <ClCompile Include="windows\Racegame\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\headers\Game.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{53AB0362-CBB2-4A7A-84B1-4C2A49CFEEF9}</ProjectGuid>

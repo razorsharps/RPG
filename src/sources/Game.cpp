@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "../headers//*Game.h"
 
 GLuint Game::CreateProgram(const std::vector<GLuint> &shaderList)
 {

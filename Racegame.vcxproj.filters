@@ -18,12 +18,12 @@
     <ClCompile Include="windows\Racegame\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game.cpp">
+    <ClCompile Include="src\sources\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Game.h">
+    <ClInclude Include="src\headers\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
