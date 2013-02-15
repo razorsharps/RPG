@@ -55,7 +55,7 @@ int main( void )
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders( "C:/Users/Peter/Documents/GitHub/Racegame/src/headers/SimpleVertexShader.vertexshader", "C:/Users/Peter/Documents/GitHub/Racegame/src/headers/SimpleFragmentShader.fragmentshader" );
+	GLuint programID = LoadShaders( "C:/Users/Peter/Documents/GitHub/Racegame/src/shaders/SimpleVertexShader.vertexshader", "C:/Users/Peter/Documents/GitHub/Racegame/src/shaders/SimpleFragmentShader.fragmentshader" );
 	
 	static const GLfloat g_vertex_buffer_data[] = { 
 		-1.0f, -1.0f, 0.0f,
