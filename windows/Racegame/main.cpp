@@ -74,7 +74,7 @@ int main( void )
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders( "C:/Users/Peter/Documents/GitHub/Racegame/src/shaders/NormalMapping.vertexshader", "C:/Users/Peter/Documents/GitHub/Racegame/src/shaders/NormalMapping.fragmentshader" );
+	GLuint programID = LoadShaders( "src/shaders/NormalMapping.vertexshader", "src/shaders/NormalMapping.fragmentshader" );
 
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
@@ -83,9 +83,9 @@ int main( void )
 	GLuint ModelView3x3MatrixID = glGetUniformLocation(programID, "MV3x3");
 
 	// Load the texture
-	GLuint DiffuseTexture = loadDDS("C:/Users/Peter/Documents/GitHub/Racegame/src/shaders/diffuse.DDS");
-	GLuint NormalTexture = loadTGA_glfw("C:/Users/Peter/Documents/GitHub/Racegame/src/shaders/normal.tga");
-	GLuint SpecularTexture = loadDDS("C:/Users/Peter/Documents/GitHub/Racegame/src/shaders/specular.DDS");
+	GLuint DiffuseTexture = loadDDS("src/shaders/diffuse.DDS");
+	GLuint NormalTexture = loadTGA_glfw("src/shaders/normal.tga");
+	GLuint SpecularTexture = loadDDS("src/shaders/specular.DDS");
 	
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint DiffuseTextureID  = glGetUniformLocation(programID, "DiffuseTextureSampler");
@@ -96,7 +96,7 @@ int main( void )
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
-	bool res = loadOBJ("C:/Users/Peter/Documents/GitHub/Racegame/src/shaders/cylinder.obj", vertices, uvs, normals);
+	bool res = loadOBJ("shaders/cylinder.obj", vertices, uvs, normals);
 
 	std::vector<glm::vec3> tangents;
 	std::vector<glm::vec3> bitangents;
