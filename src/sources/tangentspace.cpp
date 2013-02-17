@@ -64,10 +64,7 @@ void computeTangentBasis(
 		if (glm::dot(glm::cross(n, t), b) < 0.0f){
 			t = t * -1.0f;
 		}
-
 	}
-
-
 }
 
 

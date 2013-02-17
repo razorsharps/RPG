@@ -86,6 +86,10 @@
     <None Include="src\shaders\uvtemplate.tga" />
     <None Include="src\shaders\StandardShading.fragmentshader" />
     <None Include="src\shaders\StandardShading.vertexshader" />
+    <None Include="src\shaders\NormalMapping.vertexshader" />
+    <None Include="src\shaders\NormalMapping.fragmentshader" />
+    <None Include="src\shaders\TextVertexShader.fragmentshader" />
+    <None Include="src\shaders\TextVertexShader.vertexshader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\shaders\uvtemplate.bmp">

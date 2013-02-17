@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\ColorFragmentShader.fragmentshader" />
+    <None Include="src\shaders\NormalMapping.fragmentshader" />
+    <None Include="src\shaders\NormalMapping.vertexshader" />
     <None Include="src\shaders\SimpleFragmentShader.fragmentshader" />
     <None Include="src\shaders\SimpleTransform.vertexshader" />
     <None Include="src\shaders\SimpleVertexShader.vertexshader" />
@@ -50,6 +52,8 @@
     <None Include="src\shaders\StandardShading.fragmentshader" />
     <None Include="src\shaders\StandardShading.vertexshader" />
     <None Include="src\shaders\TextureFragmentShader.fragmentshader" />
+    <None Include="src\shaders\TextVertexShader.fragmentshader" />
+    <None Include="src\shaders\TextVertexShader.vertexshader" />
     <None Include="src\shaders\TransformVertexShader.vertexshader" />
     <None Include="src\shaders\uvtemplate.tga" />
   </ItemGroup>
