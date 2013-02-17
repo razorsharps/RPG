@@ -19,13 +19,44 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\sources\controls.cpp" />
     <ClCompile Include="src\sources\Game.cpp" />
+    <ClCompile Include="src\sources\objloader.cpp" />
+    <ClCompile Include="src\sources\quaternion_utils.cpp" />
     <ClCompile Include="src\sources\Shader.cpp" />
+    <ClCompile Include="src\sources\tangentspace.cpp" />
+    <ClCompile Include="src\sources\text2D.cpp" />
+    <ClCompile Include="src\sources\Texture.cpp" />
+    <ClCompile Include="src\sources\vboindexer.cpp" />
     <ClCompile Include="windows\Racegame\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\headers\controls.h" />
     <ClInclude Include="src\headers\Game.h" />
+    <ClInclude Include="src\headers\objloader.h" />
+    <ClInclude Include="src\headers\quaternion_utils.h" />
     <ClInclude Include="src\headers\Shader.h" />
+    <ClInclude Include="src\headers\tangentspace.h" />
+    <ClInclude Include="src\headers\text2D.h" />
+    <ClInclude Include="src\headers\Texture.h" />
+    <ClInclude Include="src\headers\vboindexer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\ColorFragmentShader.fragmentshader" />
+    <None Include="src\shaders\SimpleFragmentShader.fragmentshader" />
+    <None Include="src\shaders\SimpleTransform.vertexshader" />
+    <None Include="src\shaders\SimpleVertexShader.vertexshader" />
+    <None Include="src\shaders\SingleColor.fragmentshader" />
+    <None Include="src\shaders\StandardShading.fragmentshader" />
+    <None Include="src\shaders\StandardShading.vertexshader" />
+    <None Include="src\shaders\TextureFragmentShader.fragmentshader" />
+    <None Include="src\shaders\TransformVertexShader.vertexshader" />
+    <None Include="src\shaders\uvtemplate.tga" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\shaders\uvmap.DDS" />
+    <Image Include="src\shaders\uvtemplate.bmp" />
+    <Image Include="src\shaders\uvtemplate.DDS" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{53AB0362-CBB2-4A7A-84B1-4C2A49CFEEF9}</ProjectGuid>
