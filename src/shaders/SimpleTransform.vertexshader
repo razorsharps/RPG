@@ -1,15 +1,13 @@
-#version 330 core
-
-// Input vertex data, different for all executions of this shader.
-layout(location = 0) in vec3 vertexPosition_modelspace;
-
-// Values that stay constant for the whole mesh.
-uniform mat4 MVP;
-
-void main(){
-
-	// Output position of the vertex, in clip space : MVP * position
-	gl_Position =  MVP * vec4(vertexPosition_modelspace,1);
-
+//vertexshader, create a file for it as vertex.vs
+#version 120
+uniform vec3 color;
+varying vec3 color2;    //out
+attribute vec3 atr;     //in
+varying vec2 texcoord;
+ 
+void main()
+{
+        gl_Position=gl_ModelViewProjectionMatrix*gl_Vertex;
+        color2=atr;
+        texcoord=gl_MultiTexCoord0.xy;
 }
-

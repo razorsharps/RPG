@@ -41,18 +41,13 @@ quat RotationBetweenVectors(vec3 start, vec3 dest){
 		rotationAxis.y * invs,
 		rotationAxis.z * invs
 	);
-
-
 }
-
-
 
 // Returns a quaternion that will make your object looking towards 'direction'.
 // Similar to RotationBetweenVectors, but also controls the vertical orientation.
 // This assumes that at rest, the object faces +Z.
 // Beware, the first parameter is a direction, not the target point !
 quat LookAt(vec3 direction, vec3 desiredUp){
-
 	if (length2(direction) < 0.0001f )
 		return quat();
 
@@ -73,12 +68,9 @@ quat LookAt(vec3 direction, vec3 desiredUp){
 	return rot2 * rot1; // remember, in reverse order.
 }
 
-
-
 // Like SLERP, but forbids rotation greater than maxAngle (in radians)
 // In conjunction to LookAt, can make your characters 
-quat RotateTowards(quat q1, quat q2, float maxAngle){
-	
+quat RotateTowards(quat q1, quat q2, float maxAngle){	
 	if( maxAngle < 0.001f ){
 		// No rotation allowed. Prevent dividing by 0 later.
 		return q1;
@@ -112,28 +104,8 @@ quat RotateTowards(quat q1, quat q2, float maxAngle){
 	
 	quat res = (sin((1.0f - t) * angle) * q1 + sin(t * angle) * q2) / sin(angle);
 	res = normalize(res);
-	return res;
-	
+	return res;	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void tests(){
 

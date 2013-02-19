@@ -10,5 +10,8 @@ GLuint loadTGA_glfw(const char * imagepath);
 // Load a .DDS file using GLFW's own loader
 GLuint loadDDS(const char * imagepath);
 
+GLuint loadBMP_customSky(const char * imagepath);
+
+GLuint LoadTextureRAW(const char * imagepath, int wrap);
 
 #endif

@@ -24,6 +24,7 @@
     <ClCompile Include="src\sources\objloader.cpp" />
     <ClCompile Include="src\sources\quaternion_utils.cpp" />
     <ClCompile Include="src\sources\Shader.cpp" />
+    <ClCompile Include="src\sources\functions.cpp" />
     <ClCompile Include="src\sources\tangentspace.cpp" />
     <ClCompile Include="src\sources\text2D.cpp" />
     <ClCompile Include="src\sources\Texture.cpp" />
@@ -32,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\controls.h" />
+    <ClInclude Include="src\headers\functions.h" />
     <ClInclude Include="src\headers\Game.h" />
     <ClInclude Include="src\headers\objloader.h" />
     <ClInclude Include="src\headers\quaternion_utils.h" />

@@ -11,5 +11,4 @@ void computeTangentBasis(
 	std::vector<glm::vec3> & bitangents
 );
 
-
 #endif

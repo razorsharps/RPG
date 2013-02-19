@@ -1,12 +1,5 @@
-// Include GLFW
-#include <GL/glfw.h>
-
-// Include GLM
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-using namespace glm;
-
 #include "../headers/controls.h"
+#include "../headers/functions.h"
 
 glm::mat4 ViewMatrix;
 glm::mat4 ProjectionMatrix;
@@ -30,7 +23,6 @@ float initialFoV = 45.0f;
 
 float speed = 3.0f; // 3 units / second
 float mouseSpeed = 0.005f;
-
 
 void computeMatricesFromInputs(){
 
