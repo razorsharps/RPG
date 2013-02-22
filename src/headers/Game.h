@@ -18,8 +18,8 @@ class Game {
 	private:
 		
 	public:
-		void display();
-		void InitializeVertexBuffer();
+		Game();
+		virtual ~Game();
 };
 
 #endif

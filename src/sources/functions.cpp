@@ -101,16 +101,24 @@ void initSkybox(float size)
 
 void drawSkybox()
 {
+	glDisable(GL_LIGHTING);
+	glDisable(GL_CULL_FACE);
+	glEnable(GL_TEXTURE_2D);
+
 	drawQuad(SKY_BACK, backvertexbuffer, uvbuffer);
 	drawQuad(SKY_FRONT, frontvertexbuffer, uvbuffer);
 	drawQuad(SKY_RIGHT, rightvertexbuffer, uvbuffer);
 	drawQuad(SKY_LEFT, leftvertexbuffer, uvbuffer);
 	drawQuad(SKY_BOTTOM, bottomvertexbuffer, uvbuffer);
 	drawQuad(SKY_TOP, topvertexbuffer, uvbuffer);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_CULL_FACE);
+	glDisable(GL_TEXTURE_2D);
 }
 
 void drawQuad(int skyboxIndex, GLuint vertexbuffer, GLuint uvbuffer) {
-		glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, skybox[skyboxIndex]);
 
 	// 1rst attribute buffer : vertices
