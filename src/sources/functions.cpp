@@ -1,13 +1,14 @@
 #include <../../src/headers/functions.h>
 #include <../../src/headers/Texture.h>
 
-enum {SKY_LEFT=0,SKY_BACK,SKY_RIGHT,SKY_FRONT,SKY_TOP,SKY_BOTTOM};      //constants for the skybox faces, so we don't have to remember so much number
+enum {SKY_LEFT=0,SKY_BACK,SKY_RIGHT,SKY_FRONT,SKY_TOP,SKY_BOTTOM, PLANE};      //constants for the skybox faces, so we don't have to remember so much number
 unsigned int skybox[6]; //the ids for the textures
 
-GLuint backvertexbuffer, frontvertexbuffer, rightvertexbuffer,leftvertexbuffer,bottomvertexbuffer,topvertexbuffer;
+GLuint backvertexbuffer, frontvertexbuffer, rightvertexbuffer,leftvertexbuffer,bottomvertexbuffer,topvertexbuffer, planevertexbuffer;
 GLuint uvbuffer;
+GLuint SkyboxShaders, TextureID;
 
-float boxsize = 50.0f;
+float boxsize = 75.0f;
 
 static const GLfloat backquadBuffer[] = {
 	boxsize/2, boxsize/2, boxsize/2,
@@ -51,6 +52,14 @@ static const GLfloat topquadBuffer[] = {
 	-boxsize/2, boxsize/2, -boxsize/2
 };
 
+
+static const GLfloat planeBuffer[] = {
+	-boxsize/8, 0, -boxsize/8,
+	-boxsize/8, 0, boxsize/8,
+	boxsize/8, 0, boxsize/8,
+	boxsize/8, 0, -boxsize/8
+};
+
 static const GLfloat backTexBuffer[] = {
 	// back quad
 	0.0f, 0.0f,
@@ -69,6 +78,7 @@ void initSkybox(float size)
     skybox[SKY_FRONT]	= loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/front.bmp");
     skybox[SKY_TOP]		= loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/top.bmp");
     skybox[SKY_BOTTOM]	= loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/bottom.bmp");
+	skybox[PLANE]		= loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/Racetrack.bmp");
 		
 	glGenBuffers(1, &backvertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, backvertexbuffer);
@@ -94,6 +104,10 @@ void initSkybox(float size)
 	glBindBuffer(GL_ARRAY_BUFFER, topvertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(topquadBuffer), topquadBuffer, GL_STATIC_DRAW);
 
+	glGenBuffers(1, &planevertexbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, planevertexbuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(planeBuffer), planeBuffer, GL_STATIC_DRAW);
+
 	glGenBuffers(1, &uvbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(backTexBuffer), backTexBuffer, GL_STATIC_DRAW);
@@ -111,6 +125,7 @@ void drawSkybox()
 	drawQuad(SKY_LEFT, leftvertexbuffer, uvbuffer);
 	drawQuad(SKY_BOTTOM, bottomvertexbuffer, uvbuffer);
 	drawQuad(SKY_TOP, topvertexbuffer, uvbuffer);
+	drawQuad(PLANE, planevertexbuffer, uvbuffer);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);

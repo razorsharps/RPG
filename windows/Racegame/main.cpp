@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include <iostream>
  
 // Include GLEW
 #include <GL/glew.h>
@@ -29,6 +30,7 @@ using namespace glm;
 #include <../../src/headers/quaternion_utils.h> // See quaternion_utils.cpp for RotationBetweenVectors, LookAt and RotateTowards
 #include <../../src/headers/functions.h>
 
+
 vec3 gPosition1(-1.5f, 0.0f, 0.0f);
 vec3 gOrientation1;
  
@@ -39,6 +41,7 @@ bool gLookAtOther = true;
  
 int main( void )
 {
+
 // Initialise GLFW
 	if( !glfwInit() )
 	{
@@ -89,10 +92,11 @@ int main( void )
 
 	// Create and compile our GLSL program from the shaders
 	GLuint programID = LoadShaders( "src/shaders/StandardShading.vertexshader", "src/shaders/StandardShading.fragmentshader" );
-	GLuint programID2 = LoadShaders( "src/shaders/TransformVertexShader.vertexshader", "src/shaders/TextureFragmentShader.fragmentshader" );
+	GLuint programIDSkybox = LoadShaders( "src/shaders/TransformVertexShader.vertexshader", "src/shaders/TextureFragmentShader.fragmentshader" );
 
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
+	GLuint skyboxID = glGetUniformLocation(programIDSkybox, "MVP");
 	GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
 	GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
 
@@ -102,8 +106,8 @@ int main( void )
 	GLuint vertexNormal_modelspaceID	= glGetAttribLocation(programID, "vertexNormal_modelspace");
 
 	// Load the texture
-	GLuint Texture = loadDDS("src/shaders/uvmap.DDS");
-	
+	GLuint Texture = loadBMP_custom("src/shaders/truck_color_cleantest.bmp");
+
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
 
@@ -111,7 +115,7 @@ int main( void )
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
-	bool res = loadOBJ("src/shaders/suzanne.obj", vertices, uvs, normals);
+	bool res = loadOBJ("src/shaders/car.obj", vertices, uvs, normals);
  
 	std::vector<unsigned short> indices;
 	std::vector<glm::vec3> indexed_vertices;
@@ -120,7 +124,6 @@ int main( void )
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
  
 	// Load it into a VBO
- 
 	GLuint vertexbuffer;
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -142,8 +145,6 @@ int main( void )
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0] , GL_STATIC_DRAW);
 
-	initSkybox(50.0f);
-
 	// Get a handle for our "LightPosition" uniform
 	glUseProgram(programID);
 	GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
@@ -153,6 +154,7 @@ int main( void )
 	double lastFrameTime = lastTime;
 	int nbFrames = 0;
 
+	initSkybox(50.0f);
 
 	do{
 		// Measure speed
@@ -169,9 +171,6 @@ int main( void )
  
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
- 
-		// Use our shader
-		glUseProgram(programID);
  	
 		// Compute the MVP matrix from keyboard and mouse input
 		computeMatricesFromInputs();
@@ -183,19 +182,30 @@ int main( void )
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
 		
-		drawSkybox();
- 
+		// Use our shader
+		glUseProgram(programIDSkybox);
+
+		// Send our transformation to the currently bound shader, 
+		// in the "MVP" uniform
+		glUniformMatrix4fv(skyboxID, 1, GL_FALSE, &MVP[0][0]);
+
 		// Bind our texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, Texture);
 		// Set our "myTextureSampler" sampler to user Texture Unit 0
 		glUniform1i(TextureID, 0);
- 
+
+		drawSkybox();
+		
+		glUseProgram(programID);
+
+		// Bind our texture in Texture Unit 0
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, Texture);
+		// Set our "myTextureSampler" sampler to user Texture Unit 0
+		glUniform1i(TextureID, 0);
+
 		// 1rst attribute buffer : vertices
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -243,8 +253,8 @@ int main( void )
 			gOrientation1.y += 3.14159f/2.0f * deltaTime;
  
 			// Build the model matrix
-			glm::mat4 RotationMatrix = eulerAngleYXZ(gOrientation1.y, gOrientation1.x, gOrientation1.z);
-			glm::mat4 TranslationMatrix = translate(mat4(), gPosition1); // A bit to the left
+			glm::mat4 RotationMatrix = eulerAngleYXZ(getOrientation().y, getOrientation().x, 0.0f);
+			glm::mat4 TranslationMatrix = translate(mat4(), getPosition()); // A bit to the left
 			glm::mat4 ScalingMatrix = scale(mat4(), vec3(1.0f, 1.0f, 1.0f));
 			glm::mat4 ModelMatrix = TranslationMatrix * RotationMatrix * ScalingMatrix;
  
@@ -298,6 +308,15 @@ int main( void )
 			GL_UNSIGNED_SHORT,   // type
 			(void*)0           // element array buffer offset
 		);
+
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
+
+		GLenum error = glGetError();
+		if(error != GL_NO_ERROR) 
+			std::cerr << "Opengl error " << error << ": " << (const char*) gluErrorString(error) << std::endl;
+
 
 		// Swap buffers
 		glfwSwapBuffers();
