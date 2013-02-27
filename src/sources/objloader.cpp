@@ -92,7 +92,6 @@ bool loadOBJ(
 		out_vertices.push_back(vertex);
 		out_uvs     .push_back(uv);
 		out_normals .push_back(normal);
-	
 	}
 
 	return true;

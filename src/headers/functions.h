@@ -20,8 +20,8 @@
 #ifndef FUNCTION_UTILS_H
 #define FUNCTION_UTILS_H
 
-void initSkybox(float size);
-void drawSkybox();
+void initEnvironment();
+void drawEnvironment();
 void drawQuad(int skyboxIndex, GLuint vertexbuffer, GLuint uvbuffer);
 
 #endif // QUATERNION_UTILS_H

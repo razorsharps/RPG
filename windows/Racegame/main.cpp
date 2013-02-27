@@ -1,160 +1,22 @@
-// Include standard headers
-#include <stdio.h>
-#include <stdlib.h>
-#include <vector>
-#include <iostream>
- 
-// Include GLEW
-#include <GL/glew.h>
- 
-// Include GLFW
-#include <GL/glfw.h>
- 
-// Include GLM
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/quaternion.hpp>
-#include <glm/gtx/euler_angles.hpp>
-#include <glm/gtx/norm.hpp>
-using namespace glm;
- 
-// Include AntTweakBar
-#include <AntTweakBar.h>
- 
-#include <../../src/headers/shader.h>
-#include <../../src/headers/texture.h>
-#include <../../src/headers/controls.h>
-#include <../../src/headers/objloader.h>
-#include <../../src/headers/vboindexer.h>
-#include <../../src/headers/quaternion_utils.h> // See quaternion_utils.cpp for RotationBetweenVectors, LookAt and RotateTowards
-#include <../../src/headers/functions.h>
+#include <../../src/headers/Game.h>
 
-
-vec3 gPosition1(-1.5f, 0.0f, 0.0f);
-vec3 gOrientation1;
- 
-vec3 gPosition2( 1.5f, 0.0f, 0.0f);
-quat gOrientation2;
- 
-bool gLookAtOther = true;
- 
 int main( void )
 {
+	Game * game = new Game();
+    game->build();
+    game->run();
+    game->stop();
 
-// Initialise GLFW
-	if( !glfwInit() )
-	{
-		fprintf( stderr, "Failed to initialize GLFW\n" );
-		return -1;
-	}
-
-	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
-	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 3);
-	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 3);
-	glfwOpenWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
-
-	// Open a window and create its OpenGL context
-	if( !glfwOpenWindow( 1024, 768, 0,0,0,0, 32,0, GLFW_WINDOW ) )
-	{
-		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
-		glfwTerminate();
-		return -1;
-	}
-
-	// Initialize GLEW
-	glewExperimental = true; // Needed for core profile
-	if (glewInit() != GLEW_OK) {
-		fprintf(stderr, "Failed to initialize GLEW\n");
-		return -1;
-	}
-
-	glfwSetWindowTitle( "Peter Test OpenGL" );
-
-	// Ensure we can capture the escape key being pressed below
-	glfwEnable( GLFW_STICKY_KEYS );
-	glfwSetMousePos(1024/2, 768/2);
-
-	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-
-	// Enable depth test
-	glEnable(GL_DEPTH_TEST);
-	// Accept fragment if it closer to the camera than the former one
-	glDepthFunc(GL_LESS); 
- 
-	// Cull triangles which normal is not towards the camera
-	glEnable(GL_CULL_FACE);
-
-	GLuint VertexArrayID;
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
-
-	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders( "src/shaders/StandardShading.vertexshader", "src/shaders/StandardShading.fragmentshader" );
-	GLuint programIDSkybox = LoadShaders( "src/shaders/TransformVertexShader.vertexshader", "src/shaders/TextureFragmentShader.fragmentshader" );
-
-	// Get a handle for our "MVP" uniform
-	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-	GLuint skyboxID = glGetUniformLocation(programIDSkybox, "MVP");
-	GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
-	GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
-
-	// Get a handle for our buffers
-	GLuint vertexPosition_modelspaceID	= glGetAttribLocation(programID, "vertexPosition_modelspace");
-	GLuint vertexUVID					= glGetAttribLocation(programID, "vertexUV");
-	GLuint vertexNormal_modelspaceID	= glGetAttribLocation(programID, "vertexNormal_modelspace");
-
-	// Load the texture
-	GLuint Texture = loadBMP_custom("src/shaders/truck_color_cleantest.bmp");
-
-	// Get a handle for our "myTextureSampler" uniform
-	GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
-
-	// Read our .obj file
-	std::vector<glm::vec3> vertices;
-	std::vector<glm::vec2> uvs;
-	std::vector<glm::vec3> normals;
-	bool res = loadOBJ("src/shaders/car.obj", vertices, uvs, normals);
- 
-	std::vector<unsigned short> indices;
-	std::vector<glm::vec3> indexed_vertices;
-	std::vector<glm::vec2> indexed_uvs;
-	std::vector<glm::vec3> indexed_normals;
-	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
- 
-	// Load it into a VBO
-	GLuint vertexbuffer;
-	glGenBuffers(1, &vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(glm::vec3), &indexed_vertices[0], GL_STATIC_DRAW);
- 
-	GLuint uvbuffer;
-	glGenBuffers(1, &uvbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, indexed_uvs.size() * sizeof(glm::vec2), &indexed_uvs[0], GL_STATIC_DRAW);
- 
-	GLuint normalbuffer;
-	glGenBuffers(1, &normalbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
-	glBufferData(GL_ARRAY_BUFFER, indexed_normals.size() * sizeof(glm::vec3), &indexed_normals[0], GL_STATIC_DRAW);
- 
-	// Generate a buffer for the indices as well
-	GLuint elementbuffer;
-	glGenBuffers(1, &elementbuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0] , GL_STATIC_DRAW);
-
-	// Get a handle for our "LightPosition" uniform
-	glUseProgram(programID);
-	GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
+	return 0;
+}
+/*
  
 	// For speed computation
 	double lastTime = glfwGetTime();
 	double lastFrameTime = lastTime;
 	int nbFrames = 0;
 
-	initSkybox(50.0f);
+	initEnvironment(50.0f);
 
 	do{
 		// Measure speed
@@ -188,7 +50,7 @@ int main( void )
 
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
-		glUniformMatrix4fv(skyboxID, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(SkyboxID, 1, GL_FALSE, &MVP[0][0]);
 
 		// Bind our texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0);
@@ -196,7 +58,7 @@ int main( void )
 		// Set our "myTextureSampler" sampler to user Texture Unit 0
 		glUniform1i(TextureID, 0);
 
-		drawSkybox();
+		drawEnvironment();
 		
 		glUseProgram(programID);
 
@@ -338,3 +200,4 @@ int main( void )
 
 	return 0;
 }
+*/

@@ -13,6 +13,14 @@ class Game {
 	public:
 		Game();
 		virtual ~Game();
+
+		void initGLFW();
+		void initGLEW();
+		void setGlParameters();
+
+		void build();
+		void run();
+		void stop();
 };
 
 #endif
