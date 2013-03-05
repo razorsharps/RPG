@@ -26,6 +26,7 @@ enum {MATRIXID = 0, VIEWMATRIXID, MODELMATRIXID, SKYBOXMATRIXID};
 GLuint handles[4]; 
 
 GLuint TextureIDs;
+GLuint Textures;	
 
 Game::Game() {
 	initGLFW();

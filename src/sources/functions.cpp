@@ -71,19 +71,19 @@ static const GLfloat backTexBuffer[] = {
 void initEnvironment()
 {
 	Texture* tex = new Texture();
-	skybox[SKY_LEFT]	= tex->loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/left.bmp");
+	skybox[SKY_LEFT]	= tex->loadBMP_customSky("src/media/left.bmp");
 	tex = new Texture();
-    skybox[SKY_BACK]	= tex->loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/back.bmp");
+    skybox[SKY_BACK]	= tex->loadBMP_customSky("src/media/back.bmp");
 	tex = new Texture();
-    skybox[SKY_RIGHT]	= tex->loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/right.bmp");
+    skybox[SKY_RIGHT]	= tex->loadBMP_customSky("src/media/right.bmp");
 	tex = new Texture();
-    skybox[SKY_FRONT]	= tex->loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/front.bmp");
+    skybox[SKY_FRONT]	= tex->loadBMP_customSky("src/media/front.bmp");
 	tex = new Texture();
-    skybox[SKY_TOP]		= tex->loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/top.bmp");
+    skybox[SKY_TOP]		= tex->loadBMP_customSky("src/media/top.bmp");
 	tex = new Texture();
-    skybox[SKY_BOTTOM]	= tex->loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/bottom.bmp");
+    skybox[SKY_BOTTOM]	= tex->loadBMP_customSky("src/media/bottom.bmp");
 	tex = new Texture();
-	skybox[PLANE]		= tex->loadBMP_customSky("C:/Users/Peter/Documents/GitHub/Racegame/src/media/Racetrack.bmp");
+	skybox[PLANE]		= tex->loadBMP_customSky("src/media/Racetrack.bmp");
 		
 	glGenBuffers(1, &backvertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, backvertexbuffer);
