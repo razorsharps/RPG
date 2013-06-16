@@ -1,93 +1,142 @@
-#include "../headers/controls.h"
-#include "../headers/functions.h"
+#include "../headers/Controls.h"
 
-glm::mat4 ViewMatrix;
-glm::mat4 ProjectionMatrix;
+Controls::Controls() {
+	position = glm::vec3( 0, 0.6f, -2.5f ); 
+	carPosition = glm::vec3(-2.66f, 0, 2.48);
+	carDirection = glm::vec3(-(3.14/2),0,0);
 
-glm::mat4 getViewMatrix(){
-	return ViewMatrix;
+	horizontalAngle = 3.14f;
+	verticalAngle = 0.0f;
+	initialFoV = 45.0f;
+	rotationSpeed = 0.0f;
+	speedPerTick = 1.0f;
+	acceleration = 0.0f;
+	steering = 0.0f;
+
+	speed = 3.0f; 
+	mouseSpeed = 0.005f;
 }
-glm::mat4 getProjectionMatrix(){
-	return ProjectionMatrix;
-}
 
-// Initial position : on +Z
-glm::vec3 position = glm::vec3( 0, 0, 5 ); 
-// Initial horizontal angle : toward -Z
-float horizontalAngle = 3.14f;
-// Initial vertical angle : none
-float verticalAngle = 0.0f;
-// Initial Field of View
-float initialFoV = 45.0f;
-
-float speed = 3.0f; // 3 units / second
-float mouseSpeed = 0.005f;
-
-void computeMatricesFromInputs(){
-
-	// glfwGetTime is called only once, the first time this function is called
+void Controls::updateCamera(){
 	static double lastTime = glfwGetTime();
 
-	// Compute time difference between current and last frame
 	double currentTime = glfwGetTime();
 	float deltaTime = float(currentTime - lastTime);
 
-	// Get mouse position
-	int xpos, ypos;
-	glfwGetMousePos(&xpos, &ypos);
+	float FoV = initialFoV - 5;
 
-	// Reset mouse position for next frame
-	glfwSetMousePos(1024/2, 768/2);
+	glm::vec3 temp = carDirection;
 
-	// Compute new orientation
-	horizontalAngle += mouseSpeed * float(1024/2 - xpos );
-	verticalAngle   += mouseSpeed * float( 768/2 - ypos );
+	temp.x = carDirection.y;
+	temp.y = -carDirection.x;
+	temp.z = carDirection.z;
 
-	// Direction : Spherical coordinates to Cartesian coordinates conversion
-	glm::vec3 direction(
-		cos(verticalAngle) * sin(horizontalAngle), 
-		sin(verticalAngle),
-		cos(verticalAngle) * cos(horizontalAngle)
-	);
-	
-	// Right vector
-	glm::vec3 right = glm::vec3(
-		sin(horizontalAngle - 3.14f/2.0f), 
-		0,
-		cos(horizontalAngle - 3.14f/2.0f)
-	);
-	
-	// Up vector
-	glm::vec3 up = glm::cross( right, direction );
-
-	// Move forward
-	if (glfwGetKey( GLFW_KEY_UP ) == GLFW_PRESS){
-		position += direction * deltaTime * speed;
-	}
-	// Move backward
-	if (glfwGetKey( GLFW_KEY_DOWN ) == GLFW_PRESS){
-		position -= direction * deltaTime * speed;
-	}
-	// Strafe right
-	if (glfwGetKey( GLFW_KEY_RIGHT ) == GLFW_PRESS){
-		position += right * deltaTime * speed;
-	}
-	// Strafe left
-	if (glfwGetKey( GLFW_KEY_LEFT ) == GLFW_PRESS){
-		position -= right * deltaTime * speed;
-	}
-
-	float FoV = initialFoV - 5 * glfwGetMouseWheel();
-
-	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	ProjectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 100.0f);
-	// Camera matrix
 	ViewMatrix       = glm::lookAt(
-								position,           // Camera is here
-								position+direction, // and looks here : at the same position, plus "direction"
-								up                  // Head is up (set to 0,-1,0 to look upside-down)
+								carPosition + position * glm::quat(temp), 	// Camera is here
+								carPosition, 								// and looks here : at the same position, plus "direction"
+								vec3(0, 1, 0)                  				// Head is up (set to 0,-1,0 to look upside-down)
 						   );
 
 	// For the next frame, the "last time" will be "now"
 	lastTime = currentTime;
+}
+
+void Controls::updateCar(){
+	static double lastTime = glfwGetTime();
+
+	double currentTime = glfwGetTime();
+	float deltaTime = float(currentTime - lastTime);
+
+	if(glfwGetKey( GLFW_KEY_LEFT ) == GLFW_PRESS) {
+		steering += 0.03f;
+
+		if(steering > 0.7f) 
+			steering = 0.7f;
+	} else if(glfwGetKey( GLFW_KEY_RIGHT ) == GLFW_PRESS) {
+		steering -= 0.03f;
+
+		if(steering < -0.7f) 
+			steering = -0.7f;
+	} else {
+		if(steering > 0.01f) {
+			steering -= 0.01f;
+		}
+		if(steering < 0.01f) {
+			steering += 0.01f;
+		}
+	}
+	
+	if(acceleration > 0.0f)
+		carDirection += vec3(glm::radians(steering), 0, 0);
+
+	glm::mat4 RotationMatrix		= eulerAngleYXZ(carDirection.x, carDirection.y, carDirection.z);
+	glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
+	glm::vec3 realforward(forward);
+
+	if(glfwGetKey( GLFW_KEY_UP ) == GLFW_PRESS || glfwGetKey( GLFW_KEY_DOWN ) == GLFW_PRESS) {
+		if (glfwGetKey( GLFW_KEY_UP ) == GLFW_PRESS) {
+			rotationSpeed += speedPerTick;
+			acceleration += speedPerTick * 0.015f;
+			carPosition -= realforward * deltaTime * speed * acceleration;
+		}
+		if (glfwGetKey( GLFW_KEY_DOWN ) == GLFW_PRESS){
+			if(acceleration > 0) {
+				rotationSpeed -= speedPerTick;
+				acceleration -= speedPerTick * 0.06f;
+				carPosition -= realforward * deltaTime * speed * acceleration;
+			}
+		}
+	} else {
+		if(acceleration > 0.1f) {
+			acceleration -= speedPerTick * 0.005f;
+			carPosition -= realforward * deltaTime * speed * acceleration;
+		}
+		else if (acceleration < -0.1f){
+			acceleration += speedPerTick * 0.005f;
+			carPosition -= realforward * deltaTime * speed * acceleration;
+		} else
+			acceleration = 0;
+		
+	}
+
+	// For the next frame, the "last time" will be "now"
+	lastTime = currentTime;
+}
+
+
+glm::mat4 Controls::getViewMatrix(){
+	return ViewMatrix;
+}
+
+glm::mat4 Controls::getProjectionMatrix(){
+	return ProjectionMatrix;
+}
+
+glm::vec3 Controls::getPosition() {
+	return position;
+}
+
+float Controls::getSteering() { 
+	return steering;
+}
+
+float Controls::getRotationSpeed() {
+	return rotationSpeed;
+}
+
+glm::vec3 Controls::getCarPosition() {
+	return carPosition;
+}
+
+glm::vec3 Controls::getCarDirection() {
+	return carDirection;
+}
+
+float Controls::getCarSpeed() {
+	return acceleration;
+}
+
+void Controls::setCarSpeed(float accel) {
+	acceleration = accel;
 }

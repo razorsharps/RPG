@@ -5,10 +5,9 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-using namespace glm;
 
 #include "../headers/shader.h"
-#include "../headers/texture.h"
+#include "../headers/Texture.h"
 
 #include "../headers/text2D.h"
 
@@ -19,9 +18,9 @@ unsigned int Text2DShaderID;
 unsigned int Text2DUniformID;
 
 void initText2D(const char * texturePath){
-
+	Texture* tex = new Texture();
 	// Initialize texture
-//	Text2DTextureID = loadTGA_glfw(texturePath);
+	Text2DTextureID = tex->loadTGA_glfw(texturePath);
 
 	// Initialize VBO
 	glGenBuffers(1, &Text2DVertexBufferID);

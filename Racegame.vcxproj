@@ -19,54 +19,41 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\sources\controls.cpp" />
+    <ClCompile Include="src\sources\Controls.cpp" />
     <ClCompile Include="src\sources\Game.cpp" />
     <ClCompile Include="src\sources\GameObject.cpp" />
     <ClCompile Include="src\sources\Mesh.cpp" />
     <ClCompile Include="src\sources\objloader.cpp" />
-    <ClCompile Include="src\sources\quaternion_utils.cpp" />
+    <ClCompile Include="src\sources\Renderer.cpp" />
     <ClCompile Include="src\sources\Shader.cpp" />
-    <ClCompile Include="src\sources\functions.cpp" />
-    <ClCompile Include="src\sources\tangentspace.cpp" />
+    <ClCompile Include="src\sources\Environment.cpp" />
+    <ClCompile Include="src\sources\Sound.cpp" />
     <ClCompile Include="src\sources\text2D.cpp" />
     <ClCompile Include="src\sources\Texture.cpp" />
     <ClCompile Include="src\sources\vboindexer.cpp" />
     <ClCompile Include="windows\Racegame\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\headers\controls.h" />
-    <ClInclude Include="src\headers\functions.h" />
+    <ClInclude Include="src\headers\Controls.h" />
+    <ClInclude Include="src\headers\Environment.h" />
     <ClInclude Include="src\headers\Game.h" />
     <ClInclude Include="src\headers\GameObject.h" />
     <ClInclude Include="src\headers\Mesh.h" />
     <ClInclude Include="src\headers\objloader.h" />
-    <ClInclude Include="src\headers\quaternion_utils.h" />
+    <ClInclude Include="src\headers\Renderer.h" />
     <ClInclude Include="src\headers\Shader.h" />
-    <ClInclude Include="src\headers\tangentspace.h" />
+    <ClInclude Include="src\headers\Sound.h" />
     <ClInclude Include="src\headers\text2D.h" />
     <ClInclude Include="src\headers\Texture.h" />
     <ClInclude Include="src\headers\vboindexer.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\ColorFragmentShader.fragmentshader" />
-    <None Include="src\shaders\NormalMapping.fragmentshader" />
-    <None Include="src\shaders\NormalMapping.vertexshader" />
-    <None Include="src\shaders\SimpleFragmentShader.fragmentshader" />
-    <None Include="src\shaders\SimpleTransform.vertexshader" />
-    <None Include="src\shaders\SimpleVertexShader.vertexshader" />
-    <None Include="src\shaders\SingleColor.fragmentshader" />
     <None Include="src\shaders\StandardShading.fragmentshader" />
     <None Include="src\shaders\StandardShading.vertexshader" />
     <None Include="src\shaders\TextureFragmentShader.fragmentshader" />
     <None Include="src\shaders\TextVertexShader.fragmentshader" />
     <None Include="src\shaders\TextVertexShader.vertexshader" />
     <None Include="src\shaders\TransformVertexShader.vertexshader" />
-    <None Include="src\shaders\uvtemplate.tga" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="src\shaders\uvmap.DDS" />
-    <Image Include="src\shaders\uvtemplate.bmp" />
-    <Image Include="src\shaders\uvtemplate.DDS" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{53AB0362-CBB2-4A7A-84B1-4C2A49CFEEF9}</ProjectGuid>
@@ -175,15 +162,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>windows\glfw\include;windows\glm;windows\glew\include;C:\Users\Peter\Downloads\OpenGL-tutorial_v0010_33\OpenGL-tutorial_v0010_33\external\AntTweakBar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;windows\glfw\include;windows\glm;windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\Peter\Downloads\OpenGL-tutorial_v0010_33\OpenGL-tutorial_v0010_33\external\AntTweakBar\lib;windows\glfw\lib-msvc110;windows\glew\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;GLFW.lib;AntTweakBar.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\OpenAL 1.1 SDK\libs\Win32;windows\glfw\lib-msvc110;windows\glew\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glew32.lib;GLFW.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

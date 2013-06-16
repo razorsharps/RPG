@@ -1,6 +1,4 @@
-#ifndef TEXTURE_HPP
-#define TEXTURE_HPP
-
+#pragma once
 
 class Texture {
 	private:
@@ -12,8 +10,6 @@ class Texture {
 
 		GLuint loadBMP_custom(const char * imagepath);
 		GLuint loadBMP_customSky(const char * imagepath);
+		GLuint loadTGA_glfw(const char * imagepath);
 		GLuint getTexture();
 };
-
-
-#endif

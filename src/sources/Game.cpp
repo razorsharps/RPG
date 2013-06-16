@@ -11,27 +11,24 @@
 #include <GL/glfw.h>
 
 #include "../headers/Game.h"
-#include "../headers/Shader.h"
-#include "../headers/Texture.h"
-#include "../headers/objloader.h"
-#include "../headers/vboindexer.h"
-#include "../headers/functions.h"
-#include "../headers/controls.h"
-#include "../headers/GameObject.h"
 
-enum {NORMAL = 0, SKYBOX};
-GLuint shaders[2]; 
-
-enum {MATRIXID = 0, VIEWMATRIXID, MODELMATRIXID, SKYBOXMATRIXID};
-GLuint handles[4]; 
-
-GLuint TextureIDs;
-GLuint Textures;	
 
 Game::Game() {
 	initGLFW();
 	initGLEW();
 	setGlParameters();
+
+	checkIndex = 0;
+
+	carMoved = false;
+	playSound = false;
+	bestLap = 0.0f;
+
+	double startTime = 0.0f;
+	float pie = 3.14f;
+
+	environment = new Environment();
+	control = new Controls();
 }
 
 Game::~Game() {
@@ -50,70 +47,132 @@ void Game::build() {
 	
 	handles[SKYBOXMATRIXID]		= glGetUniformLocation(shaders[SKYBOX], "MVP");
 
-	// Get a handle for our buffers
-	GLuint vertexPosition_modelspaceID	= glGetAttribLocation(shaders[NORMAL], "vertexPosition_modelspace");
-	GLuint vertexUVID					= glGetAttribLocation(shaders[NORMAL], "vertexUV");
-	GLuint vertexNormal_modelspaceID	= glGetAttribLocation(shaders[NORMAL], "vertexNormal_modelspace");
-
-	// Load a car GameObject
-	GameObject* car = new GameObject("Car", vec3(0,0,0));
-	Texture* carTex = new Texture();
-	carTex->loadBMP_custom("src/shaders/truck_color_cleantest.bmp");
-	Mesh* carMesh = new Mesh();
-	carMesh->load("src/shaders/car.obj");
-	car->setTexture(carTex);
-	car->setMesh(carMesh);
-
 	// Get a handle for our "myTextureSampler" uniform
 	TextureIDs  = glGetUniformLocation(shaders[NORMAL], "myTextureSampler");
+	
+	buildGameObjects();
+	environment->initEnvironment();
+	initCheckPoints();
 
 	// Get a handle for our "LightPosition" uniform
 	glUseProgram(shaders[NORMAL]);
-	GLuint LightID = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspace");
-
-	initEnvironment();
+	LightID = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspace");
 }
 
 void Game::run() {
+	// For speed computation
+	double lastTime = glfwGetTime();
+	double lastFrameTime = lastTime;
+
+	int nbFrames = 0;
+
+	Sound* s = new Sound();
+	s->init();
+
+	initText2D( "src/resources/Holstein.tga" );
+
 	do{
+		// Measure speed
+		double currentTime = glfwGetTime();
+		float deltaTime = (float)(currentTime - lastFrameTime); 
+		lastFrameTime = currentTime;
+		nbFrames++;
+		if ( currentTime - lastTime >= 1.0 ){ // If last prinf() was more than 1sec ago
+			// printf and reset
+			printf("%f ms/frame\n", double(nbFrames));
+			nbFrames = 0;
+			lastTime += 1.0;
+		}
+
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glUseProgram(shaders[NORMAL]);
-
 		// Compute the MVP matrix from keyboard and mouse input
-		computeMatricesFromInputs();
-		glm::mat4 ProjectionMatrix = getProjectionMatrix();
-		glm::mat4 ViewMatrix = getViewMatrix();
-		glm::mat4 ModelMatrix = glm::mat4(1.0);
-		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+		control->updateCar();
+		control->updateCamera();
 
-		// Send our transformation to the currently bound shader, 
-		// in the "MVP" uniform
-		glUniformMatrix4fv(handles[MATRIXID], 1, GL_FALSE, &MVP[0][0]);
-		
 		// Use our shader
 		glUseProgram(shaders[SKYBOX]);
-		
-		// Send our transformation to the currently bound shader, 
-		// in the "MVP" uniform
-		glUniformMatrix4fv(handles[SKYBOXMATRIXID], 1, GL_FALSE, &MVP[0][0]);
+		glm::mat4 TestProjectionMatrix = control->getProjectionMatrix();
+		glm::mat4 TestViewMatrix = control->getViewMatrix();
+		glm::mat4 TestModelMatrix = glm::translate(glm::mat4(), control->getCarPosition());
+		glm::mat4 MVP = TestProjectionMatrix * TestViewMatrix * TestModelMatrix;
 
-		// Bind our texture in Texture Unit 0
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, Textures);
-		// Set our "myTextureSampler" sampler to user Texture Unit 0
+		glUniformMatrix4fv(handles[SKYBOXMATRIXID], 1, GL_FALSE, &MVP[0][0]);
+		environment->drawEnvironment();
+
+		glm::mat4 ProjectionMatrix = control->getProjectionMatrix();
+		glm::mat4 ViewMatrix = control->getViewMatrix();
+		glm::mat4 ModelMatrix = glm::mat4(1.0);
+		MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+
+		glUniformMatrix4fv(handles[SKYBOXMATRIXID], 1, GL_FALSE, &MVP[0][0]);
+		environment->drawPlane();
+
+		glUseProgram(shaders[NORMAL]);
+
+		ProjectionMatrix = control->getProjectionMatrix();
+		ViewMatrix = control->getViewMatrix();
+		ModelMatrix = glm::mat4(1.0);
+		MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+
+		glUniformMatrix4fv(handles[MATRIXID], 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(handles[MODELMATRIXID], 1, GL_FALSE, &ModelMatrix[0][0]);
+		glUniformMatrix4fv(handles[VIEWMATRIXID], 1, GL_FALSE, &ViewMatrix[0][0]);
+		
+		glm::vec3 lightPos = glm::vec3(10,50,-20);
+		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 		glUniform1i(TextureIDs, 0);
 
-		drawEnvironment();
-	
+		car->translateObject(control->getCarPosition());
+		car->rotateObject(control->getCarDirection());
+
+		tire1->setRotationSpeed(control->getRotationSpeed());
+		tire1->setSteering(glm::vec3(control->getSteering(),0,0));
+		tire2->setRotationSpeed(control->getRotationSpeed());
+		tire2->setSteering(glm::vec3(control->getSteering(),0,0));
+		tire3->setRotationSpeed(control->getRotationSpeed());
+		tire4->setRotationSpeed(control->getRotationSpeed());
+
+		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
+		
+		if((glm::distance(car->getPosition(), box1->getPosition()) < 1.0f || glm::distance(car->getPosition(), box2->getPosition()) < 1.0f) && !playSound) {
+			playSound = true;
+			control->setCarSpeed(-1.0f);
+			s->playSound();
+		} else if (playSound && currentTime - lastTime > 0.9f) {
+			playSound = false;
+		}
+
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
 			std::cerr << "Opengl error " << error << ": " << (const char*) gluErrorString(error) << std::endl;
 
-		// Swap buffers
+		char text[256];
+		if(carMoved || control->getCarSpeed() != 0) {
+			if(!carMoved) {
+				carMoved = true;
+				startTime = -glfwGetTime();
+			}
+
+			sprintf(text,"%.2f sec", startTime + glfwGetTime());
+			printText2D(text, 10, 550, 25);
+		}
+		if(control->getCarSpeed() * 60 < 0.5) {
+			sprintf(text,"%.1f km/h", 0.0f );
+			printText2D(text, 10, 520, 25);
+		} else {
+			sprintf(text,"%.1f km/h", control->getCarSpeed() * 30 );
+			printText2D(text, 10, 520, 25);
+		}
+
+		sprintf(text,"%.2f Last Lap Time", bestLap );
+		printText2D(text, 10, 500, 14);
+
+		checkLapTime();
+
 		glfwSwapBuffers();
-	} // Check if the ESC key was pressed or the window was closed
+	} 
 	while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
 		   glfwGetWindowParam( GLFW_OPENED ) );
 }
@@ -149,7 +208,7 @@ void Game::initGLEW() {
 		fprintf(stderr, "Failed to initialize GLEW\n");
 	}
 
-	glfwSetWindowTitle( "Peter Test OpenGL" );
+	glfwSetWindowTitle( "Peter Heinen RaceGame OpenGL" );
 
 	// Ensure we can capture the escape key being pressed below
 	glfwEnable( GLFW_STICKY_KEYS );
@@ -161,15 +220,105 @@ void Game::initGLEW() {
 }
 
 void Game::setGlParameters() {
-	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
-	// Accept fragment if it closer to the camera than the former one
 	glDepthFunc(GL_LESS); 
  
-	// Cull triangles which normal is not towards the camera
 	glEnable(GL_CULL_FACE);
+
+	glfwSwapInterval(1);
 
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
+}
+
+void Game::buildGameObjects() {
+	Texture* tex = new Texture();
+	tex->loadBMP_custom("src/resources/truck_color_cleantest.bmp");
+	Texture* towerTex = new Texture();
+	towerTex->loadBMP_custom("src/resources/bricks.bmp");
+	
+	Mesh* tireMesh = new Mesh();
+	tireMesh->load("src/resources/cartirefix.obj");
+	Mesh* carMesh = new Mesh();
+	carMesh->load("src/resources/car.obj");
+	Mesh* towerMesh = new Mesh();
+	towerMesh->load("src/resources/cube.obj");
+	 
+	float height = 0.02f;
+
+	car = new GameObject("Car", vec3(0, height, 0), 1);
+	car->init(shaders[NORMAL]);
+	car->setTexture(*tex);
+	car->setMesh(carMesh);
+
+	tire1 = new GameObject("RightFrontTire", vec3(-0.15f, height + 0.06f, 0.33f), 2.5f, true, vec3(0,0,0));
+	tire1->init(shaders[NORMAL]);
+	tire1->setTexture(*tex);
+	tire1->setMesh(tireMesh);
+	
+	tire2 = new GameObject("LeftFrontTire", vec3(0.15f, height + 0.06f, 0.33f), 2.5f, true, vec3(0,0,pie));
+	tire2->init(shaders[NORMAL]);
+	tire2->setTexture(*tex);
+	tire2->setMesh(tireMesh);
+
+	tire3 = new GameObject("RightBackTire", vec3(-0.15f, height + 0.06f, -0.27f), 2.70f);
+	tire3->init(shaders[NORMAL]);
+	tire3->setTexture(*tex);
+	tire3->setMesh(tireMesh);
+
+	tire4 = new GameObject("LeftBackTire", vec3(0.15f, height + 0.06f, -0.27f), 2.70f, false, vec3(0,0,pie));
+	tire4->init(shaders[NORMAL]);
+	tire4->setTexture(*tex);
+	tire4->setMesh(tireMesh);
+
+	box1 = new GameObject("Box1", vec3(6, 0.2f, 4), 0.5f);
+	box1->init(shaders[NORMAL]);
+	box1->setTexture(*towerTex);
+	box1->setMesh(towerMesh);
+
+	box2 = new GameObject("Box2", vec3(6, 0.2f, -4), 0.5f);
+	box2->init(shaders[NORMAL]);
+	box2->setTexture(*towerTex);
+	box2->setMesh(towerMesh);
+	
+	tire1->setParent(*car);
+	tire2->setParent(*car);
+	tire3->setParent(*car);
+	tire4->setParent(*car);
+
+	tire1->setTireBehaviour();
+	tire2->setTireBehaviour();
+	tire3->setTireBehaviour();
+	tire4->setTireBehaviour();
+
+	renderer = new Renderer();
+	renderer->addObjects(*car);
+	renderer->addObjects(*tire1);
+	renderer->addObjects(*tire2);
+	renderer->addObjects(*tire3);
+	renderer->addObjects(*tire4);
+	renderer->addObjects(*box1);
+	renderer->addObjects(*box2);
+}
+
+void Game::initCheckPoints() {
+	checkpoints[CHECK1] = glm::vec3(-13.5, 0, 6);
+	checkpoints[CHECK2] = glm::vec3(-0.25, 0, 12.6);
+	checkpoints[CHECK3] = glm::vec3(12.25, 0, 7.25);
+	checkpoints[CHECK4] = glm::vec3(11.75, 0, -9.50);
+	checkpoints[CHECK5] = glm::vec3(-13.25, 0, -7.65);
+	checkpoints[CHECK6] = glm::vec3(3.75, 0, -0.95);
+}
+
+void Game::checkLapTime() {
+	if(checkIndex > 5) {
+		checkIndex = 0;
+		bestLap = startTime + glfwGetTime();
+		startTime = -glfwGetTime();
+	} 
+
+	if(glm::distance(car->getPosition(), checkpoints[checkIndex]) < 3.0f) {
+		checkIndex += 1;
+	}
 }

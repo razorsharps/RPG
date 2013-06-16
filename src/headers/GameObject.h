@@ -1,44 +1,76 @@
+#pragma once
+
 // Include standard headers
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
 #include <iostream>
- 
-// Include GLEW
-#include <GL/glew.h>
- 
-// Include GLFW
-#include <GL/glfw.h>
 
-#include "../headers/Game.h"
-#include "../headers/Shader.h"
-#include "../headers/Texture.h"
+#include <GL/glew.h>
+#include <GL/glfw.h>
+#include <glm/glm.hpp>
+#include <vector>
+#include <algorithm>
+
+#include <glm/gtc/quaternion.hpp>
+
 #include "../headers/objloader.h"
-#include "../headers/vboindexer.h"
-#include "../headers/functions.h"
-#include "../headers/controls.h"
 #include "../headers/Mesh.h"
+
+class Mesh;
 
 class GameObject {
 	private:
 		std::string name;
-		GameObject* parent;
-		glm::mat4 transform;
+		
+		GameObject* _parent;
 
-		Mesh * mesh;
+		float rotationSpeed;
+
+		glm::vec3 position;
+		glm::vec3 orientation;
+		glm::vec3 scaling;
+		glm::vec3 steering;
+
+		bool steerable;
+		bool tireBehaviour;
+
 		Texture * colorMap;
 
+		GLuint vertexPosition_modelspaceID;
+		GLuint vertexUVID;
+		GLuint vertexNormal_modelspaceID;
 	public:
-		GameObject(std::string aName = NULL, glm::vec3 aPosition = glm::vec3( 0.0f, 0.0f, 0.0f ));
+		GameObject(std::string aName, glm::vec3 aPosition, float scale, bool steer = false, glm::vec3 orientation = glm::vec3(0,0,0));
 		virtual ~GameObject();
 
-		void translate(glm::vec3 translation);
-		void rotate( float angle, glm::vec3 axis );
+		void translateObject(glm::vec3 translation);
+		void rotateObject(glm::vec3 axis );
+		void scaleObject(glm::vec3 scale);
 
-		glm::vec3 getLocation();
+		void render();
+		void init(GLuint shader);
 
 		const std::string getName();
 
-		void setTexture(Texture* tex);
+		bool hasParent();
+		bool hasTireBehaviour();
+		bool isSteering();
+
+		glm::vec3 getPosition();
+		glm::vec3 getOrientation();
+		glm::vec3 GameObject::getSteering();
+		glm::vec3 getScaling();
+		glm::quat getOrientationQuat();
+		float getRotationSpeed();
+		GameObject* getParent();
+
+		void setTexture(Texture& tex);
 		void setMesh(Mesh* mes);
+		void setParent(GameObject& gameObject);
+		void setTireBehaviour();
+		void setRotationSpeed(float speed);
+		void setSteering(glm::vec3 steer);
+
+		Mesh * mesh;
 };
