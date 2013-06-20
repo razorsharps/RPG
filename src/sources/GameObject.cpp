@@ -1,6 +1,6 @@
 #include "../headers/GameObject.h"
 
-GameObject::GameObject(std::string _name, glm::vec3 aPosition, float scale, bool steer, glm::vec3 rotation) {
+GameObject::GameObject(std::string _name, glm::vec3 aPosition, glm::vec3 scale, bool steer, glm::vec3 rotation) {
 	name = _name;
 	steerable = steer;
 	
@@ -10,7 +10,7 @@ GameObject::GameObject(std::string _name, glm::vec3 aPosition, float scale, bool
 
 	rotateObject(rotation);
 	translateObject(aPosition);
-	scaleObject(glm::vec3(scale,scale,scale));
+	scaleObject(scale);
 }
 
 GameObject::~GameObject() {

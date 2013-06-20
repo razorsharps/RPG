@@ -41,7 +41,7 @@ class GameObject {
 		GLuint vertexUVID;
 		GLuint vertexNormal_modelspaceID;
 	public:
-		GameObject(std::string aName, glm::vec3 aPosition, float scale, bool steer = false, glm::vec3 orientation = glm::vec3(0,0,0));
+		GameObject(std::string aName, glm::vec3 aPosition, glm::vec3 scale, bool steer = false, glm::vec3 orientation = glm::vec3(0,0,0));
 		virtual ~GameObject();
 
 		void translateObject(glm::vec3 translation);

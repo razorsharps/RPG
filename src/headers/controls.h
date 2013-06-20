@@ -29,18 +29,18 @@ class Controls {
 	public:
 		Controls();
 		void updateCamera();
-		void updateCar();
+		void update();
 
 		glm::mat4 getViewMatrix();
 		glm::mat4 getProjectionMatrix();
 
+		glm::vec3 getCameraPosition();
 		glm::vec3 getPosition();
-		glm::vec3 getCarPosition();
-		glm::vec3 getCarDirection();
+		glm::vec3 getDirection();
 
 		float getRotationSpeed();
-		float getCarSpeed();
+		float getSpeed();
 		float getSteering();
 
-		void setCarSpeed(float accel);
+		void setSpeed(float accel);
 };

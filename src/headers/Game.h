@@ -34,8 +34,7 @@ class Game {
 
 		Renderer* renderer;
 
-		GameObject *car, *tire1, *tire2, *tire3, *tire4;
-		GameObject *box1, *box2;
+		GameObject *halo, *walls, *door1, *door2, *door3, *door4;
 
 		double startTime;
 
@@ -53,12 +52,9 @@ class Game {
 
 		void initGLFW();
 		void initGLEW();
-		void initCheckPoints();
 		
 		void setGlParameters();
 		void buildGameObjects();
-
-		void checkLapTime();
 
 		void build();
 		void run();
