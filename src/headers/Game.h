@@ -35,7 +35,8 @@ class Game {
 
 		Renderer* renderer;
 
-		GameObject *halo, *walls, *door1, *door2, *door3, *door4;
+		GameObject *halo, *walls;
+		Door *door1, *door2, *door3 , *door4;
 
 		double startTime;
 

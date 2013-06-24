@@ -206,7 +206,7 @@ void Game::initGLEW() {
 		fprintf(stderr, "Failed to initialize GLEW\n");
 	}
 
-	glfwSetWindowTitle( "Peter Heinen & Nick Veldhorst RPG OpenGL" );
+	glfwSetWindowTitle( "Peter Heinen & Nick Velthorst RPG OpenGL" );
 
 	// Ensure we can capture the escape key being pressed below
 	glfwEnable( GLFW_STICKY_KEYS );
@@ -255,22 +255,22 @@ void Game::buildGameObjects() {
 	walls->setTexture(*towerTex);
 	walls->setMesh(towerMesh);
 
-	door1 = new GameObject("Door1", glm::vec3(0, 0, 8), glm::vec3(0.1f, 3, 5));
+	door1 = new Door("Door1", glm::vec3(0, 0, 8), glm::vec3(0.1f, 3, 5));
 	door1->init(shaders[NORMAL]);
 	door1->setTexture(*doorTex);
 	door1->setMesh(doorMesh);
 
-	door2 = new GameObject("Door2", glm::vec3(0, 0, -12.3f), glm::vec3(0.1f, 3, 5));
+	door2 = new Door("Door2", glm::vec3(0, 0, -12.3f), glm::vec3(0.1f, 3, 5));
 	door2->init(shaders[NORMAL]);
 	door2->setTexture(*doorTex);
 	door2->setMesh(doorMesh);
 
-	door3 = new GameObject("Door3", glm::vec3(8, 0, 0), glm::vec3(5, 3, 0.1f));
+	door3 = new Door("Door3", glm::vec3(8, 0, 0), glm::vec3(5, 3, 0.1f));
 	door3->init(shaders[NORMAL]);
 	door3->setTexture(*doorTex);
 	door3->setMesh(doorMesh);
 
-	door4 = new GameObject("Door4", glm::vec3(-12.3f, 0, 0), glm::vec3(5, 3, 0.1f));
+	door4 = new Door("Door4", glm::vec3(-12.3f, 0, 0), glm::vec3(5, 3, 0.1f));
 	door4->init(shaders[NORMAL]);
 	door4->setTexture(*doorTex);
 	door4->setMesh(doorMesh);

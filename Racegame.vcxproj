@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\sources\Controls.cpp" />
+    <ClCompile Include="src\sources\Door.cpp" />
     <ClCompile Include="src\sources\Game.cpp" />
     <ClCompile Include="src\sources\GameObject.cpp" />
     <ClCompile Include="src\sources\Mesh.cpp" />
@@ -34,7 +35,9 @@
     <ClCompile Include="windows\Racegame\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\headers\Door.h" />
     <ClInclude Include="src\headers\Element.h" />
+    <ClInclude Include="src\headers\CollisionVisitor.h" />
     <ClInclude Include="src\headers\RenderVisitor.h" />
     <ClInclude Include="src\headers\Visitor.h" />
     <ClInclude Include="src\headers\UpdateVisitor.h" />
