@@ -66,7 +66,7 @@ char* Sound::loadWAV(const char* fn,int& chan,int& samplerate,int& bps,int& size
 
 void Sound::init() {
 	int channel, sampleRate, bps, size;
-	char* data = loadWAV("C:/Users/Peter/Documents/GitHub/Racegame/src/resources/goodCrash.wav",channel,sampleRate,bps,size);
+	char* data = loadWAV("src/resources/goodCrash.wav",channel,sampleRate,bps,size);
 	
     ALCdevice* device=alcOpenDevice(NULL);
     if(device==NULL)
