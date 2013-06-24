@@ -142,3 +142,7 @@ float Controls::getSpeed() {
 void Controls::setSpeed(float accel) {
 	acceleration = accel;
 }
+
+void Controls::accept(Visitor &v) {
+	v.visit(this);
+}

@@ -157,3 +157,7 @@ void GameObject::render() {
 		(void*)0          
 	);
 }
+
+void GameObject::accept(Visitor &v) {
+	v.visit(this);
+}

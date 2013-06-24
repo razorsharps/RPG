@@ -87,8 +87,9 @@ void Game::run() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Compute the MVP matrix from keyboard and mouse input
-		control->update();
-		control->updateCamera();
+		control->accept(updateVisitor); 
+		//control->update();
+		//control->updateCamera();
 
 		// Use our shader
 		glUseProgram(shaders[SKYBOX]);

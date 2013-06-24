@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Racegame", "Racegame.vcxproj", "{53AB0362-CBB2-4A7A-84B1-4C2A49CFEEF9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VisitorPattern", "..\VisitorPattern\VisitorPattern.vcxproj", "{1E44043E-503E-4AA4-A368-DAD54690A481}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,12 +19,6 @@ Global
 		{53AB0362-CBB2-4A7A-84B1-4C2A49CFEEF9}.Release|Win32.Build.0 = Release|Win32
 		{53AB0362-CBB2-4A7A-84B1-4C2A49CFEEF9}.Release|x64.ActiveCfg = Release|x64
 		{53AB0362-CBB2-4A7A-84B1-4C2A49CFEEF9}.Release|x64.Build.0 = Release|x64
-		{1E44043E-503E-4AA4-A368-DAD54690A481}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1E44043E-503E-4AA4-A368-DAD54690A481}.Debug|Win32.Build.0 = Debug|Win32
-		{1E44043E-503E-4AA4-A368-DAD54690A481}.Debug|x64.ActiveCfg = Debug|Win32
-		{1E44043E-503E-4AA4-A368-DAD54690A481}.Release|Win32.ActiveCfg = Release|Win32
-		{1E44043E-503E-4AA4-A368-DAD54690A481}.Release|Win32.Build.0 = Release|Win32
-		{1E44043E-503E-4AA4-A368-DAD54690A481}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

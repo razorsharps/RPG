@@ -34,6 +34,10 @@
     <ClCompile Include="windows\Racegame\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\headers\Element.h" />
+    <ClInclude Include="src\headers\RenderVisitor.h" />
+    <ClInclude Include="src\headers\Visitor.h" />
+    <ClInclude Include="src\headers\UpdateVisitor.h" />
     <ClInclude Include="src\headers\Controls.h" />
     <ClInclude Include="src\headers\Environment.h" />
     <ClInclude Include="src\headers\Game.h" />

@@ -17,14 +17,16 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+// Include Visitors
+#include "RenderVisitor.h"
 class GameObject;
 
 class Renderer {
 
 	private:
 		std::vector<GameObject*> gameObjects;
-
-	public:
+		RenderVisitor renderVisitor;
+		public:
 		Renderer();
 		virtual ~Renderer();
 

@@ -14,12 +14,13 @@
 
 #include <glm/gtc/quaternion.hpp>
 
-#include "../headers/objloader.h"
-#include "../headers/Mesh.h"
+#include "objloader.h"
+#include "Mesh.h"
 
+#include "Element.h"
 class Mesh;
 
-class GameObject {
+class GameObject : public Element {
 	private:
 		std::string name;
 		
@@ -51,6 +52,7 @@ class GameObject {
 		void render();
 		void init(GLuint shader);
 
+		void accept(Visitor &v);
 		const std::string getName();
 
 		bool hasParent();

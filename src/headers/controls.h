@@ -15,9 +15,10 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtx/norm.hpp>
 
+#include "Element.h"
 using namespace glm;
 
-class Controls {
+class Controls : public Element {
 	private:
 		glm::mat4 ViewMatrix;
 		glm::mat4 ProjectionMatrix;
@@ -30,7 +31,7 @@ class Controls {
 		Controls();
 		void updateCamera();
 		void update();
-
+		void accept(Visitor &v);
 		glm::mat4 getViewMatrix();
 		glm::mat4 getProjectionMatrix();
 
@@ -43,4 +44,5 @@ class Controls {
 		float getSteering();
 
 		void setSpeed(float accel);
+
 };

@@ -15,6 +15,7 @@
 #include "../headers/Renderer.h"
 #include "../headers/text2D.h"
 #include "../headers/Sound.h"
+#include "../headers/UpdateVisitor.h"
 
 class Game {
 	enum {NORMAL = 0, SKYBOX};
@@ -44,6 +45,8 @@ class Game {
 
 		Environment *environment;
 		Controls* control;
+
+		UpdateVisitor updateVisitor;
 
 		float pie;
 	public:
