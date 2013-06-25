@@ -243,6 +243,7 @@ void Game::buildGameObjects() {
 	renderer = new Renderer();
 
 	halo = go.at(0);
+
 	collision  = new Collision(halo);
 	for(GameObject* g : go) {
 		g->init(shaders[NORMAL]);
