@@ -28,7 +28,7 @@ class Director
 			builder = newBuilder;
 		}
  
-		vector<GameObject*> getGameObject()
+		vector<GameObject*> getGameObject(GLuint shader)
 		{
 			string line;
 			ifstream myfile ("src/headers/level.txt");
@@ -48,12 +48,17 @@ class Director
 						tokens.push_back(token);
 
 					GameObject* gameObject = new GameObject();
+					gameObject->init(shader);
 			
 					gameObject->name = tokens.at(0);
 					gameObject->setMesh(builder->getMesh(tokens.at(1).c_str()));
 					gameObject->setTexture(builder->getTexture(tokens.at(2).c_str()));
 					gameObject->position = glm::vec3(atof(tokens.at(3).c_str()), atof(tokens.at(4).c_str()), atof(tokens.at(5).c_str()));
 					gameObject->scaling = glm::vec3(atof(tokens.at(6).c_str()), atof(tokens.at(7).c_str()), atof(tokens.at(8).c_str()));
+
+					if(gameObject->name == "Door1")
+						gameObject->collisionDistance = 5;
+
 
 					gameObjectList.push_back(gameObject);
 				}

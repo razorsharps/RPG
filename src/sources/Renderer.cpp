@@ -48,8 +48,8 @@ void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, G
 		glUniformMatrix4fv(matrixid, 1, GL_FALSE, &MVP[0][0]);
 		glUniformMatrix4fv(modelmatrixid, 1, GL_FALSE, &ModelMatrix[0][0]);
 		glUniformMatrix4fv(viewmatrixid, 1, GL_FALSE, &ViewMatrix[0][0]);	
-		//(*it)->accept(renderVisitor);
-		(*it)->render();
+		(*it)->accept(renderVisitor);
+		//(*it)->render();
 	}
 }
 

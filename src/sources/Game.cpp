@@ -137,7 +137,7 @@ void Game::run() {
 
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
 		
-	//	collision->update();
+		collision->update();
 		/*if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
 /*		if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
 >>>>>>> af0375e67d4e64fd7dc4fab8fa92b511711ec6bc
@@ -238,15 +238,16 @@ void Game::buildGameObjects() {
 	Director dir;
 	ObjectBuilder ob;
 	dir.setBuilder(&ob);
-	vector<GameObject*> go = dir.getGameObject();
+	vector<GameObject*> go = dir.getGameObject(shaders[NORMAL]);
 	
 	renderer = new Renderer();
 
 	halo = go.at(0);
 
 	collision  = new Collision(halo);
+
 	for(GameObject* g : go) {
-		g->init(shaders[NORMAL]);
+		collision->addObjects(g);
 		renderer->addObjects(g);
 	}
 }
