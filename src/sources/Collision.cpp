@@ -3,6 +3,7 @@
  
 // Include GLFW
 #include <GL/glfw.h>
+#include "../headers/Door.h"
 
 
 Collision::Collision(GameObject * aHalo)
@@ -25,8 +26,12 @@ void Collision::update() {
 	for(iter = colliders->begin(); iter != colliders->end(); ++iter) {
 		
 		if((glm::distance(halo->getPosition(), (*iter)->getPosition()) < (*iter)->collisionDistance) ) {
-			std::cout << "Collided: " << halo->getName() << " to " << (*iter)->getName() << std::endl;
-			halo->onCollide(*iter);
+			Door * d = dynamic_cast<Door*>(*iter);
+			if( d != 0) {
+				d->accept(cv);
+			} else {
+				(*iter)->accept(cv);
+			}
 		}
 	}
 			//	playSound = true;

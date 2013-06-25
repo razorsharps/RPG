@@ -21,5 +21,11 @@ public:
 		e->render();
 	}
 
+	/*
+	void visit(Key *e) {
+		std::cout << "key"<< std::endl;
+		e->onCollision();
+	}
+	*/
 };
 

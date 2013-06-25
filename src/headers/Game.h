@@ -12,6 +12,7 @@
 #include "../headers/Environment.h"
 #include "../headers/controls.h"
 #include "../headers/GameObject.h"
+#include "../headers/Door.h"
 #include "../headers/Renderer.h"
 #include "../headers/text2D.h"
 #include "../headers/Sound.h"

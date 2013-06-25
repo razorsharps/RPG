@@ -137,7 +137,7 @@ void Game::run() {
 
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
 		
-	//	collision->update();
+		collision->update();
 		/*if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
 /*		if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
 >>>>>>> af0375e67d4e64fd7dc4fab8fa92b511711ec6bc
@@ -235,78 +235,21 @@ void Game::setGlParameters() {
 }
 
 void Game::buildGameObjects() {
-	Texture* tex = new Texture();
-	tex->loadBMP_custom("src/resources/halo.bmp");
-	Texture* towerTex = new Texture();
-	towerTex->loadBMP_custom("src/resources/bricks.bmp");
-	Texture* doorTex = new Texture();
-	doorTex->loadBMP_custom("src/resources/door.bmp");
 	
-	Mesh* haloMesh = new Mesh();
-	haloMesh->load("src/resources/Halo.obj");
-	Mesh* towerMesh = new Mesh();
-	towerMesh->load("src/resources/Walls.obj");
-	Mesh* doorMesh = new Mesh();
-	doorMesh->load("src/resources/cube.obj");
-
-	halo = new GameObject("HaloCharacter", glm::vec3(0, 0, 0), glm::vec3(0.02f));
-	halo->init(shaders[NORMAL]);
-	halo->setTexture(*tex);
-	halo->setMesh(haloMesh);
-
-	walls = new GameObject("Walls", glm::vec3(0, 0, 0), glm::vec3(0.8f));
-	walls->init(shaders[NORMAL]);
-	walls->setTexture(*towerTex);
-	walls->setMesh(towerMesh);
-
-	door1 = new Door("Door1", glm::vec3(0, 0, 8), glm::vec3(0.1f, 3, 5));
-	door1->init(shaders[NORMAL]);
-	door1->setTexture(*doorTex);
-	door1->setMesh(doorMesh);
-
-	door2 = new Door("Door2", glm::vec3(0, 0, -12.3f), glm::vec3(0.1f, 3, 5));
-	door2->init(shaders[NORMAL]);
-	door2->setTexture(*doorTex);
-	door2->setMesh(doorMesh);
-
-	door3 = new Door("Door3", glm::vec3(8, 0, 0), glm::vec3(5, 3, 0.1f));
-	door3->init(shaders[NORMAL]);
-	door3->setTexture(*doorTex);
-	door3->setMesh(doorMesh);
-
-	door4 = new Door("Door4", glm::vec3(-12.3f, 0, 0), glm::vec3(5, 3, 0.1f));
-	door4->init(shaders[NORMAL]);
-	door4->setTexture(*doorTex);
-	door4->setMesh(doorMesh);
-
-
 	Director dir;
 	ObjectBuilder ob;
 	dir.setBuilder(&ob);
-	vector<GameObject*> go = dir.getGameObject();
+	vector<GameObject*> go = dir.getGameObject(shaders[NORMAL]);
+	
+	renderer = new Renderer();
 	
 	
-	GameObject * halo2 = go.at(0);
-	halo2->init(shaders[NORMAL]);
-	/*
 	halo = go.at(0);
 	collision  = new Collision(halo);
+	renderer->addObjects(halo);
 	for(GameObject* g : go) {
-		g->init(shaders[NORMAL]);
-		renderer->addObjects(*g);
+		collision->addObjects(g);
+		renderer->addObjects(g);
 	}
-	*/
-	renderer = new Renderer();
-	renderer->addObjects(*halo);
-	renderer->addObjects(*halo2);
-	//std::cout << "halo," << halo->position.x << " , " << halo->position.y << "," << halo->position.z << std::endl;
-	//std::cout << "halo2," << halo2->position.x << " , " << halo2->position.y << "," << halo2->position.z << std::endl;
-//	std::cout << "halo," << halo->orientation.x << " , " << halo->orientation.y << "," << halo->orientation.z << std::endl;
-//	std::cout << "halo2," << halo2->orientation.x << " , " << halo2->orientation.y << "," << halo2->orientation.z << std::endl;
-	renderer->addObjects(*walls);
-	renderer->addObjects(*door1);
-	renderer->addObjects(*door2);
-	renderer->addObjects(*door3);
-	renderer->addObjects(*door4);
 
 }

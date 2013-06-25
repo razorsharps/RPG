@@ -19,6 +19,6 @@ void Door::render(){
 }
 */
 
-void Door::onCollide() {
+void Door::onCollision() {
 	std::cout << "Door collided" << std::endl;
 }

@@ -10,5 +10,5 @@ public:
 	~Door();
 	void accept(Visitor &v);
 //	void render();
-	void onCollide();
+	void onCollision();
 };

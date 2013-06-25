@@ -28,7 +28,7 @@ class Director
 			builder = newBuilder;
 		}
  
-		vector<GameObject*> getGameObject()
+		vector<GameObject*> getGameObject(GLuint shader)
 		{
 			string line;
 			ifstream myfile ("src/headers/level.txt");
@@ -48,16 +48,22 @@ class Director
 						tokens.push_back(token);
 
 					GameObject* gameObject = new GameObject();
+					gameObject->init(shader);
 			
 					gameObject->name = tokens.at(0);
-					gameObject->steerable = false;
+					//gameObject->steerable = false;
 
 					gameObject->setMesh(builder->getMesh(tokens.at(1).c_str()));
 					gameObject->setTexture(builder->getTexture(tokens.at(2).c_str()));
 					gameObject->position = glm::vec3(atof(tokens.at(3).c_str()), atof(tokens.at(4).c_str()), atof(tokens.at(5).c_str()));
 					gameObject->scaling = glm::vec3(atof(tokens.at(6).c_str()), atof(tokens.at(7).c_str()), atof(tokens.at(8).c_str()));
-					gameObject->orientation =  glm::vec3(0.0f,0.0f,0.0f);
-					gameObject->collisionDistance = 0.0f;
+
+					if(gameObject->name == "Door1")
+						gameObject->collisionDistance = 5;
+					if(gameObject->name == "HaloCharacter") {
+						gameObject->steerable = true;
+					}
+
 					gameObjectList.push_back(gameObject);
 				}
 				myfile.close();
