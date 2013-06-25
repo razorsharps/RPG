@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\sources\Collision.cpp" />
     <ClCompile Include="src\sources\Controls.cpp" />
     <ClCompile Include="src\sources\Door.cpp" />
     <ClCompile Include="src\sources\Game.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="src\headers\Door.h" />
     <ClInclude Include="src\headers\Element.h" />
     <ClInclude Include="src\headers\CollisionVisitor.h" />
+    <ClInclude Include="src\headers\Collision.h" />
     <ClInclude Include="src\headers\RenderVisitor.h" />
     <ClInclude Include="src\headers\Visitor.h" />
     <ClInclude Include="src\headers\UpdateVisitor.h" />

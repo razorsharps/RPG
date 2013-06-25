@@ -136,13 +136,14 @@ void Game::run() {
 
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
 		
-		if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
+		collision->update();
+		/*if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
 			playSound = true;
 			control->setSpeed(-1.0f);
 			s->playSound();
 		} else if (playSound && currentTime - lastTime > 0.9f) {
 			playSound = false;
-		}
+		}*/
 
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
@@ -255,7 +256,7 @@ void Game::buildGameObjects() {
 	walls->setTexture(*towerTex);
 	walls->setMesh(towerMesh);
 
-	door1 = new Door("Door1", glm::vec3(0, 0, 8), glm::vec3(0.1f, 3, 5));
+	door1 = new Door("Door1", glm::vec3(0, 0, 8), glm::vec3(0.1f, 3, 5),false,glm::vec3(0,0,0),1.0f);
 	door1->init(shaders[NORMAL]);
 	door1->setTexture(*doorTex);
 	door1->setMesh(doorMesh);
@@ -282,4 +283,13 @@ void Game::buildGameObjects() {
 	renderer->addObjects(*door2);
 	renderer->addObjects(*door3);
 	renderer->addObjects(*door4);
+	
+	collision = new Collision(halo);
+//	collision->addObjects(halo);
+	collision->addObjects(walls);
+	collision->addObjects(door1);
+	collision->addObjects(door2);
+	collision->addObjects(door3);
+	collision->addObjects(door4);
+
 }

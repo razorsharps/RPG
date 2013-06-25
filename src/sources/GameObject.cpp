@@ -1,9 +1,11 @@
 #include "../headers/GameObject.h"
+#include "../headers/Door.h"
 
-GameObject::GameObject(std::string _name, glm::vec3 aPosition, glm::vec3 scale, bool steer, glm::vec3 rotation) {
+GameObject::GameObject(std::string _name, glm::vec3 aPosition, glm::vec3 scale, bool steer, glm::vec3 rotation, float aCollisionDistance) {
 	name = _name;
 	steerable = steer;
-	
+	collisionDistance = aCollisionDistance;
+
 	_parent = NULL;
 	tireBehaviour = false;
 	rotationSpeed = 0.0f;
@@ -160,4 +162,18 @@ void GameObject::render() {
 
 void GameObject::accept(Visitor &v) {
 	v.visit(this);
+}
+
+void GameObject::onCollide(GameObject * anObject) {
+	
+	Door * d = dynamic_cast<Door*>(anObject);
+	if( d != 0) {
+		std::cout << " i collided with a door" << std::endl;
+		return;
+	}
+	//Key * k = dynamic_cast<Key*>(anObject);
+	//if (k !=0 ) {
+		//std::cout << "!!!Got a key!!!" << std::endl;
+		//return;
+	//}
 }
