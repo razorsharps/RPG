@@ -26,11 +26,17 @@ void Collision::update() {
 	for(iter = colliders->begin(); iter != colliders->end(); ++iter) {
 		
 		if((glm::distance(halo->getPosition(), (*iter)->getPosition()) < (*iter)->collisionDistance) ) {
+			std::cout << (*iter)->name << std::endl;
 			Door * d = dynamic_cast<Door*>(*iter);
 			if( d != 0) {
 				d->accept(cv);
 			} else {
-				(*iter)->accept(cv);
+				Key * k = dynamic_cast<Key*>(*iter);
+				if( k != 0) {
+					k->accept(cv);
+				} else {
+					(*iter)->accept(cv);
+				}
 			}
 		}
 	}

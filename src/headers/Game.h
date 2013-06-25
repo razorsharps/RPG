@@ -33,7 +33,7 @@ class Game {
 		int checkIndex;
 
 		GLuint TextureIDs;
-		GLuint LightID;
+		GLuint LightID1, LightID2;
 
 		Renderer* renderer;
 

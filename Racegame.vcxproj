@@ -24,6 +24,7 @@
     <ClCompile Include="src\sources\Door.cpp" />
     <ClCompile Include="src\sources\Game.cpp" />
     <ClCompile Include="src\sources\GameObject.cpp" />
+    <ClCompile Include="src\sources\Key.cpp" />
     <ClCompile Include="src\sources\Mesh.cpp" />
     <ClCompile Include="src\sources\objloader.cpp" />
     <ClCompile Include="src\sources\Renderer.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="src\headers\Element.h" />
     <ClInclude Include="src\headers\CollisionVisitor.h" />
     <ClInclude Include="src\headers\Collision.h" />
+    <ClInclude Include="src\headers\Key.h" />
     <ClInclude Include="src\headers\RenderVisitor.h" />
     <ClInclude Include="src\headers\Visitor.h" />
     <ClInclude Include="src\headers\UpdateVisitor.h" />

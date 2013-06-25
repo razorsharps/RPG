@@ -1,138 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="src\sources\Collision.cpp" />
+    <ClCompile Include="src\sources\Controls.cpp" />
+    <ClCompile Include="src\sources\Door.cpp" />
+    <ClCompile Include="src\sources\Game.cpp" />
+    <ClCompile Include="src\sources\GameObject.cpp" />
+    <ClCompile Include="src\sources\Mesh.cpp" />
+    <ClCompile Include="src\sources\objloader.cpp" />
+    <ClCompile Include="src\sources\Renderer.cpp" />
+    <ClCompile Include="src\sources\Shader.cpp" />
+    <ClCompile Include="src\sources\Environment.cpp" />
+    <ClCompile Include="src\sources\Sound.cpp" />
+    <ClCompile Include="src\sources\text2D.cpp" />
+    <ClCompile Include="src\sources\Texture.cpp" />
+    <ClCompile Include="src\sources\vboindexer.cpp" />
+    <ClCompile Include="windows\Racegame\main.cpp" />
+    <ClCompile Include="src\sources\Key.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="windows\Racegame\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\objloader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\text2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\vboindexer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Sound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Controls.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Environment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Door.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sources\Collision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="src\headers\Door.h" />
+    <ClInclude Include="src\headers\Element.h" />
+    <ClInclude Include="src\headers\CollisionVisitor.h" />
+    <ClInclude Include="src\headers\Collision.h" />
+    <ClInclude Include="src\headers\RenderVisitor.h" />
+    <ClInclude Include="src\headers\Visitor.h" />
+    <ClInclude Include="src\headers\UpdateVisitor.h" />
+    <ClInclude Include="src\headers\Builder.h" />
+    <ClInclude Include="src\headers\Controls.h" />
+    <ClInclude Include="src\headers\Environment.h" />
+    <ClInclude Include="src\headers\Factory.h" />
+    <ClInclude Include="src\headers\Game.h" />
+    <ClInclude Include="src\headers\GameObject.h" />
+    <ClInclude Include="src\headers\Mesh.h" />
+    <ClInclude Include="src\headers\objloader.h" />
+    <ClInclude Include="src\headers\Renderer.h" />
+    <ClInclude Include="src\headers\Shader.h" />
+    <ClInclude Include="src\headers\Sound.h" />
+    <ClInclude Include="src\headers\text2D.h" />
+    <ClInclude Include="src\headers\Texture.h" />
+    <ClInclude Include="src\headers\Time.h" />
+    <ClInclude Include="src\headers\vboindexer.h" />
+    <ClInclude Include="src\headers\Key.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\headers\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\objloader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\text2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\vboindexer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Environment.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Controls.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\UpdateVisitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Visitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Element.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\RenderVisitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\CollisionVisitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Door.h">
-    <ClInclude Include="src\headers\Time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Factory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Builder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Collision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\shaders\TransformVertexShader.vertexshader" />
-    <None Include="src\shaders\TextureFragmentShader.fragmentshader" />
     <None Include="src\shaders\StandardShading.fragmentshader" />
     <None Include="src\shaders\StandardShading.vertexshader" />
+    <None Include="src\shaders\TextureFragmentShader.fragmentshader" />
     <None Include="src\shaders\TextVertexShader.fragmentshader" />
     <None Include="src\shaders\TextVertexShader.vertexshader" />
+    <None Include="src\shaders\TransformVertexShader.vertexshader" />
   </ItemGroup>
 </Project>

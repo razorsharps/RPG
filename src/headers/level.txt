@@ -1,6 +1,7 @@
 HaloCharacter	src/resources/Halo.obj	src/resources/halo.bmp	0	0	0	0.02f	0.02f	0.02f
 Walls	src/resources/Walls.obj	src/resources/bricks.bmp	0	0	0	0.8f	0.8f	0.8f
-Door1	src/resources/cube.obj	src/resources/bricks.bmp	0	0	8	0.1f	3	5
-Door2	src/resources/cube.obj	src/resources/bricks.bmp	0	0	12.3f	0.1f	3	5
-Door3	src/resources/cube.obj	src/resources/bricks.bmp	8	0	0	5	3	0.1f
-Door4	src/resources/cube.obj	src/resources/bricks.bmp	-12.3f	0	0	5	3	0.1f
+Door	src/resources/cube.obj	src/resources/bricks.bmp	0	0	8	0.1f	3	5
+Door	src/resources/cube.obj	src/resources/bricks.bmp	0	0	12.3f	0.1f	3	5
+Door	src/resources/cube.obj	src/resources/bricks.bmp	8	0	0	5	3	0.1f
+Door	src/resources/cube.obj	src/resources/bricks.bmp	-12.3f	0	0	5	3	0.1f
+Key1	src/resources/Halo.obj	src/resources/bricks.bmp	-2.0f	0	-2.0	0.02f	0.02f	0.02f

@@ -18,4 +18,8 @@ public:
 	void visit (Door *e) {
 		std::cout << "DO NOT USE ME FOR DOOR" << std::endl;
 	}
+
+	void visit (Key *e) {
+		std::cout << "DO NOT USE ME FOR DOOR" << std::endl;
+	}
 };

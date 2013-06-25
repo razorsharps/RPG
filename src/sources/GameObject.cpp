@@ -172,7 +172,7 @@ void GameObject::accept(Visitor &v) {
 }
 
 void GameObject::onCollision() {
-	
+	std::cout << "collision in game object" << std::endl;
 //	Door * d = dynamic_cast<Door*>(anObject);
 //	if( d != 0) {
 //		std::cout << " i collided with a door" << std::endl;

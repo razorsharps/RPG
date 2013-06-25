@@ -4,6 +4,7 @@
 #include <iostream>
 //#include "../headers/GameObject.h"
 #include "../headers/Door.h"
+#include "../headers/Key.h"
 
 class RenderVisitor :
 	public Visitor
@@ -21,11 +22,9 @@ public:
 		e->render();
 	}
 
-	/*
 	void visit(Key *e) {
-		std::cout << "key"<< std::endl;
-		e->onCollision();
+		e->render();
 	}
-	*/
+	
 };
 

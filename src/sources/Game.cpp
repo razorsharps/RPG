@@ -56,7 +56,7 @@ void Game::build() {
 
 	// Get a handle for our "LightPosition" uniform
 	glUseProgram(shaders[NORMAL]);
-	LightID = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspace");
+	LightID1 = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspace");
 }
 
 void Game::run() {
@@ -122,7 +122,7 @@ void Game::run() {
 		glUniformMatrix4fv(handles[VIEWMATRIXID], 1, GL_FALSE, &ViewMatrix[0][0]);
 		
 		glm::vec3 lightPos = glm::vec3(10,50,-20);
-		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
+		glUniform3f(LightID1, lightPos.x, lightPos.y, lightPos.z);
 		glUniform1i(TextureIDs, 0);
 
 		halo->translateObject(control->getPosition());
