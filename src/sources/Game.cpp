@@ -243,6 +243,8 @@ void Game::buildGameObjects() {
 	renderer = new Renderer();
 
 	halo = go.at(0);
+	GameObject * muur = go.at(1);
+	std::cout << muur->scaling.x << "," <<muur->scaling.y << "," << muur->scaling.z << std::endl;
 	collision  = new Collision(halo);
 	for(GameObject* g : go) {
 		g->init(shaders[NORMAL]);

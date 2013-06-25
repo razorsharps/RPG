@@ -54,7 +54,7 @@ class Director
 					gameObject->setTexture(builder->getTexture(tokens.at(2).c_str()));
 					gameObject->position = glm::vec3(atof(tokens.at(3).c_str()), atof(tokens.at(4).c_str()), atof(tokens.at(5).c_str()));
 					gameObject->scaling = glm::vec3(atof(tokens.at(6).c_str()), atof(tokens.at(7).c_str()), atof(tokens.at(8).c_str()));
-
+					gameObject->orientation =  glm::vec3(0.0f,0.0f,0.0f);
 					gameObjectList.push_back(gameObject);
 				}
 				myfile.close();
