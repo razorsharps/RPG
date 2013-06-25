@@ -56,7 +56,7 @@ void Game::build() {
 
 	// Get a handle for our "LightPosition" uniform
 	glUseProgram(shaders[NORMAL]);
-	LightID = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspace");
+	LightID1 = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspace");
 }
 
 void Game::run() {

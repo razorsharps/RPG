@@ -16,19 +16,9 @@ void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, G
 		glm::vec3 position;
 		glm::vec3 scaling;
 
-		/*if((*it)->hasParent()) {
-			rotation	= (*it)->getParent()->getOrientation() + (*it)->getOrientation();
-			position	= (*it)->getParent()->getPosition() + (*it)->getOrientationQuat() * (*it)->getPosition();
-			scaling		= (*it)->getScaling();
-
-			if((*it)->isSteering())
-				rotation	+= (*it)->getSteering();
-		} 
-		else {*/
-			rotation	= (*it)->getOrientation();
-			position	= (*it)->getPosition();
-			scaling		= (*it)->getScaling();
-		//}
+		rotation	= (*it)->getOrientation();
+		position	= (*it)->getPosition();
+		scaling		= (*it)->getScaling();
 
 		// Build the model matrix
 		glm::mat4 RotationMatrix;
@@ -49,7 +39,6 @@ void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, G
 		glUniformMatrix4fv(modelmatrixid, 1, GL_FALSE, &ModelMatrix[0][0]);
 		glUniformMatrix4fv(viewmatrixid, 1, GL_FALSE, &ViewMatrix[0][0]);	
 		(*it)->accept(renderVisitor);
-		//(*it)->render();
 	}
 }
 

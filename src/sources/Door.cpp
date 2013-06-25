@@ -2,6 +2,9 @@
 
 #include "../headers/Door.h";
 
+Door::Door() {
+}
+
 Door::Door(std::string _name, glm::vec3 aPosition, glm::vec3 scale, bool steer, glm::vec3 rotation, float aCollisionDistance) : GameObject(_name,aPosition,scale,steer,rotation, aCollisionDistance) {
 }
 
