@@ -12,6 +12,10 @@ Texture::Texture() {
 
 }
 
+Texture::Texture(const char * imagepath) {
+	loadBMP_custom(imagepath);
+}
+
 Texture::~Texture() {
 
 }

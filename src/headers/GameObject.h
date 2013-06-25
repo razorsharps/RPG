@@ -23,15 +23,12 @@ class Door;
 
 class GameObject : public Element {
 	private:
-		std::string name;
 		
 		GameObject* _parent;
 
 		float rotationSpeed;
 
-		glm::vec3 position;
 		glm::vec3 orientation;
-		glm::vec3 scaling;
 		glm::vec3 steering;
 
 		bool steerable;
@@ -44,7 +41,12 @@ class GameObject : public Element {
 		GLuint vertexNormal_modelspaceID;
 	public:
 		GameObject(std::string aName, glm::vec3 aPosition, glm::vec3 scale, bool steer = false, glm::vec3 orientation = glm::vec3(0,0,0), float collisionDistance = 0.0f);
+		GameObject();
 		virtual ~GameObject();
+		
+		std::string name;
+		glm::vec3 position;
+		glm::vec3 scaling;
 
 		void translateObject(glm::vec3 translation);
 		void rotateObject(glm::vec3 axis );
@@ -68,6 +70,7 @@ class GameObject : public Element {
 		float getRotationSpeed();
 		GameObject* getParent();
 
+		void setTexture(Texture* tex);
 		void setTexture(Texture& tex);
 		void setMesh(Mesh* mes);
 		void setParent(GameObject& gameObject);

@@ -5,6 +5,11 @@ Mesh::Mesh()
 
 }
 
+Mesh::Mesh(const char * fileName)
+{
+	load(fileName);
+}
+
 Mesh::~Mesh()
 {
 

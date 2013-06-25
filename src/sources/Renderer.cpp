@@ -16,7 +16,7 @@ void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, G
 		glm::vec3 position;
 		glm::vec3 scaling;
 
-		if((*it)->hasParent()) {
+		/*if((*it)->hasParent()) {
 			rotation	= (*it)->getParent()->getOrientation() + (*it)->getOrientation();
 			position	= (*it)->getParent()->getPosition() + (*it)->getOrientationQuat() * (*it)->getPosition();
 			scaling		= (*it)->getScaling();
@@ -24,11 +24,11 @@ void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, G
 			if((*it)->isSteering())
 				rotation	+= (*it)->getSteering();
 		} 
-		else {
+		else {*/
 			rotation	= (*it)->getOrientation();
 			position	= (*it)->getPosition();
 			scaling		= (*it)->getScaling();
-		}
+		//}
 
 		// Build the model matrix
 		glm::mat4 RotationMatrix;
@@ -52,6 +52,6 @@ void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, G
 	}
 }
 
-void Renderer::addObjects(GameObject& gameObject) {
-	gameObjects.push_back(&gameObject);
+void Renderer::addObjects(GameObject* gameObject) {
+	gameObjects.push_back(gameObject);
 }

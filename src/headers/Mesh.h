@@ -22,6 +22,7 @@ class Mesh
 
 	public: // functions
 		Mesh();
+		Mesh(const char * fileName);
 		virtual ~Mesh();
 
 		void load( const char * fileName );

@@ -15,6 +15,9 @@ GameObject::GameObject(std::string _name, glm::vec3 aPosition, glm::vec3 scale, 
 	scaleObject(scale);
 }
 
+GameObject::GameObject(){
+}
+
 GameObject::~GameObject() {
 	
 }
@@ -78,6 +81,10 @@ void GameObject::init(GLuint shader) {
 
 void GameObject::setTexture(Texture& tex) {
 	colorMap = &tex;
+}
+
+void GameObject::setTexture(Texture* tex) {
+	colorMap = tex;
 }
 
 void GameObject::setMesh(Mesh* mes) {

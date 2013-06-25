@@ -43,8 +43,10 @@
     <ClInclude Include="src\headers\RenderVisitor.h" />
     <ClInclude Include="src\headers\Visitor.h" />
     <ClInclude Include="src\headers\UpdateVisitor.h" />
+    <ClInclude Include="src\headers\Builder.h" />
     <ClInclude Include="src\headers\Controls.h" />
     <ClInclude Include="src\headers\Environment.h" />
+    <ClInclude Include="src\headers\Factory.h" />
     <ClInclude Include="src\headers\Game.h" />
     <ClInclude Include="src\headers\GameObject.h" />
     <ClInclude Include="src\headers\Mesh.h" />
@@ -54,6 +56,7 @@
     <ClInclude Include="src\headers\Sound.h" />
     <ClInclude Include="src\headers\text2D.h" />
     <ClInclude Include="src\headers\Texture.h" />
+    <ClInclude Include="src\headers\Time.h" />
     <ClInclude Include="src\headers\vboindexer.h" />
   </ItemGroup>
   <ItemGroup>

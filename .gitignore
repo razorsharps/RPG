@@ -5,3 +5,6 @@ Release/
 Racegame.sdf
 Racegame.v11.suo
 Racegame.opensdf
+*.vcxproj
+*.filters
+*.user

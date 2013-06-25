@@ -11,7 +11,8 @@
 #include <GL/glfw.h>
 
 #include "../headers/Game.h"
-
+#include "../headers/Time.h"
+#include "../headers/Builder.h"
 
 Game::Game() {
 	initGLFW();
@@ -60,7 +61,7 @@ void Game::build() {
 
 void Game::run() {
 	// For speed computation
-	double lastTime = glfwGetTime();
+	double lastTime = Time::getInstance().getTime();
 	double lastFrameTime = lastTime;
 
 	int nbFrames = 0;
@@ -72,7 +73,7 @@ void Game::run() {
 
 	do{
 		// Measure speed
-		double currentTime = glfwGetTime();
+		double currentTime = Time::getInstance().getTime();
 		float deltaTime = (float)(currentTime - lastFrameTime); 
 		lastFrameTime = currentTime;
 		nbFrames++;
@@ -136,8 +137,10 @@ void Game::run() {
 
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
 		
-		collision->update();
+	//	collision->update();
 		/*if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
+/*		if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
+>>>>>>> af0375e67d4e64fd7dc4fab8fa92b511711ec6bc
 			playSound = true;
 			control->setSpeed(-1.0f);
 			s->playSound();
@@ -153,10 +156,10 @@ void Game::run() {
 		if(carMoved || control->getSpeed() != 0) {
 			if(!carMoved) {
 				carMoved = true;
-				startTime = -glfwGetTime();
+				startTime = -Time::getInstance().getTime();
 			}
 
-			sprintf(text,"%.2f sec", startTime + glfwGetTime());
+			sprintf(text,"%.2f sec", startTime + Time::getInstance().getTime());
 			printText2D(text, 10, 550, 25);
 		}
 		if(control->getSpeed() * 60 < 0.5) {
@@ -232,64 +235,17 @@ void Game::setGlParameters() {
 }
 
 void Game::buildGameObjects() {
-	Texture* tex = new Texture();
-	tex->loadBMP_custom("src/resources/halo.bmp");
-	Texture* towerTex = new Texture();
-	towerTex->loadBMP_custom("src/resources/bricks.bmp");
-	Texture* doorTex = new Texture();
-	doorTex->loadBMP_custom("src/resources/door.bmp");
-	
-	Mesh* haloMesh = new Mesh();
-	haloMesh->load("src/resources/Halo.obj");
-	Mesh* towerMesh = new Mesh();
-	towerMesh->load("src/resources/Walls.obj");
-	Mesh* doorMesh = new Mesh();
-	doorMesh->load("src/resources/cube.obj");
-
-	halo = new GameObject("HaloCharacter", glm::vec3(0, 0, 0), glm::vec3(0.02f));
-	halo->init(shaders[NORMAL]);
-	halo->setTexture(*tex);
-	halo->setMesh(haloMesh);
-
-	walls = new GameObject("Walls", glm::vec3(0, 0, 0), glm::vec3(0.8f));
-	walls->init(shaders[NORMAL]);
-	walls->setTexture(*towerTex);
-	walls->setMesh(towerMesh);
-
-	door1 = new Door("Door1", glm::vec3(0, 0, 8), glm::vec3(0.1f, 3, 5),false,glm::vec3(0,0,0),1.0f);
-	door1->init(shaders[NORMAL]);
-	door1->setTexture(*doorTex);
-	door1->setMesh(doorMesh);
-
-	door2 = new Door("Door2", glm::vec3(0, 0, -12.3f), glm::vec3(0.1f, 3, 5));
-	door2->init(shaders[NORMAL]);
-	door2->setTexture(*doorTex);
-	door2->setMesh(doorMesh);
-
-	door3 = new Door("Door3", glm::vec3(8, 0, 0), glm::vec3(5, 3, 0.1f));
-	door3->init(shaders[NORMAL]);
-	door3->setTexture(*doorTex);
-	door3->setMesh(doorMesh);
-
-	door4 = new Door("Door4", glm::vec3(-12.3f, 0, 0), glm::vec3(5, 3, 0.1f));
-	door4->init(shaders[NORMAL]);
-	door4->setTexture(*doorTex);
-	door4->setMesh(doorMesh);
+	Director dir;
+	ObjectBuilder ob;
+	dir.setBuilder(&ob);
+	vector<GameObject*> go = dir.getGameObject();
 	
 	renderer = new Renderer();
-	renderer->addObjects(*halo);
-	renderer->addObjects(*walls);
-	renderer->addObjects(*door1);
-	renderer->addObjects(*door2);
-	renderer->addObjects(*door3);
-	renderer->addObjects(*door4);
-	
-	collision = new Collision(halo);
-//	collision->addObjects(halo);
-	collision->addObjects(walls);
-	collision->addObjects(door1);
-	collision->addObjects(door2);
-	collision->addObjects(door3);
-	collision->addObjects(door4);
 
+	halo = go.at(0);
+	collision  = new Collision(halo);
+	for(GameObject* g : go) {
+		g->init(shaders[NORMAL]);
+		renderer->addObjects(g);
+	}
 }

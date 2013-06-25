@@ -6,6 +6,7 @@ class Texture {
 
 	public:
 		Texture();
+		Texture(const char * imagepath);
 		virtual ~Texture();
 
 		GLuint loadBMP_custom(const char * imagepath);

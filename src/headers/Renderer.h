@@ -31,5 +31,5 @@ class Renderer {
 		virtual ~Renderer();
 
 		void renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint matrixid, GLuint modelmatrixid, GLuint viewmatrixid);
-		void addObjects(GameObject& gameObject);
+		void addObjects(GameObject* gameObject);
 };
