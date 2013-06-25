@@ -111,6 +111,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\headers\Door.h">
+    <ClInclude Include="src\headers\Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\headers\Factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\headers\Builder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

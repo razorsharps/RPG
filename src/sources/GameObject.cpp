@@ -1,5 +1,9 @@
 #include "../headers/GameObject.h"
 
+GameObject::GameObject() {
+
+}
+
 GameObject::GameObject(std::string _name, glm::vec3 aPosition, glm::vec3 scale, bool steer, glm::vec3 rotation) {
 	name = _name;
 	steerable = steer;
@@ -76,6 +80,10 @@ void GameObject::init(GLuint shader) {
 
 void GameObject::setTexture(Texture& tex) {
 	colorMap = &tex;
+}
+
+void GameObject::setTexture(Texture* tex) {
+	colorMap = tex;
 }
 
 void GameObject::setMesh(Mesh* mes) {
