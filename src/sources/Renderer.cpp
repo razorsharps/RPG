@@ -53,6 +53,6 @@ void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, G
 	}
 }
 
-void Renderer::addObjects(GameObject* gameObject) {
-	gameObjects.push_back(gameObject);
+void Renderer::addObjects(GameObject& gameObject) {
+	gameObjects.push_back(&gameObject);
 }

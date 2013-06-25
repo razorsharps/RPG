@@ -2,8 +2,8 @@
 
 Controls::Controls() {
 	position = glm::vec3( 0, 1, -1.5f ); 
-	carPosition = glm::vec3(-2.66f, 0, 2.48);
-	carDirection = glm::vec3(-(3.14/2),0,0);
+	carPosition = glm::vec3(0, 0, 0);
+	carDirection = glm::vec3(0,0,0);
 
 	horizontalAngle = 3.1415f;
 	verticalAngle = 0.0f;

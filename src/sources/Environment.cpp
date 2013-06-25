@@ -125,7 +125,7 @@ void Environment::drawEnvironment()
 }
 
 void Environment::drawPlane() {
-	glDisable(GL_LIGHTING);
+/*	glDisable(GL_LIGHTING);
 	glDisable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
 	
@@ -133,7 +133,7 @@ void Environment::drawPlane() {
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);
-	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);*/
 }
 
 void Environment::drawQuad(int skyboxIndex, GLuint vertexbuffer, GLuint uvbuffer) {

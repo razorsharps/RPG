@@ -50,11 +50,14 @@ class Director
 					GameObject* gameObject = new GameObject();
 			
 					gameObject->name = tokens.at(0);
+					gameObject->steerable = false;
+
 					gameObject->setMesh(builder->getMesh(tokens.at(1).c_str()));
 					gameObject->setTexture(builder->getTexture(tokens.at(2).c_str()));
 					gameObject->position = glm::vec3(atof(tokens.at(3).c_str()), atof(tokens.at(4).c_str()), atof(tokens.at(5).c_str()));
 					gameObject->scaling = glm::vec3(atof(tokens.at(6).c_str()), atof(tokens.at(7).c_str()), atof(tokens.at(8).c_str()));
 					gameObject->orientation =  glm::vec3(0.0f,0.0f,0.0f);
+					gameObject->collisionDistance = 0.0f;
 					gameObjectList.push_back(gameObject);
 				}
 				myfile.close();

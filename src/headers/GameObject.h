@@ -22,7 +22,7 @@ class Mesh;
 class Door;
 
 class GameObject : public Element {
-	private:
+	public:
 		
 		GameObject* _parent;
 
