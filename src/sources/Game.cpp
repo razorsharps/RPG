@@ -24,7 +24,9 @@ Game::Game() {
 	carMoved = false;
 	playSound = false;
 	bestLap = 0.0f;
-
+	key1 = false;
+	key2 = false;
+	key3 = false;
 	double startTime = 0.0f;
 	float pie = 3.14f;
 
@@ -129,13 +131,28 @@ void Game::run() {
 		glUniform3f(LightID2, lightPos2.x, lightPos2.y, lightPos2.z);
 		glUniform1i(TextureIDs, 0);
 
-		cout << control->getPosition().x << " " << control->getPosition().y << " "  << control->getPosition().z << " " << endl;
 		halo->translateObject(control->getPosition());
 		halo->rotateObject(control->getDirection());
+
+/*		tire1->setRotationSpeed(control->getRotationSpeed());
+		tire1->setSteering(glm::vec3(control->getSteering(),0,0));
+		tire2->setRotationSpeed(control->getRotationSpeed());
+		tire2->setSteering(glm::vec3(control->getSteering(),0,0));
+		tire3->setRotationSpeed(control->getRotationSpeed());
+		tire4->setRotationSpeed(control->getRotationSpeed());*/
 
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
 		
 		collision->update();
+		/*if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
+/*		if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
+>>>>>>> af0375e67d4e64fd7dc4fab8fa92b511711ec6bc
+			playSound = true;
+			control->setSpeed(-1.0f);
+			s->playSound();
+		} else if (playSound && currentTime - lastTime > 0.9f) {
+			playSound = false;
+		}*/
 
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
@@ -241,4 +258,8 @@ void Game::buildGameObjects() {
 		renderer->addObjects(g);
 	}
 
+}
+
+void Game::foundKey(Key* aKey) {
+	
 }

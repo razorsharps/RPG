@@ -55,17 +55,18 @@ class Director
 
 					if(tokens.at(0) == "Door") {
 						gameObject = new Door();
-						gameObject->init(shader);
-			
-						gameObject->name = tokens.at(0);
-						gameObject->setMesh(builder->getMesh(tokens.at(1).c_str()));
-						gameObject->setTexture(builder->getTexture(tokens.at(2).c_str()));
-						gameObject->position = glm::vec3(atof(tokens.at(3).c_str()), atof(tokens.at(4).c_str()), atof(tokens.at(5).c_str()));
-						gameObject->scaling = glm::vec3(atof(tokens.at(6).c_str()), atof(tokens.at(7).c_str()), atof(tokens.at(8).c_str()));
-						
-						gameObject->collisionDistance = 2.5f;
-
-					} else if (tokens.at(0) == "Key1" ) {
+						Door* d = dynamic_cast<Door*>(gameObject);
+						if (d != 0) {
+							d->init(shader);
+							d->name = tokens.at(0);
+							d->setMesh(builder->getMesh(tokens.at(1).c_str()));
+							d->setTexture(builder->getTexture(tokens.at(2).c_str()));
+							d->position = glm::vec3(atof(tokens.at(3).c_str()), atof(tokens.at(4).c_str()), atof(tokens.at(5).c_str()));
+							d->scaling = glm::vec3(atof(tokens.at(6).c_str()), atof(tokens.at(7).c_str()), atof(tokens.at(8).c_str()));
+							d->key = tokens.at(9);
+							d->collisionDistance = 5.0f;
+						}
+					} else if (tokens.at(0) == "Key1" || tokens.at(0) == "Key2" || tokens.at(0) == "Key3" || tokens.at(0) == "Key4"  ) {
 						std::cout << "building key" <<std::endl;
 						gameObject = new Key();
 						gameObject->init(shader);

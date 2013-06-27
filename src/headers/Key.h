@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-
+class Game;
 class Key :
 	public GameObject
 {

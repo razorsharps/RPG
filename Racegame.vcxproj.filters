@@ -17,6 +17,7 @@
     <ClCompile Include="src\sources\vboindexer.cpp" />
     <ClCompile Include="windows\Racegame\main.cpp" />
     <ClCompile Include="src\sources\Key.cpp" />
+    <ClCompile Include="src\sources\Inventory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\Door.h" />
@@ -42,6 +43,7 @@
     <ClInclude Include="src\headers\Time.h" />
     <ClInclude Include="src\headers\vboindexer.h" />
     <ClInclude Include="src\headers\Key.h" />
+    <ClInclude Include="src\headers\Inventory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\StandardShading.fragmentshader" />

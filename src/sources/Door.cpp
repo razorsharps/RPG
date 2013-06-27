@@ -1,6 +1,8 @@
 #pragma once
 
-#include "../headers/Door.h";
+#include "../headers/Door.h"
+#include "../headers/Game.h"
+#include "../headers/Inventory.h"
 
 Door::Door() {
 }
@@ -13,19 +15,12 @@ Door::~Door(){
 
 
 void Door::accept(Visitor &v) {
-	if( typeid(v).name() == "RenderVisitor") {
-		GameObject::accept(v);
-	}
-	else {
 		v.visit(this);
-	}
 }
-/*
-void Door::render(){
-	GameObject::render();
-}
-*/
 
 void Door::onCollision() {
-	std::cout << "Door collided" << std::endl;
+	std::cout << "I need " << key << " : " << Inventory::getKey(key) << std::endl;
+	if(Inventory::getKey(key)){
+		this->position.y += 0.01f;
+	}
 }

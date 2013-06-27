@@ -1,7 +1,8 @@
 #pragma once
 
 #include "GameObject.h"
-
+#include <iostream>
+#include <string>
 class Door :
 	public GameObject
 {
@@ -12,4 +13,5 @@ public:
 	void accept(Visitor &v);
 //	void render();
 	void onCollision();
+	std::string key;
 };

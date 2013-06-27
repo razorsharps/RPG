@@ -18,6 +18,7 @@
 #include "../headers/Sound.h"
 #include "../headers/UpdateVisitor.h"
 #include "../headers/Collision.h"
+#include "../headers/Key.h"
 
 class Game {
 	enum {NORMAL = 0, SKYBOX};
@@ -45,7 +46,6 @@ class Game {
 		bool carMoved;
 		bool playSound;
 		float bestLap;
-
 		Environment *environment;
 		Controls* control;
 		Collision* collision;
@@ -53,6 +53,8 @@ class Game {
 
 		float pie;
 	public:
+		bool key1, key2, key3;
+		
 		Game();
 		virtual ~Game();
 
@@ -61,6 +63,8 @@ class Game {
 		
 		void setGlParameters();
 		void buildGameObjects();
+
+		void foundKey(Key* aKey);
 
 		void build();
 		void run();

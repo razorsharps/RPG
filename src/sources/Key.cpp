@@ -1,6 +1,8 @@
 #pragma once
 
-#include "../headers/Key.h";
+#include "../headers/Key.h"
+#include "../headers/Game.h"
+#include "../headers/Inventory.h"
 
 Key::Key() {
 }
@@ -13,15 +15,13 @@ Key::~Key(){
 
 
 void Key::accept(Visitor &v) {
-	if( typeid(v).name() == "RenderVisitor") {
-		GameObject::accept(v);
-	}
-	else {
 		v.visit(this);
-	}
 }
 
 
 void Key::onCollision() {
 	std::cout << "Key collided" << std::endl;
+	Inventory::findKey(this);
+//	Inventory::getInstance().findKey(this);
+//		Game::foundKey(this);
 }
