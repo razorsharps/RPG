@@ -44,6 +44,9 @@
     <ClInclude Include="src\headers\vboindexer.h" />
     <ClInclude Include="src\headers\Key.h" />
     <ClInclude Include="src\headers\Inventory.h" />
+    <ClInclude Include="src\headers\Observer.h" />
+    <ClInclude Include="src\headers\DoorObserver.h" />
+    <ClInclude Include="src\headers\KeyObserver.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\StandardShading.fragmentshader" />

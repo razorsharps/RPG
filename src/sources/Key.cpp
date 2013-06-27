@@ -21,5 +21,5 @@ void Key::accept(Visitor &v) {
 
 void Key::onCollision() {
 	if(!Inventory::getKey(this->name))
-		Inventory::findKey(this);	
+		Inventory::findKey(this);
 }

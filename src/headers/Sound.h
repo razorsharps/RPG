@@ -3,7 +3,6 @@
 class Sound {
 	private:
 		char* data;
-		bool initialized;
 		unsigned int sourceid;
 	public:
 		Sound();
@@ -12,5 +11,5 @@ class Sound {
 		int convertToInt(char* buffer,int len);
 		char* loadWAV(const char* fn,int& chan,int& samplerate,int& bps,int& size);
 		void playSound();
-		void init();
+		void init(const char* fn);
 };
