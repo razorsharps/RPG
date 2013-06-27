@@ -7,8 +7,11 @@
 #include <alc.h>
 #include "../headers/sound.h"
 
+#include <iostream>
+#include <vector>
+using namespace std;
+
 Sound::Sound() {
-	initialized = false;
 }
 
 Sound::~Sound() {
@@ -64,9 +67,9 @@ char* Sound::loadWAV(const char* fn,int& chan,int& samplerate,int& bps,int& size
     return data;   
 }
 
-void Sound::init() {
+void Sound::init(const char* fn) {
 	int channel, sampleRate, bps, size;
-	char* data = loadWAV("src/resources/goodCrash.wav",channel,sampleRate,bps,size);
+	char* data = loadWAV(fn,channel,sampleRate,bps,size);
 	
     ALCdevice* device=alcOpenDevice(NULL);
     if(device==NULL)

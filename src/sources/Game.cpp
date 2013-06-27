@@ -66,9 +66,6 @@ void Game::run() {
 
 	int nbFrames = 0;
 
-	Sound* s = new Sound();
-	s->init();
-
 	initText2D( "src/resources/Holstein.tga" );
 
 	do{

@@ -6,6 +6,7 @@
 #include "../headers/Door.h"
 #include "../headers/Key.h"
 #include "../headers/Factory.h"
+#include "../headers/Sound.h"
 
 #include <sstream>
 #include <fstream>
@@ -36,6 +37,9 @@ class Director
 			ifstream myfile ("src/headers/level.txt");
 			vector<GameObject*> gameObjectList;
 
+			Sound *sound = new Sound();
+			sound->init("src/resources/goodCrash.wav");
+
 			if (myfile.is_open())
 			{
 				while ( myfile.good() )
@@ -65,6 +69,8 @@ class Director
 							d->scaling = glm::vec3(atof(tokens.at(6).c_str()), atof(tokens.at(7).c_str()), atof(tokens.at(8).c_str()));
 							d->key = tokens.at(9);
 							d->collisionDistance = 5.0f;
+							
+							d->sound = sound;
 						}
 					} else if (tokens.at(0) == "Key1" || tokens.at(0) == "Key2" || tokens.at(0) == "Key3" || tokens.at(0) == "Key4"  ) {
 						std::cout << "building key" <<std::endl;
