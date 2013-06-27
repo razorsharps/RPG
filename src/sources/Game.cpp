@@ -144,15 +144,6 @@ void Game::run() {
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
 		
 		collision->update();
-		/*if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
-/*		if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
->>>>>>> af0375e67d4e64fd7dc4fab8fa92b511711ec6bc
-			playSound = true;
-			control->setSpeed(-1.0f);
-			s->playSound();
-		} else if (playSound && currentTime - lastTime > 0.9f) {
-			playSound = false;
-		}*/
 
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
@@ -168,16 +159,31 @@ void Game::run() {
 			sprintf(text,"%.2f sec", startTime + Time::getInstance().getTime());
 			printText2D(text, 10, 550, 25);
 		}
-		if(control->getSpeed() * 60 < 0.5) {
-			sprintf(text,"%.1f km/h", 0.0f );
-			printText2D(text, 10, 520, 25);
-		} else {
-			sprintf(text,"%.1f km/h", control->getSpeed() * 30 );
-			printText2D(text, 10, 520, 25);
-		}
+		sprintf(text,"Look at that nice statue of masterchief!");
+		printText2D(text, 10,580, 16);
+		if(Inventory::getKey("Key1"))
+			sprintf(text,"Key 1 found!");
+		else 
+			sprintf(text,"The door is locked.");
+		printText2D(text, 10, 520, 16);
+		
+		if(Inventory::getKey("Key3"))
+			sprintf(text,"Key 2 found!");
+		else 
+			sprintf(text,"The door is locked.");
+		printText2D(text, 10, 500, 16);
 
-		sprintf(text,"%.2f Last Lap Time", bestLap );
-		printText2D(text, 10, 500, 14);
+		if(Inventory::getKey("Key2"))
+			sprintf(text,"Key 3 found!");
+		else 
+			sprintf(text,"The door is locked.");
+		printText2D(text, 10, 480, 16);
+
+		if(Inventory::getKey("Key4"))
+			sprintf(text,"Key 4 found!");
+		else 
+			sprintf(text,"The door is locked.");
+		printText2D(text, 10, 460, 16);
 
 		glfwSwapBuffers();
 	} 

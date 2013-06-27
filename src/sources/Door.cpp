@@ -19,7 +19,6 @@ void Door::accept(Visitor &v) {
 }
 
 void Door::onCollision() {
-	std::cout << "I need " << key << " : " << Inventory::getKey(key) << std::endl;
 	if(Inventory::getKey(key)){
 		this->position.y += 0.01f;
 	}

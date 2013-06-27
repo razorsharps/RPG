@@ -19,6 +19,7 @@
 #include "../headers/UpdateVisitor.h"
 #include "../headers/Collision.h"
 #include "../headers/Key.h"
+#include "../headers/Inventory.h"
 
 class Game {
 	enum {NORMAL = 0, SKYBOX};

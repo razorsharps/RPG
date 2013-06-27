@@ -20,8 +20,6 @@ void Key::accept(Visitor &v) {
 
 
 void Key::onCollision() {
-	std::cout << "Key collided" << std::endl;
-	Inventory::findKey(this);
-//	Inventory::getInstance().findKey(this);
-//		Game::foundKey(this);
+	if(!Inventory::getKey(this->name))
+		Inventory::findKey(this);	
 }
