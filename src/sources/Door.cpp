@@ -22,14 +22,16 @@ void Door::accept(Visitor &v) {
 }
 
 void Door::onCollision() {
-	if(playSound) {
-		playSound = false;
-		
-		Subject sub;
-		DoorObserver dob(&sub, sound);
-		sub.setVal();
-	}
-
-	if(Inventory::getKey(key))
+	if(Inventory::getKey(key)) {
 		this->position.y += 0.01f;
+
+		if(playSound) {
+			playSound = false;
+		
+			Subject sub;
+			DoorObserver dob(&sub, sound);
+			sub.setVal();
+		}
+
+	}
 }

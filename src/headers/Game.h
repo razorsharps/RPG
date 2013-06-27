@@ -46,6 +46,7 @@ class Game {
 		bool carMoved;
 		bool playSound;
 		float bestLap;
+		bool win;
 		Environment *environment;
 		Controls* control;
 		Collision* collision;

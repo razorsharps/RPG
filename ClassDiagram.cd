@@ -3,26 +3,26 @@
   <Class Name="Door">
     <Position X="3" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACCAAAAAIAAAAAAEAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <HashCode>AAAAACCAAAAAIAAAAAAEAAAAAAAMAAAAAAAAACAAAAA=</HashCode>
       <FileName>src\headers\Door.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Element">
-    <Position X="2.75" Y="0.5" Width="1.5" />
+    <Position X="2.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>src\headers\Element.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CollisionVisitor">
-    <Position X="17.75" Y="11" Width="1.5" />
+    <Position X="22.25" Y="11" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>src\headers\CollisionVisitor.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Collision">
-    <Position X="13.75" Y="6.5" Width="1.5" />
+    <Position X="18.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAKCAAEAAAAAAAAAAAAAAAAAAAAAAEAAEAAg=</HashCode>
       <FileName>src\headers\Collision.h</FileName>
@@ -32,7 +32,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Inventory">
-    <Position X="23.5" Y="2.75" Width="1.5" />
+    <Position X="28.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAABAAAAFoAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>src\headers\Inventory.h</FileName>
@@ -56,14 +56,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="RenderVisitor" Collapsed="true">
-    <Position X="21.25" Y="9.75" Width="1.5" />
+    <Position X="25.25" Y="8" Width="1.5" />
     <InheritanceLine Type="Visitor" FixedToPoint="true">
       <Path>
-        <Point X="19.75" Y="9.5" />
-        <Point X="19.75" Y="9.125" />
-        <Point X="23.125" Y="9.125" />
-        <Point X="23.125" Y="10" />
-        <Point X="22.75" Y="10" />
+        <Point X="24.25" Y="9.5" />
+        <Point X="24.25" Y="9.125" />
+        <Point X="27.125" Y="9.125" />
+        <Point X="27.125" Y="8.25" />
+        <Point X="26.75" Y="8.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -72,14 +72,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Visitor">
-    <Position X="19" Y="9.5" Width="1.5" />
+    <Position X="23.5" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>src\headers\Visitor.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UpdateVisitor">
-    <Position X="15.75" Y="8.75" Width="1.5" />
+    <Position X="20.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>src\headers\UpdateVisitor.h</FileName>
@@ -113,14 +113,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Controls">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEIAikAAAAIACAACABICCCAAYQgQShAgBgAAgEAAA=</HashCode>
       <FileName>src\headers\Controls.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Environment">
-    <Position X="21.25" Y="0.5" Width="1.5" />
+    <Position X="23.25" Y="0.5" Width="1.5" />
     <NestedTypes>
       <Enum Name="Environment::__unnamed_enum_0007_1" Collapsed="true">
         <TypeIdentifier>
@@ -148,7 +148,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Game">
-    <Position X="18" Y="0.5" Width="1.5" />
+    <Position X="20.25" Y="0.5" Width="1.5" />
     <NestedTypes>
       <Enum Name="Game::__unnamed_enum_0009_1" Collapsed="true">
         <TypeIdentifier>
@@ -172,8 +172,9 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="environment" />
-      <Field Name="updateVisitor" />
       <Field Name="collision" />
+      <Field Name="updateVisitor" />
+      <Field Name="renderer" />
     </ShowAsAssociation>
   </Class>
   <Class Name="GameObject">
@@ -195,7 +196,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Renderer">
-    <Position X="23.5" Y="6.25" Width="1.5" />
+    <Position X="23.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAAEAGAABAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>src\headers\Renderer.h</FileName>
@@ -204,10 +205,10 @@
       <Field Name="renderVisitor" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Sound" Collapsed="true">
-    <Position X="13" Y="1.5" Width="1.5" />
+  <Class Name="Sound">
+    <Position X="30" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAAABAAAAAAAAQAAEBAAAAIAAIABAAQAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAAAAQAAEBAAAAIAAIABAAQAAAAAAA=</HashCode>
       <FileName>src\headers\Sound.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -219,10 +220,38 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Time">
-    <Position X="15.5" Y="0.75" Width="1.5" />
+    <Position X="32" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAgAAEAAQA=</HashCode>
       <FileName>src\headers\Time.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoorObserver">
+    <Position X="12.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAEAAA=</HashCode>
+      <FileName>src\headers\DoorObserver.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KeyObserver">
+    <Position X="11.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\KeyObserver.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Subject">
+    <Position X="11" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAABAAAAAAAAAAACIAAAAQAIAAAA=</HashCode>
+      <FileName>src\headers\Observer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Observer">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAABAAAAAAAAAAAAAAIAAAAAMCIA=</HashCode>
+      <FileName>src\headers\Observer.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

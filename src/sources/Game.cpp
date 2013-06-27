@@ -23,6 +23,7 @@ Game::Game() {
 
 	carMoved = false;
 	playSound = false;
+	win = false;
 	bestLap = 0.0f;
 	double startTime = 0.0f;
 	float pie = 3.14f;
@@ -67,7 +68,11 @@ void Game::run() {
 	int nbFrames = 0;
 
 	initText2D( "src/resources/Holstein.tga" );
-
+	GameObject * go = new GameObject("WINNING STATUE", glm::vec3(-6.0f, 0.0f, 6.0f ), glm::vec3(0.04f), false, glm::vec3(180,0,0));
+	Mesh * mesh = new Mesh("src/resources/Halo.obj");
+	Texture * texture = new Texture("src/resources/bricks.bmp");
+	go->setMesh(mesh);
+	go->setTexture(texture);	
 	do{
 		// Measure speed
 		double currentTime = Time::getInstance().getTime();
@@ -81,6 +86,10 @@ void Game::run() {
 			lastTime += 1.0;
 		}
 
+		if(Inventory::getKey("Key1") && Inventory::getKey("Key2") && Inventory::getKey("Key3") && Inventory::getKey("Key4") && !win){
+			renderer->addObjects(go);
+			win = true;
+		}
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
