@@ -24,9 +24,6 @@ Game::Game() {
 	carMoved = false;
 	playSound = false;
 	bestLap = 0.0f;
-	key1 = false;
-	key2 = false;
-	key3 = false;
 	double startTime = 0.0f;
 	float pie = 3.14f;
 

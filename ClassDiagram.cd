@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Door">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACCAAAAAIAAAAAAEAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>src\headers\Door.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Element">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\Element.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollisionVisitor">
+    <Position X="17.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\CollisionVisitor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Collision">
+    <Position X="13.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAKCAAEAAAAAAAAAAAAAAAAAAAAAAEAAEAAg=</HashCode>
+      <FileName>src\headers\Collision.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="cv" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Inventory">
+    <Position X="23.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAABAAAAFoAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\headers\Inventory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Key">
+    <Position X="9" Y="10" Width="1.5" />
+    <InheritanceLine Type="GameObject" ManuallyRouted="true">
+      <Path>
+        <Point X="8" Y="9.3" />
+        <Point X="8" Y="10" />
+        <Point X="9.75" Y="10" />
+      </Path>
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="0.06" Y="0.208" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAACBAAAAAAQAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>src\headers\Key.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RenderVisitor" Collapsed="true">
+    <Position X="21.25" Y="9.75" Width="1.5" />
+    <InheritanceLine Type="Visitor" FixedToPoint="true">
+      <Path>
+        <Point X="19.75" Y="9.5" />
+        <Point X="19.75" Y="9.125" />
+        <Point X="23.125" Y="9.125" />
+        <Point X="23.125" Y="10" />
+        <Point X="22.75" Y="10" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\RenderVisitor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Visitor">
+    <Position X="19" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\Visitor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UpdateVisitor">
+    <Position X="15.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\UpdateVisitor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Builder">
+    <Position X="2.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\Builder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Director">
+    <Position X="2.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAICAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\Builder.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="builder" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ObjectBuilder">
+    <Position X="2.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAgAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\Builder.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="fac" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Controls">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEIAikAAAAIACAACABICCCAAYQgQShAgBgAAgEAAA=</HashCode>
+      <FileName>src\headers\Controls.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Environment">
+    <Position X="21.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Environment::__unnamed_enum_0007_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\headers\Environment.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAQKAAAAAAgEACCEARAAgAAAJAAAgA=</HashCode>
+      <FileName>src\headers\Environment.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Factory">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAQAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\Factory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyGameObject">
+    <Position X="0.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\headers\Factory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Game::__unnamed_enum_0009_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\headers\Game.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Game::__unnamed_enum_0009_2" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\headers\Game.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Game::__unnamed_enum_0009_3" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\headers\Game.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAgiQAQAAABkIAgAEggAAAgAioQIAYAIAAAAoIgAA=</HashCode>
+      <FileName>src\headers\Game.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="environment" />
+      <Field Name="updateVisitor" />
+      <Field Name="collision" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GameObject">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBABIADAQgAAKBABEDAgIAAQCQSFgBIgkhBGACJSgAA=</HashCode>
+      <FileName>src\headers\GameObject.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="colorMap" />
+      <Field Name="mesh" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Mesh">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQQAAAKEEEBAAAIAAAAAAAAAQAAAAAQAAAAAAAgA=</HashCode>
+      <FileName>src\headers\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Renderer">
+    <Position X="23.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAEAGAABAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>src\headers\Renderer.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="renderVisitor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Sound" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAABAAAAAAAAQAAEBAAAAIAAIABAAQAAAAAAA=</HashCode>
+      <FileName>src\headers\Sound.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture">
+    <Position X="9.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAARAIggAAAAAQAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>src\headers\Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Time">
+    <Position X="15.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAgAAEAAQA=</HashCode>
+      <FileName>src\headers\Time.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

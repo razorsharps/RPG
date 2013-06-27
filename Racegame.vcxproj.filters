@@ -52,5 +52,6 @@
     <None Include="src\shaders\TextVertexShader.fragmentshader" />
     <None Include="src\shaders\TextVertexShader.vertexshader" />
     <None Include="src\shaders\TransformVertexShader.vertexshader" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

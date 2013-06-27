@@ -39,9 +39,8 @@ class Game {
 
 		Renderer* renderer;
 
-		GameObject *halo, *walls;
-		Door *door1, *door2, *door3 , *door4;
-
+		GameObject *halo;
+	
 		double startTime;
 
 		bool carMoved;
@@ -54,7 +53,6 @@ class Game {
 
 		float pie;
 	public:
-		bool key1, key2, key3;
 		
 		Game();
 		virtual ~Game();
