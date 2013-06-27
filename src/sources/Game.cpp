@@ -57,6 +57,7 @@ void Game::build() {
 	// Get a handle for our "LightPosition" uniform
 	glUseProgram(shaders[NORMAL]);
 	LightID1 = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspace");
+	LightID2 = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspaceLocal");
 }
 
 void Game::run() {
@@ -121,32 +122,20 @@ void Game::run() {
 		glUniformMatrix4fv(handles[MODELMATRIXID], 1, GL_FALSE, &ModelMatrix[0][0]);
 		glUniformMatrix4fv(handles[VIEWMATRIXID], 1, GL_FALSE, &ViewMatrix[0][0]);
 		
-		glm::vec3 lightPos = glm::vec3(10,50,-20);
+		glm::vec3 lightPos = glm::vec3(5.0f, 5.0f, 10.0f);
 		glUniform3f(LightID1, lightPos.x, lightPos.y, lightPos.z);
+
+		glm::vec3 lightPos2 = glm::vec3((-10.0f, 10.0f, -10.0f));
+		glUniform3f(LightID2, lightPos2.x, lightPos2.y, lightPos2.z);
 		glUniform1i(TextureIDs, 0);
 
+		cout << control->getPosition().x << " " << control->getPosition().y << " "  << control->getPosition().z << " " << endl;
 		halo->translateObject(control->getPosition());
 		halo->rotateObject(control->getDirection());
-
-/*		tire1->setRotationSpeed(control->getRotationSpeed());
-		tire1->setSteering(glm::vec3(control->getSteering(),0,0));
-		tire2->setRotationSpeed(control->getRotationSpeed());
-		tire2->setSteering(glm::vec3(control->getSteering(),0,0));
-		tire3->setRotationSpeed(control->getRotationSpeed());
-		tire4->setRotationSpeed(control->getRotationSpeed());*/
 
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
 		
 		collision->update();
-		/*if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
-/*		if((glm::distance(halo->getPosition(), door1->getPosition()) < 1.0f)  && !playSound) {
->>>>>>> af0375e67d4e64fd7dc4fab8fa92b511711ec6bc
-			playSound = true;
-			control->setSpeed(-1.0f);
-			s->playSound();
-		} else if (playSound && currentTime - lastTime > 0.9f) {
-			playSound = false;
-		}*/
 
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
