@@ -147,7 +147,7 @@ void Game::run() {
 					glm::mat4 RotationMatrix		= eulerAngleYXZ((anAstroid)->orientation.x, (anAstroid)->orientation.y, (anAstroid)->orientation.z);
 					glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
 					glm::vec3 realforward(forward);
-					anAstroid->position -= realforward * deltaTime * anAstroid->speed * 1.0f;
+			//		anAstroid->position -= realforward * deltaTime * anAstroid->speed * 1.0f;
 				}
 			}
 		}
@@ -240,8 +240,9 @@ void Game::setGlParameters() {
 }
 
 void Game::buildGameObjects() {
-	octree = new Octree(glm::vec3(0), 20.0f, 10);
-
+	int min = -50;
+	int max = 100;
+	octree = new Octree(glm::vec3(0), 55.0f, 10);
 	Director dir;
 	ObjectBuilder ob;
 	dir.setBuilder(&ob);
@@ -251,15 +252,15 @@ void Game::buildGameObjects() {
 
 	Mesh * mesh = new Mesh("src/resources/ball.obj");
 	Texture * texture = new Texture("src/resources/land.bmp");
-	for ( int i = 0; i < 10; ++i ) {		
-		float x       = -5  + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
-		float y		  = -5  + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
-		float z		  = -5  + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
-		float scale   = 0.5 + (float)rand()/((float)RAND_MAX/1.0); /* Random size        */
-		float rotateX = 0.0 + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
-		float rotateY = 0.0 + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
-		float rotateZ = 0.0 + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
-		float speed   = 0.1 + (float)rand()/((float)RAND_MAX/6.0f); /* Random speed      */
+	for ( int i = 0; i < 500; ++i ) {		
+		float x       = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
+		float y		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
+		float z		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
+		float scale   = 0.05f+ (float)rand()/((float)RAND_MAX/0.1f); /* Random size        */
+		float rotateX = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
+		float rotateY = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
+		float rotateZ = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
+		float speed   = 0.1f + (float)rand()/((float)RAND_MAX/6.0f); /* Random speed      */
 
 		Astroid * astroid = new Astroid("Astroid", glm::vec3(x,y,z), glm::vec3(scale), speed);
 		astroid->orientation = glm::vec3(rotateX,rotateY,rotateZ);
@@ -278,4 +279,5 @@ void Game::buildGameObjects() {
 		renderer->addObjects(g);
 		octree->add(g);
 	}
+	octree->print();
 }

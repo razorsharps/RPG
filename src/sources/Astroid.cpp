@@ -18,5 +18,5 @@ void Astroid::accept(Visitor &v) {
 }
 
 void Astroid::onCollision() {
-	std::cout << "GOT HIT" << std::endl;
+	//std::cout << "GOT HIT" << std::endl;
 }
