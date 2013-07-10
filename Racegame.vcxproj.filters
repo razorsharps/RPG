@@ -18,6 +18,7 @@
     <ClCompile Include="windows\Racegame\main.cpp" />
     <ClCompile Include="src\sources\Key.cpp" />
     <ClCompile Include="src\sources\Inventory.cpp" />
+    <ClCompile Include="src\sources\Astroid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\Door.h" />
@@ -47,6 +48,7 @@
     <ClInclude Include="src\headers\Observer.h" />
     <ClInclude Include="src\headers\DoorObserver.h" />
     <ClInclude Include="src\headers\KeyObserver.h" />
+    <ClInclude Include="src\headers\Astroid.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\StandardShading.fragmentshader" />

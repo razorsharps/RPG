@@ -24,12 +24,12 @@ class GameObject;
 class Renderer {
 
 	private:
-		std::vector<GameObject*> gameObjects;
 		RenderVisitor renderVisitor;
 		public:
 			Renderer();
 			virtual ~Renderer();
-
+			
+			std::vector<GameObject*> gameObjects;
 			void renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint matrixid, GLuint modelmatrixid, GLuint viewmatrixid);
 			void addObjects(GameObject* gameObject);
 };

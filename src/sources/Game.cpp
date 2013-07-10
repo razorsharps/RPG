@@ -26,7 +26,7 @@ Game::Game() {
 	win = false;
 	bestLap = 0.0f;
 	double startTime = 0.0f;
-	float pie = 3.14f;
+	float pie = 3.1415f;
 
 	environment = new Environment();
 	control = new Controls();
@@ -106,7 +106,7 @@ void Game::run() {
 		glm::mat4 MVP = TestProjectionMatrix * TestViewMatrix * TestModelMatrix;
 
 		glUniformMatrix4fv(handles[SKYBOXMATRIXID], 1, GL_FALSE, &MVP[0][0]);
-		environment->drawEnvironment();
+		//environment->drawEnvironment();
 
 		glm::mat4 ProjectionMatrix = control->getProjectionMatrix();
 		glm::mat4 ViewMatrix = control->getViewMatrix();
@@ -114,7 +114,7 @@ void Game::run() {
 		MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
 		glUniformMatrix4fv(handles[SKYBOXMATRIXID], 1, GL_FALSE, &MVP[0][0]);
-		environment->drawPlane();
+		//environment->drawPlane();
 
 		glUseProgram(shaders[NORMAL]);
 
@@ -137,15 +137,22 @@ void Game::run() {
 		halo->translateObject(control->getPosition());
 		halo->rotateObject(control->getDirection());
 
-/*		tire1->setRotationSpeed(control->getRotationSpeed());
-		tire1->setSteering(glm::vec3(control->getSteering(),0,0));
-		tire2->setRotationSpeed(control->getRotationSpeed());
-		tire2->setSteering(glm::vec3(control->getSteering(),0,0));
-		tire3->setRotationSpeed(control->getRotationSpeed());
-		tire4->setRotationSpeed(control->getRotationSpeed());*/
+		std::vector<GameObject*>::iterator it;
+
+		for(it = renderer->gameObjects.begin()+1; it != renderer->gameObjects.end(); ++it)
+		{
+			Astroid * anAstroid = dynamic_cast<Astroid*>(*it);
+			if( anAstroid != 0 ) {
+				if((*it)->name != "HaloCharacter") {
+					glm::mat4 RotationMatrix		= eulerAngleYXZ((anAstroid)->orientation.x, (anAstroid)->orientation.y, (anAstroid)->orientation.z);
+					glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
+					glm::vec3 realforward(forward);
+					anAstroid->position -= realforward * deltaTime * anAstroid->speed * 1.0f;
+				}
+			}
+		}
 
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
-		
 		collision->update();
 
 		GLenum error = glGetError();
@@ -162,31 +169,8 @@ void Game::run() {
 			sprintf(text,"%.2f sec", startTime + Time::getInstance().getTime());
 			printText2D(text, 10, 550, 25);
 		}
-		sprintf(text,"Look at that nice statue of masterchief!");
+		sprintf(text,"%d Astroids left!", renderer->gameObjects.size() - 1); //because halo
 		printText2D(text, 10,580, 16);
-		if(Inventory::getKey("Key1"))
-			sprintf(text,"Key 1 found!");
-		else 
-			sprintf(text,"The door is locked.");
-		printText2D(text, 10, 520, 16);
-		
-		if(Inventory::getKey("Key3"))
-			sprintf(text,"Key 2 found!");
-		else 
-			sprintf(text,"The door is locked.");
-		printText2D(text, 10, 500, 16);
-
-		if(Inventory::getKey("Key2"))
-			sprintf(text,"Key 3 found!");
-		else 
-			sprintf(text,"The door is locked.");
-		printText2D(text, 10, 480, 16);
-
-		if(Inventory::getKey("Key4"))
-			sprintf(text,"Key 4 found!");
-		else 
-			sprintf(text,"The door is locked.");
-		printText2D(text, 10, 460, 16);
 
 		glfwSwapBuffers();
 	} 
@@ -233,7 +217,7 @@ void Game::initGLEW() {
 	glfwSetMousePos(1024/2, 768/2);
 
 	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 void Game::setGlParameters() {
@@ -257,18 +241,32 @@ void Game::buildGameObjects() {
 	vector<GameObject*> go = dir.getGameObject(shaders[NORMAL]);
 	
 	renderer = new Renderer();
-	
+	Mesh * mesh = new Mesh("src/resources/ball.obj");
+	Texture * texture = new Texture("src/resources/land.bmp");
+	for ( int i = 0; i < 10; ++i ) {		
+		float x       = -5 + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
+		float y		  = -5 + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
+		float z		  = -5 + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
+		float scale   = 0.5 + (float)rand()/((float)RAND_MAX/1.0); /* Random size        */
+		float rotateX = 0.0 + (float)rand()/((float)RAND_MAX/pie); /* Random orientation */
+		float rotateY = 0.0 + (float)rand()/((float)RAND_MAX/pie); /* Random orientation */
+		float rotateZ = 0.0 + (float)rand()/((float)RAND_MAX/pie); /* Random orientation */
+		float speed   = 0.1 + (float)rand()/((float)RAND_MAX/6.0f); /* Random speed      */
+
+		Astroid * astroid = new Astroid("Astroid", glm::vec3(x,y,z), glm::vec3(scale), speed);
+		astroid->orientation = glm::vec3(rotateX,rotateY,rotateZ);
+		astroid->setMesh(mesh);
+		astroid->setTexture(texture);
+		astroid->init(shaders[NORMAL]);
+		astroid->collisionDistance = 0.75f*scale;
+		go.push_back(astroid);
+	}
 	
 	halo = go.at(0);
 	collision  = new Collision(halo);
-	renderer->addObjects(halo);
 	for(GameObject* g : go) {
 		collision->addObjects(g);
 		renderer->addObjects(g);
 	}
 
-}
-
-void Game::foundKey(Key* aKey) {
-	
 }

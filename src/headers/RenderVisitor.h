@@ -5,6 +5,7 @@
 //#include "../headers/GameObject.h"
 #include "../headers/Door.h"
 #include "../headers/Key.h"
+#include "../headers/Astroid.h"
 
 class RenderVisitor :
 	public Visitor
@@ -23,6 +24,10 @@ public:
 	}
 
 	void visit(Key *e) {
+		e->render();
+	}
+
+	void visit(Astroid *e){
 		e->render();
 	}
 	

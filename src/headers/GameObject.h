@@ -28,7 +28,6 @@ class GameObject : public Element {
 
 		float rotationSpeed;
 
-		glm::vec3 orientation;
 		glm::vec3 steering;
 
 		bool steerable;
@@ -46,6 +45,7 @@ class GameObject : public Element {
 		
 		std::string name;
 		glm::vec3 position;
+		glm::vec3 orientation;
 		glm::vec3 scaling;
 
 		void translateObject(glm::vec3 translation);
@@ -77,6 +77,7 @@ class GameObject : public Element {
 		void setTireBehaviour();
 		void setRotationSpeed(float speed);
 		void setSteering(glm::vec3 steer);
+		void forward(float speed);
 
 		float collisionDistance;
 

@@ -20,6 +20,10 @@ public:
 	}
 
 	void visit (Key *e) {
-		std::cout << "DO NOT USE ME FOR DOOR" << std::endl;
+		std::cout << "DO NOT USE ME FOR KEY" << std::endl;
+	}
+
+	void visit(Astroid *e) {
+		std::cout << "DO NOT USE ME FOR ASTROID" << std::endl;
 	}
 };

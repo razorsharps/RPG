@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\sources\Astroid.cpp" />
     <ClCompile Include="src\sources\Collision.cpp" />
     <ClCompile Include="src\sources\Controls.cpp" />
     <ClCompile Include="src\sources\Door.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="windows\Racegame\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\headers\Astroid.h" />
     <ClInclude Include="src\headers\Door.h" />
     <ClInclude Include="src\headers\DoorObserver.h" />
     <ClInclude Include="src\headers\Element.h" />

@@ -173,3 +173,7 @@ void GameObject::accept(Visitor &v) {
 
 void GameObject::onCollision() {
 }
+
+void GameObject::forward(float speed) {
+	
+}

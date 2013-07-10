@@ -5,7 +5,7 @@
 #include <iostream>
 #include "../headers/Door.h"
 #include "../headers/Key.h"
-
+#include "../headers/Astroid.h"
 class CollisionVisitor :
 	public Visitor
 {
@@ -25,6 +25,9 @@ public:
 		e->onCollision();
 	}
 	
+	void visit(Astroid *e){
+		e->onCollision();
+	}
 
 
 };
