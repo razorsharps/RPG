@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\sources\Octree.cpp" />
     <ClCompile Include="src\sources\Astroid.cpp" />
     <ClCompile Include="src\sources\Collision.cpp" />
     <ClCompile Include="src\sources\Controls.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="src\headers\Observer.h" />
     <ClInclude Include="src\headers\Inventory.h" />
     <ClInclude Include="src\headers\Key.h" />
+    <ClInclude Include="src\headers\Octree.h" />
     <ClInclude Include="src\headers\RenderVisitor.h" />
     <ClInclude Include="src\headers\Visitor.h" />
     <ClInclude Include="src\headers\UpdateVisitor.h" />

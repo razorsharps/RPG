@@ -151,10 +151,16 @@ void Game::run() {
 				}
 			}
 		}
-
+		
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
-		collision->update();
+		std::vector<GameObject*> meuk;
+		octree->gatherObjects(meuk);
+		std::vector<GameObject*>::iterator iter;
+		for(iter=meuk.begin(); iter != meuk.end(); ++iter) {
+			octree->add(*iter);
+		}
 
+		octree->detectCollisions();
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
 			std::cerr << "Opengl error " << error << ": " << (const char*) gluErrorString(error) << std::endl;
@@ -234,7 +240,8 @@ void Game::setGlParameters() {
 }
 
 void Game::buildGameObjects() {
-	
+	octree = new Octree(glm::vec3(0), 20.0f, 10);
+
 	Director dir;
 	ObjectBuilder ob;
 	dir.setBuilder(&ob);
@@ -244,7 +251,7 @@ void Game::buildGameObjects() {
 
 	Mesh * mesh = new Mesh("src/resources/ball.obj");
 	Texture * texture = new Texture("src/resources/land.bmp");
-	for ( int i = 0; i < 1000; ++i ) {		
+	for ( int i = 0; i < 10; ++i ) {		
 		float x       = -5  + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
 		float y		  = -5  + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
 		float z		  = -5  + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
@@ -261,19 +268,14 @@ void Game::buildGameObjects() {
 		astroid->init(shaders[NORMAL]);
 		astroid->collisionDistance = 0.75f*scale;
 		go.push_back(astroid);
+
 	}
-
-
 	
 	halo = go.at(0);
-	collision  = new Collision(halo);
+	halo->collisionDistance = 3.0f;
+	
 	for(GameObject* g : go) {
-<<<<<<< HEAD
-	//	collision->addObjects(g);
-=======
-//		collision->addObjects(g);
->>>>>>> 7552952e9244898015ef0b346121987ed4539627
 		renderer->addObjects(g);
+		octree->add(g);
 	}
-
 }

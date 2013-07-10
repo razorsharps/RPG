@@ -20,6 +20,7 @@
 #include "../headers/Collision.h"
 #include "../headers/Key.h"
 #include "../headers/Inventory.h"
+#include "../headers/Octree.h"
 
 class Game {
 	enum {NORMAL = 0, SKYBOX};
@@ -51,6 +52,7 @@ class Game {
 		Controls* control;
 		Collision* collision;
 		UpdateVisitor updateVisitor;
+		Octree* octree;
 
 		float pie;
 	public:

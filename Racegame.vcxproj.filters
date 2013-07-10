@@ -19,6 +19,7 @@
     <ClCompile Include="src\sources\Key.cpp" />
     <ClCompile Include="src\sources\Inventory.cpp" />
     <ClCompile Include="src\sources\Astroid.cpp" />
+    <ClCompile Include="src\sources\Octree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\Door.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="src\headers\DoorObserver.h" />
     <ClInclude Include="src\headers\KeyObserver.h" />
     <ClInclude Include="src\headers\Astroid.h" />
+    <ClInclude Include="src\headers\Octree.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\StandardShading.fragmentshader" />
