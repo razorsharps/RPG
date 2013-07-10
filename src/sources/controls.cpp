@@ -1,7 +1,7 @@
 #include "../headers/Controls.h"
 
 Controls::Controls() {
-	position = glm::vec3( 0, 1, -1.5f ); 
+	position = glm::vec3( 0,0.1f, -0.15f ); 
 	carPosition = glm::vec3(0.0f, 0.0f, 0.0f );
 	carDirection = glm::vec3(0,0,0);
 
@@ -32,7 +32,6 @@ void Controls::updateCamera(){
 	temp.z = carDirection.z;
 
 	glm::vec3 lookAt = carPosition;
-	lookAt.y += 0.5f;
 
 	ProjectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 100.0f);
 	ViewMatrix       = glm::lookAt(

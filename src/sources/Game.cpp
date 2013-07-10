@@ -252,7 +252,7 @@ void Game::buildGameObjects() {
 
 	Mesh * mesh = new Mesh("src/resources/ball.obj");
 	Texture * texture = new Texture("src/resources/land.bmp");
-	for ( int i = 0; i < 500; ++i ) {		
+	for ( int i = 0; i < 1000; ++i ) {		
 		float x       = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float y		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float z		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
@@ -279,5 +279,4 @@ void Game::buildGameObjects() {
 		renderer->addObjects(g);
 		octree->add(g);
 	}
-	octree->print();
 }
