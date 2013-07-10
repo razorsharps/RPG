@@ -241,17 +241,20 @@ void Game::buildGameObjects() {
 	vector<GameObject*> go = dir.getGameObject(shaders[NORMAL]);
 	
 	renderer = new Renderer();
+
 	Mesh * mesh = new Mesh("src/resources/ball.obj");
 	Texture * texture = new Texture("src/resources/land.bmp");
-	for ( int i = 0; i < 10; ++i ) {		
+	for ( int i = 0; i < 1000; ++i ) {		
 		float x       = -5 + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
 		float y		  = -5 + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
 		float z		  = -5 + (float)rand()/((float)RAND_MAX/10); /* Random position	 */
 		float scale   = 0.5 + (float)rand()/((float)RAND_MAX/1.0); /* Random size        */
-		float rotateX = 0.0 + (float)rand()/((float)RAND_MAX/pie); /* Random orientation */
-		float rotateY = 0.0 + (float)rand()/((float)RAND_MAX/pie); /* Random orientation */
-		float rotateZ = 0.0 + (float)rand()/((float)RAND_MAX/pie); /* Random orientation */
+		float rotateX = 0.0 + (float)rand()/((float)RAND_MAX/3.1415f); /* Random orientation */
+		float rotateY = 0.0 + (float)rand()/((float)RAND_MAX/3.1415f); /* Random orientation */
+		float rotateZ = 0.0 + (float)rand()/((float)RAND_MAX/3.1415f); /* Random orientation */
 		float speed   = 0.1 + (float)rand()/((float)RAND_MAX/6.0f); /* Random speed      */
+
+		cout << speed << endl;
 
 		Astroid * astroid = new Astroid("Astroid", glm::vec3(x,y,z), glm::vec3(scale), speed);
 		astroid->orientation = glm::vec3(rotateX,rotateY,rotateZ);
@@ -261,11 +264,13 @@ void Game::buildGameObjects() {
 		astroid->collisionDistance = 0.75f*scale;
 		go.push_back(astroid);
 	}
+
+
 	
 	halo = go.at(0);
 	collision  = new Collision(halo);
 	for(GameObject* g : go) {
-		collision->addObjects(g);
+	//	collision->addObjects(g);
 		renderer->addObjects(g);
 	}
 
