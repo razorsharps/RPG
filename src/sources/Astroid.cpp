@@ -19,4 +19,7 @@ void Astroid::accept(Visitor &v) {
 
 void Astroid::onCollision() {
 	//std::cout << "GOT HIT" << std::endl;
+	orientation.x += 3.1415f;
+	orientation.y += 3.1415f;
+	orientation.z += 3.1415f;
 }

@@ -101,10 +101,14 @@ void Game::run() {
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID]);
 		std::vector<GameObject*> meuk;
 		octree->gatherObjects(meuk);
+		delete octree;
+		octree = new Octree(glm::vec3(0.0f),21.0f,10);
 		std::vector<GameObject*>::iterator iter;
 		for(iter=meuk.begin(); iter != meuk.end(); ++iter) {
 			octree->add(*iter);
 		}
+
+		//std::cout << meuk.size() << std::endl;
 		octree->CheckEdges();
 		octree->detectCollisions();
 		GLenum error = glGetError();
@@ -186,9 +190,9 @@ void Game::setGlParameters() {
 }
 
 void Game::buildGameObjects() {
-	int min = -50;
-	int max = 100;
-	octree = new Octree(glm::vec3(0), 55.0f, 10);
+	int min = -20;
+	int max = 40;
+	octree = new Octree(glm::vec3(0), 21.0f, 10);
 	Director dir;
 	ObjectBuilder ob;
 	dir.setBuilder(&ob);
@@ -198,11 +202,11 @@ void Game::buildGameObjects() {
 
 	Mesh * mesh = new Mesh("src/resources/ball.obj");
 	Texture * texture = new Texture("src/resources/land.bmp");
-	for ( int i = 0; i < 1000; ++i ) {		
+	for ( int i = 0; i < 200; ++i ) {		
 		float x       = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float y		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float z		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
-		float scale   = 0.5f+ (float)rand()/((float)RAND_MAX/1.0f); /* Random size        */
+		float scale   = 0.05f + (float)rand()/((float)RAND_MAX/1.0f); /* Random size        */
 		float rotateX = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateY = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateZ = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
@@ -218,7 +222,10 @@ void Game::buildGameObjects() {
 
 	}
 
-	
+	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+    std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+    std::cout << "Vendor: " << glGetString(GL_VENDOR) << std::endl;
+    std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
 	
 	halo = go.at(0);
 	halo->collisionDistance = 3.0f;
@@ -228,6 +235,6 @@ void Game::buildGameObjects() {
 		renderer->addObjects(g);
 		octree->add(g);
 	}
-			octree->print();
+	//		octree->print();
 
 }

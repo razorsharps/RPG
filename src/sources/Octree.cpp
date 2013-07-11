@@ -71,19 +71,30 @@ void Octree::print( std::string pre )
 void Octree::CheckEdges(){
  //check x
 	for ( unsigned int i = 0; i < objects.size(); i++ ) {
-		if(objects[i]->position.x > center.x+radius || objects[i]->position.x < center.x-radius) {
-		   //invert x
-			objects[i]->orientation.x +=3.1415f;
-		} else
-		if(objects[i]->position.y > center.y+radius ||objects[i]->position.y < center.y-radius) {
-		   //invert y	
-			objects[i]->orientation.y +=3.1415f;
-		} else 
-		if(objects[i]->position.z > center.z+radius || objects[i]->position.z < center.z-radius) {
-		   //invert z
-			objects[i]->orientation.z +=3.1415f;
-		}
-
+			if(objects[i]->position.x > center.x+radius ) {
+				objects[i]->position.x = center.x + radius;
+				objects[i]->orientation.x +=3.1415f;
+			} else if (objects[i]->position.x < center.x-radius){
+				objects[i]->position.x = center.x - radius;
+				objects[i]->orientation.x +=3.1415f;
+			}		
+			
+			if(objects[i]->position.y > center.y+radius ) {
+				objects[i]->position.y = center.y + radius;
+				objects[i]->orientation.y +=3.1415f;
+			} else if (objects[i]->position.y < center.y-radius){
+				objects[i]->position.y = center.y - radius;
+				objects[i]->orientation.y +=3.1415f;
+			}
+			
+			if(objects[i]->position.z > center.z+radius ) {
+				objects[i]->position.z = center.z + radius;
+				objects[i]->orientation.z +=3.1415f;
+			} else 	if (objects[i]->position.z < center.z-radius){
+				objects[i]->position.z = center.z - radius;
+				objects[i]->orientation.z +=3.1415f;
+			}
+	
 	}
 	for ( unsigned int i = 0; i < children.size(); i++ ) {
 		if ( children[i] ) {
