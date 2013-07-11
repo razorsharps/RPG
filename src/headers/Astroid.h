@@ -12,5 +12,6 @@ public:
 	void onCollision();
 	~Astroid();
 	float speed;
+	int id;
 };
 

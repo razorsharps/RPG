@@ -35,8 +35,7 @@ void Controls::updateCamera(){
 	temp.y = spaceShip->orientation.x;
 	temp.z = spaceShip->orientation.z;
 
-	//std::cout << temp.x << " " << temp.y << " " << temp.z << std::endl;
-	glm::vec3 cameraposition = carPosition + position; //+ glm::quat(temp) * position;
+	glm::vec3 cameraposition = carPosition + glm::quat(temp) * position;
 
 	ProjectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 100.0f);
 	ViewMatrix       = glm::lookAt(

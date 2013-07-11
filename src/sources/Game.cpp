@@ -93,24 +93,25 @@ void Game::run() {
 					glm::mat4 RotationMatrix		= eulerAngleYXZ((anAstroid)->orientation.x, (anAstroid)->orientation.y, (anAstroid)->orientation.z);
 					glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
 					glm::vec3 realforward(forward);
-					anAstroid->position -= realforward * deltaTime * anAstroid->speed * 1.0f;
+					anAstroid->position -= realforward * deltaTime * anAstroid->speed * 0.2f;
 				}
 			}
 		}
 		
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID]);
+		
 		std::vector<GameObject*> meuk;
 		octree->gatherObjects(meuk);
 		delete octree;
-		octree = new Octree(glm::vec3(0.0f),21.0f,10);
+		octree = new Octree(glm::vec3(0.0f),105.0f,3);
 		std::vector<GameObject*>::iterator iter;
 		for(iter=meuk.begin(); iter != meuk.end(); ++iter) {
 			octree->add(*iter);
 		}
 
-		//std::cout << meuk.size() << std::endl;
-		octree->CheckEdges();
+		octree->CheckEdges();		
 		octree->detectCollisions();
+
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
 			std::cerr << "Opengl error " << error << ": " << (const char*) gluErrorString(error) << std::endl;
@@ -190,9 +191,9 @@ void Game::setGlParameters() {
 }
 
 void Game::buildGameObjects() {
-	int min = -20;
-	int max = 40;
-	octree = new Octree(glm::vec3(0), 21.0f, 10);
+	int min = -50;
+	int max = 100;
+	octree = new Octree(glm::vec3(0), 105.0f, 10);
 	Director dir;
 	ObjectBuilder ob;
 	dir.setBuilder(&ob);
@@ -202,11 +203,12 @@ void Game::buildGameObjects() {
 
 	Mesh * mesh = new Mesh("src/resources/ball.obj");
 	Texture * texture = new Texture("src/resources/land.bmp");
-	for ( int i = 0; i < 200; ++i ) {		
+
+	for ( int i = 0; i < 1000; ++i ) {		
 		float x       = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float y		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float z		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
-		float scale   = 0.05f + (float)rand()/((float)RAND_MAX/1.0f); /* Random size        */
+		float scale   = 1.0f + (float)rand()/((float)RAND_MAX/3.0f); /* Random size        */
 		float rotateX = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateY = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateZ = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
@@ -218,6 +220,7 @@ void Game::buildGameObjects() {
 		astroid->setTexture(texture);
 		astroid->init(shaders[NORMAL]);
 		astroid->collisionDistance = 0.75f*scale;
+		astroid->id = i;
 		go.push_back(astroid);
 
 	}
@@ -235,6 +238,4 @@ void Game::buildGameObjects() {
 		renderer->addObjects(g);
 		octree->add(g);
 	}
-	//		octree->print();
-
 }
