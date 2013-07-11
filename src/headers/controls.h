@@ -24,7 +24,7 @@ class Controls : public Element {
 		glm::mat4 ProjectionMatrix;
 		
 		glm::vec3 position, carPosition, carDirection, direction;
-		float horizontalAngle, verticalAngle, initialFoV, rotationSpeed, speedPerTick, acceleration, steering;
+		float horizontalAngle, verticalAngle, initialFoV, rotationSpeed, speedPerTick, acceleration, horizontalSteering;
 		float speed, mouseSpeed;
 
 	public:

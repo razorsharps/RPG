@@ -7,7 +7,7 @@ Renderer::~Renderer() {
 	
 }
 
-void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint matrixid, GLuint modelmatrixid, GLuint viewmatrixid) {
+void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint matrixid) {
 	std::vector<GameObject*>::iterator it;
 
 	for(it = gameObjects.begin(); it != gameObjects.end(); ++it)
@@ -34,8 +34,6 @@ void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, G
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
 		glUniformMatrix4fv(matrixid, 1, GL_FALSE, &MVP[0][0]);
-		glUniformMatrix4fv(modelmatrixid, 1, GL_FALSE, &ModelMatrix[0][0]);
-		glUniformMatrix4fv(viewmatrixid, 1, GL_FALSE, &ViewMatrix[0][0]);	
 		(*it)->accept(renderVisitor);
 	}
 }

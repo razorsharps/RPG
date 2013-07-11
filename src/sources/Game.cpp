@@ -24,11 +24,9 @@ Game::Game() {
 	carMoved = false;
 	playSound = false;
 	win = false;
-	bestLap = 0.0f;
 	double startTime = 0.0f;
 	float pie = 3.1415f;
 
-	environment = new Environment();
 	control = new Controls();
 }
 
@@ -37,27 +35,11 @@ Game::~Game() {
 }
 
 void Game::build() {
-	// Create and compile our GLSL program from the shaders
 	shaders[NORMAL]		= LoadShaders( "src/shaders/StandardShading.vertexshader", "src/shaders/StandardShading.fragmentshader" );
-	shaders[SKYBOX]		= LoadShaders( "src/shaders/TransformVertexShader.vertexshader", "src/shaders/TextureFragmentShader.fragmentshader" );
-
-	// Get a handle for our "MVP" uniform
-	handles[MATRIXID]			= glGetUniformLocation(shaders[NORMAL], "MVP");
-	handles[VIEWMATRIXID]		= glGetUniformLocation(shaders[NORMAL], "V");
-	handles[MODELMATRIXID]		= glGetUniformLocation(shaders[NORMAL], "M");
-	
-	handles[SKYBOXMATRIXID]		= glGetUniformLocation(shaders[SKYBOX], "MVP");
-
-	// Get a handle for our "myTextureSampler" uniform
+	handles[MATRIXID]	= glGetUniformLocation(shaders[NORMAL], "MVP");
 	TextureIDs  = glGetUniformLocation(shaders[NORMAL], "myTextureSampler");
 	
 	buildGameObjects();
-	environment->initEnvironment();
-
-	// Get a handle for our "LightPosition" uniform
-	glUseProgram(shaders[NORMAL]);
-	LightID1 = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspace");
-	LightID2 = glGetUniformLocation(shaders[NORMAL], "LightPosition_worldspaceLocal");
 }
 
 void Game::run() {
@@ -68,17 +50,14 @@ void Game::run() {
 	int nbFrames = 0;
 
 	initText2D( "src/resources/Holstein.tga" );
-	GameObject * go = new GameObject("WINNING STATUE", glm::vec3(-6.0f, 0.0f, 6.0f ), glm::vec3(0.04f), false, glm::vec3(180,0,0));
-	Mesh * mesh = new Mesh("src/resources/Halo.obj");
-	Texture * texture = new Texture("src/resources/bricks.bmp");
-	go->setMesh(mesh);
-	go->setTexture(texture);	
+	
 	do{
 		// Measure speed
 		double currentTime = Time::getInstance().getTime();
 		float deltaTime = (float)(currentTime - lastFrameTime); 
 		lastFrameTime = currentTime;
 		nbFrames++;
+
 		if ( currentTime - lastTime >= 1.0 ){ // If last prinf() was more than 1sec ago
 			// printf and reset
 			printf("%f ms/frame\n", double(nbFrames));
@@ -86,53 +65,20 @@ void Game::run() {
 			lastTime += 1.0;
 		}
 
-		if(Inventory::getKey("Key1") && Inventory::getKey("Key2") && Inventory::getKey("Key3") && Inventory::getKey("Key4") && !win){
-			renderer->addObjects(go);
-			win = true;
-		}
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Compute the MVP matrix from keyboard and mouse input
 		control->accept(updateVisitor); 
-		//control->update();
-		//control->updateCamera();
 
-		// Use our shader
-		glUseProgram(shaders[SKYBOX]);
-		glm::mat4 TestProjectionMatrix = control->getProjectionMatrix();
-		glm::mat4 TestViewMatrix = control->getViewMatrix();
-		glm::mat4 TestModelMatrix = glm::translate(glm::mat4(), control->getPosition());
-		glm::mat4 MVP = TestProjectionMatrix * TestViewMatrix * TestModelMatrix;
-
-		glUniformMatrix4fv(handles[SKYBOXMATRIXID], 1, GL_FALSE, &MVP[0][0]);
-		//environment->drawEnvironment();
+		glUseProgram(shaders[NORMAL]);
 
 		glm::mat4 ProjectionMatrix = control->getProjectionMatrix();
 		glm::mat4 ViewMatrix = control->getViewMatrix();
 		glm::mat4 ModelMatrix = glm::mat4(1.0);
-		MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
-
-		glUniformMatrix4fv(handles[SKYBOXMATRIXID], 1, GL_FALSE, &MVP[0][0]);
-		//environment->drawPlane();
-
-		glUseProgram(shaders[NORMAL]);
-
-		ProjectionMatrix = control->getProjectionMatrix();
-		ViewMatrix = control->getViewMatrix();
-		ModelMatrix = glm::mat4(1.0);
-		MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
 		glUniformMatrix4fv(handles[MATRIXID], 1, GL_FALSE, &MVP[0][0]);
-		glUniformMatrix4fv(handles[MODELMATRIXID], 1, GL_FALSE, &ModelMatrix[0][0]);
-		glUniformMatrix4fv(handles[VIEWMATRIXID], 1, GL_FALSE, &ViewMatrix[0][0]);
-		
-		glm::vec3 lightPos = glm::vec3(5.0f, 5.0f, 10.0f);
-		glUniform3f(LightID1, lightPos.x, lightPos.y, lightPos.z);
-
-		glm::vec3 lightPos2 = glm::vec3((-10.0f, 10.0f, -10.0f));
-		glUniform3f(LightID2, lightPos2.x, lightPos2.y, lightPos2.z);
-		glUniform1i(TextureIDs, 0);
 
 		halo->translateObject(control->getPosition());
 		halo->rotateObject(control->getDirection());
@@ -152,15 +98,18 @@ void Game::run() {
 			}
 		}
 		
-		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID], handles[MODELMATRIXID], handles[VIEWMATRIXID]);
-		std::vector<GameObject*> meuk;
+		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID]);
+		/*std::vector<GameObject*> meuk;
 		octree->gatherObjects(meuk);
 		std::vector<GameObject*>::iterator iter;
 		for(iter=meuk.begin(); iter != meuk.end(); ++iter) {
 			octree->add(*iter);
 		}
-
-		octree->detectCollisions();
+		
+		octree->detectCollisions();*/
+		
+		cout << "stuff jo" << endl;
+		
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
 			std::cerr << "Opengl error " << error << ": " << (const char*) gluErrorString(error) << std::endl;

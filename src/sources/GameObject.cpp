@@ -76,7 +76,6 @@ void GameObject::init(GLuint shader) {
 	// Get a handle for our buffers
 	vertexPosition_modelspaceID	= glGetAttribLocation(shader, "vertexPosition_modelspace");
 	vertexUVID					= glGetAttribLocation(shader, "vertexUV");
-	vertexNormal_modelspaceID	= glGetAttribLocation(shader, "vertexNormal_modelspace");
 }
 
 void GameObject::setTexture(Texture& tex) {
@@ -133,27 +132,16 @@ void GameObject::render() {
 		0,                            
 		(void*)0                      
 	);
- 
+
 	glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->uvsBuffer);
 	glVertexAttribPointer(
-		vertexUVID,                 
-		2,                          
-		GL_FLOAT,                 
-		GL_FALSE,                 
-		0,                         
-		(void*)0              
-	);
- 
-	glEnableVertexAttribArray(2);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->normalsBuffer);
-	glVertexAttribPointer(
-		vertexNormal_modelspaceID,  
-		3,                          
-		GL_FLOAT,               
-		GL_FALSE,                  
-		0,                     
-		(void*)0               
+		vertexUVID, 
+		2,                            
+		GL_FLOAT,                    
+		GL_FALSE,                     
+		0,                            
+		(void*)0                      
 	);
 
 	// Index buffer

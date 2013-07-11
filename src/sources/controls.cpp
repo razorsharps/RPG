@@ -11,7 +11,7 @@ Controls::Controls() {
 	rotationSpeed = 0.0f;
 	speedPerTick = 1.0f;
 	acceleration = 0.0f;
-	steering = 0.0f;
+	horizontalSteering = 0.0f;
 
 	speed = 3.0f; 
 	mouseSpeed = 0.005f;
@@ -50,28 +50,29 @@ void Controls::update(){
 	double currentTime = glfwGetTime();
 	float deltaTime = float(currentTime - lastTime);
 
-	if(glfwGetKey( GLFW_KEY_LEFT ) == GLFW_PRESS) {
-		steering += 0.2f;
+	if(glfwGetKey('A') == GLFW_PRESS) {
+		horizontalSteering += 0.2f;
 
-		if(steering > 1.5f) 
-			steering = 0.7f;
-	} else if(glfwGetKey( GLFW_KEY_RIGHT ) == GLFW_PRESS) {
-		steering -= 0.2f;
+		if(horizontalSteering > 1.5f) 
+			horizontalSteering = 0.7f;
+	} else if(glfwGetKey('D') == GLFW_PRESS) {
+		horizontalSteering -= 0.2f;
 
-		if(steering < -1.5f) 
-			steering = -0.7f;
+		if(horizontalSteering < -1.5f) 
+			horizontalSteering = -0.7f;
 	} else {
-		steering = 0;
+		horizontalSteering = 0;
 	}
 	
-	carDirection += vec3(glm::radians(steering), 0, 0);
+	
+	carDirection += vec3(glm::radians(horizontalSteering), glm::radians(horizontalSteering), 0);
 
 	glm::mat4 RotationMatrix		= eulerAngleYXZ(carDirection.x, carDirection.y, carDirection.z);
 	glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
 	glm::vec3 realforward(forward);
 
-	if(glfwGetKey( GLFW_KEY_UP ) == GLFW_PRESS || glfwGetKey( GLFW_KEY_DOWN ) == GLFW_PRESS) {
-		if (glfwGetKey( GLFW_KEY_UP ) == GLFW_PRESS) {
+	if(glfwGetKey('W') == GLFW_PRESS || glfwGetKey('S') == GLFW_PRESS == GLFW_PRESS) {
+		if (glfwGetKey('W') == GLFW_PRESS) {
 			rotationSpeed += speedPerTick;
 			acceleration += speedPerTick * 0.06f;
 
@@ -80,7 +81,7 @@ void Controls::update(){
 
 			carPosition -= realforward * deltaTime * speed * acceleration;
 		}
-		if (glfwGetKey( GLFW_KEY_DOWN ) == GLFW_PRESS){
+		if (glfwGetKey('S') == GLFW_PRESS){
 			rotationSpeed -= speedPerTick;
 			acceleration -= speedPerTick * 0.06f;
 
@@ -119,7 +120,7 @@ glm::vec3 Controls::getCameraPosition() {
 }
 
 float Controls::getSteering() { 
-	return steering;
+	return horizontalSteering;
 }
 
 float Controls::getRotationSpeed() {

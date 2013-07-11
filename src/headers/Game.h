@@ -23,31 +23,25 @@
 #include "../headers/Octree.h"
 
 class Game {
-	enum {NORMAL = 0, SKYBOX};
+	enum {NORMAL = 0};
 	GLuint shaders[3]; 
 
-	enum {MATRIXID = 0, VIEWMATRIXID, MODELMATRIXID, SKYBOXMATRIXID};
+	enum {MATRIXID = 0, VIEWMATRIXID, MODELMATRIXID};
 	GLuint handles[4]; 
-
-	enum {CHECK1 = 0, CHECK2, CHECK3, CHECK4, CHECK5, CHECK6};
-	glm::vec3 checkpoints[6]; 
 
 	private:
 		int checkIndex;
-
 		GLuint TextureIDs;
-		GLuint LightID1, LightID2;
 
 		Renderer* renderer;
-
 		GameObject *halo;
 	
 		double startTime;
 
 		bool carMoved;
 		bool playSound;
-		float bestLap;
 		bool win;
+
 		Environment *environment;
 		Controls* control;
 		Collision* collision;

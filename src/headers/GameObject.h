@@ -35,9 +35,7 @@ class GameObject : public Element {
 
 		Texture * colorMap;
 
-		GLuint vertexPosition_modelspaceID;
-		GLuint vertexUVID;
-		GLuint vertexNormal_modelspaceID;
+		GLuint vertexPosition_modelspaceID, vertexUVID;
 	public:
 		GameObject(std::string aName, glm::vec3 aPosition, glm::vec3 scale, bool steer = false, glm::vec3 orientation = glm::vec3(0,0,0), float collisionDistance = 0.0f);
 		GameObject();
