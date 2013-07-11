@@ -99,17 +99,14 @@ void Game::run() {
 		}
 		
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID]);
-		/*std::vector<GameObject*> meuk;
+		std::vector<GameObject*> meuk;
 		octree->gatherObjects(meuk);
 		std::vector<GameObject*>::iterator iter;
 		for(iter=meuk.begin(); iter != meuk.end(); ++iter) {
 			octree->add(*iter);
 		}
-		
-		octree->detectCollisions();*/
-		
-		cout << "stuff jo" << endl;
-		
+//		octree->CheckEdges();
+//		octree->detectCollisions();
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
 			std::cerr << "Opengl error " << error << ": " << (const char*) gluErrorString(error) << std::endl;
@@ -205,11 +202,11 @@ void Game::buildGameObjects() {
 		float x       = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float y		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float z		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
-		float scale   = 0.05f+ (float)rand()/((float)RAND_MAX/0.1f); /* Random size        */
+		float scale   = 0.05f+ (float)rand()/((float)RAND_MAX/0.10f); /* Random size        */
 		float rotateX = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateY = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateZ = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
-		float speed   = 0.1f + (float)rand()/((float)RAND_MAX/6.0f); /* Random speed      */
+		float speed   = 0.1f + (float)rand()/((float)RAND_MAX/3.0f); /* Random speed      */
 
 		Astroid * astroid = new Astroid("Astroid", glm::vec3(x,y,z), glm::vec3(scale), speed);
 		astroid->orientation = glm::vec3(rotateX,rotateY,rotateZ);
@@ -220,6 +217,8 @@ void Game::buildGameObjects() {
 		go.push_back(astroid);
 
 	}
+
+	
 	
 	halo = go.at(0);
 	halo->collisionDistance = 3.0f;
@@ -228,4 +227,6 @@ void Game::buildGameObjects() {
 		renderer->addObjects(g);
 		octree->add(g);
 	}
+			octree->print();
+
 }

@@ -20,6 +20,7 @@ class Octree
 		virtual void print(std::string pre = "" );
 		virtual unsigned int detectCollisions();
 		virtual unsigned int detectCollisions( GameObject * collider );
+		void CheckEdges();
 	
 		CollisionVisitor cv;
 

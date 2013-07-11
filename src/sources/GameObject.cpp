@@ -160,7 +160,7 @@ void GameObject::accept(Visitor &v) {
 }
 
 void GameObject::onCollision() {
-	std::cout << " gameobject got hit " << std::endl;
+//	std::cout << " gameobject got hit " << std::endl;
 }
 
 void GameObject::forward(float speed) {
