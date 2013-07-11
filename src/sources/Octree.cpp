@@ -70,7 +70,6 @@ void Octree::print( std::string pre )
 
 void Octree::CheckEdges(){
  //check x
-	std::cout << " SIZE" << objects.size();
 	for ( unsigned int i = 0; i < objects.size(); i++ ) {
 		if(objects[i]->position.x > center.x+radius || objects[i]->position.x < center.x-radius) {
 		   //invert x
@@ -88,7 +87,6 @@ void Octree::CheckEdges(){
 	}
 	for ( unsigned int i = 0; i < children.size(); i++ ) {
 		if ( children[i] ) {
-			std::cout << i << ":";
 			children[i]->CheckEdges();
 		}
 	}

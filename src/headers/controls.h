@@ -24,7 +24,7 @@ class Controls : public Element {
 		glm::mat4 ProjectionMatrix;
 		
 		glm::vec3 position, carPosition, carDirection, direction;
-		float horizontalAngle, verticalAngle, initialFoV, rotationSpeed, speedPerTick, acceleration, horizontalSteering;
+		float horizontalAngle, verticalAngle, initialFoV, rotationSpeed, speedPerTick, acceleration, horizontalSteering, verticalSteering;
 		float speed, mouseSpeed;
 
 	public:
@@ -45,4 +45,5 @@ class Controls : public Element {
 
 		void setSpeed(float accel);
 
+		GameObject* spaceShip;
 };

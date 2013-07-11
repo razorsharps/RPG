@@ -1,4 +1,6 @@
 #include "../headers/Controls.h"
+#include "../headers/GameObject.h"
+#include <iostream>
 
 Controls::Controls() {
 	position = glm::vec3( 0,0.1f, -0.15f ); 
@@ -12,6 +14,7 @@ Controls::Controls() {
 	speedPerTick = 1.0f;
 	acceleration = 0.0f;
 	horizontalSteering = 0.0f;
+	verticalSteering = 0.0f;
 
 	speed = 3.0f; 
 	mouseSpeed = 0.005f;
@@ -24,18 +27,20 @@ void Controls::updateCamera(){
 	float deltaTime = float(currentTime - lastTime);
 
 	float FoV = initialFoV - 5;
-
-	glm::vec3 temp = carDirection;
-
-	temp.x = carDirection.y;
-	temp.y = -carDirection.x;
-	temp.z = carDirection.z;
-
+	//(*it)->getParent()->getPosition() + (*it)->getOrientationQuat() * (*it)->getPosition();
 	glm::vec3 lookAt = carPosition;
+
+	glm::vec3 temp;
+	temp.x = spaceShip->orientation.y;
+	temp.y = spaceShip->orientation.x;
+	temp.z = spaceShip->orientation.z;
+
+	std::cout << temp.x << " " << temp.y << " " << temp.z << std::endl;
+	glm::vec3 cameraposition = carPosition + glm::quat(temp) * position;
 
 	ProjectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 100.0f);
 	ViewMatrix       = glm::lookAt(
-								carPosition + position * glm::quat(temp), 	// Camera is here
+								cameraposition, 	// Camera is here
 								lookAt, 									// and looks here : at the same position, plus "direction"
 								vec3(0, 1, 0)                  				// Head is up (set to 0,-1,0 to look upside-down)
 						   );
@@ -51,21 +56,47 @@ void Controls::update(){
 	float deltaTime = float(currentTime - lastTime);
 
 	if(glfwGetKey('A') == GLFW_PRESS) {
-		horizontalSteering += 0.2f;
+		horizontalSteering += 0.02f;
 
-		if(horizontalSteering > 1.5f) 
+		if(horizontalSteering > 0.7f) 
 			horizontalSteering = 0.7f;
 	} else if(glfwGetKey('D') == GLFW_PRESS) {
-		horizontalSteering -= 0.2f;
+		horizontalSteering -= 0.02f;
 
-		if(horizontalSteering < -1.5f) 
+		if(horizontalSteering < -0.7f) 
 			horizontalSteering = -0.7f;
 	} else {
-		horizontalSteering = 0;
+		if(horizontalSteering < 0.1f && horizontalSteering > -0.1f)
+			horizontalSteering = 0;
+		else if(horizontalSteering > 0) {
+			horizontalSteering -= 0.02f;
+		} else {
+			horizontalSteering += 0.02f;
+		}
+	}
+
+	if(glfwGetKey('Q') == GLFW_PRESS) {
+		verticalSteering += 0.02f;
+
+		if(verticalSteering > 0.7f) 
+			verticalSteering = 0.7f;
+	} else if(glfwGetKey('E') == GLFW_PRESS) {
+		verticalSteering -= 0.02f;
+
+		if(verticalSteering < -0.7f) 
+			verticalSteering = -0.7f;
+	} else {
+		if(verticalSteering < 0.1f && verticalSteering > -0.1f)
+			verticalSteering = 0;
+		else if(verticalSteering > 0) {
+			verticalSteering -= 0.02f;
+		} else {
+			verticalSteering += 0.02f;
+		}
 	}
 	
 	
-	carDirection += vec3(glm::radians(horizontalSteering), glm::radians(horizontalSteering), 0);
+	carDirection += vec3(glm::radians(horizontalSteering), glm::radians(verticalSteering), 0);
 
 	glm::mat4 RotationMatrix		= eulerAngleYXZ(carDirection.x, carDirection.y, carDirection.z);
 	glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
@@ -92,11 +123,11 @@ void Controls::update(){
 		}
 	} else {
 		if(acceleration > 0.1f) {
-			acceleration -= speedPerTick * 0.3f;
+			acceleration -= speedPerTick * 0.02f;
 			carPosition -= realforward * deltaTime * speed * acceleration;
 		}
 		else if (acceleration < -0.1f){
-			acceleration += speedPerTick * 0.3f;
+			acceleration += speedPerTick * 0.02f;
 			carPosition -= realforward * deltaTime * speed * acceleration;
 		} else
 			acceleration = 0;

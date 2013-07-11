@@ -82,7 +82,7 @@ void Game::run() {
 
 		halo->translateObject(control->getPosition());
 		halo->rotateObject(control->getDirection());
-
+		
 		std::vector<GameObject*>::iterator it;
 
 		for(it = renderer->gameObjects.begin()+1; it != renderer->gameObjects.end(); ++it)
@@ -93,7 +93,7 @@ void Game::run() {
 					glm::mat4 RotationMatrix		= eulerAngleYXZ((anAstroid)->orientation.x, (anAstroid)->orientation.y, (anAstroid)->orientation.z);
 					glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
 					glm::vec3 realforward(forward);
-			//		anAstroid->position -= realforward * deltaTime * anAstroid->speed * 1.0f;
+					anAstroid->position -= realforward * deltaTime * anAstroid->speed * 1.0f;
 				}
 			}
 		}
@@ -105,8 +105,8 @@ void Game::run() {
 		for(iter=meuk.begin(); iter != meuk.end(); ++iter) {
 			octree->add(*iter);
 		}
-//		octree->CheckEdges();
-//		octree->detectCollisions();
+		octree->CheckEdges();
+		octree->detectCollisions();
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR) 
 			std::cerr << "Opengl error " << error << ": " << (const char*) gluErrorString(error) << std::endl;
@@ -202,7 +202,7 @@ void Game::buildGameObjects() {
 		float x       = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float y		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float z		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
-		float scale   = 0.05f+ (float)rand()/((float)RAND_MAX/0.10f); /* Random size        */
+		float scale   = 0.5f+ (float)rand()/((float)RAND_MAX/1.0f); /* Random size        */
 		float rotateX = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateY = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateZ = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
@@ -222,7 +222,8 @@ void Game::buildGameObjects() {
 	
 	halo = go.at(0);
 	halo->collisionDistance = 3.0f;
-	
+	control->spaceShip = halo;
+
 	for(GameObject* g : go) {
 		renderer->addObjects(g);
 		octree->add(g);
