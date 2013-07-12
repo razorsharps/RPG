@@ -67,6 +67,9 @@ void Game::run() {
 
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		if(glfwGetMouseButton( GLFW_MOUSE_BUTTON_LEFT ) == GLFW_PRESS ) {
+			GetGameObjectFromPosition(control->getMousePosition());
+		}
 
 		// Compute the MVP matrix from keyboard and mouse input
 		control->accept(updateVisitor); 
@@ -93,7 +96,7 @@ void Game::run() {
 					glm::mat4 RotationMatrix		= eulerAngleYXZ((anAstroid)->orientation.x, (anAstroid)->orientation.y, (anAstroid)->orientation.z);
 					glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
 					glm::vec3 realforward(forward);
-				//	anAstroid->position -= realforward * deltaTime * anAstroid->speed * 0.2f;
+					anAstroid->position -= realforward * deltaTime * anAstroid->speed * 0.5f;
 				}
 			}
 		}
@@ -129,7 +132,7 @@ void Game::run() {
 		sprintf(text,"%d Astroids left!", renderer->gameObjects.size() - 1); //because halo
 		printText2D(text, 10,580, 16);
 
-		glfwSwapBuffers();
+			glfwSwapBuffers();
 	} 
 	while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
 		   glfwGetWindowParam( GLFW_OPENED ));
@@ -170,7 +173,7 @@ void Game::initGLEW() {
 
 	// Ensure we can capture the escape key being pressed below
 	glfwEnable( GLFW_STICKY_KEYS );
-	glfwDisable(GLFW_MOUSE_CURSOR);
+	//glfwDisable(GLFW_MOUSE_CURSOR);
 	glfwSetMousePos(1024/2, 768/2);
 
 	// Dark blue background
@@ -221,47 +224,18 @@ void Game::buildGameObjects() {
 		astroid->init(shaders[NORMAL]);
 		astroid->collisionDistance = 0.75f*scale;
 		astroid->id = i;
-	//	go.push_back(astroid);
+		//go.push_back(astroid);
 
 	}
 
-		Astroid * astroid = new Astroid("Astroid", glm::vec3(0,0,1), glm::vec3(1.0f), 0);
+	Astroid * astroid = new Astroid("Astroid", glm::vec3(0,0,10), glm::vec3(1.5f), 0);
 		astroid->orientation = glm::vec3(0);
 		astroid->setMesh(mesh);
 		astroid->setTexture(texture);
 		astroid->init(shaders[NORMAL]);
-		astroid->collisionDistance = 0.75f;
+		astroid->collisionDistance = 0.75f*1.5f;
+		astroid->id = 1337;
 		go.push_back(astroid);
-	
-		Astroid * astroid1 = new Astroid("Astroid", glm::vec3(0,0,-1), glm::vec3(0.5f), 0);
-		astroid1->orientation = glm::vec3(0);
-		astroid1->setMesh(mesh);
-		astroid1->setTexture(texture);
-		astroid1->init(shaders[NORMAL]);
-		astroid1->collisionDistance = 0.75f;
-		go.push_back(astroid1);
-		Astroid * astroid2= new Astroid("Astroid", glm::vec3(1,0,0), glm::vec3(0.1f), 0);
-		astroid2->orientation = glm::vec3(0);
-		astroid2->setMesh(mesh);
-		astroid2->setTexture(texture);
-		astroid2->init(shaders[NORMAL]);
-		astroid2->collisionDistance = 0.75f;
-	//	go.push_back(astroid2);
-		Astroid * astroid3 = new Astroid("Astroid", glm::vec3(1,0,0), glm::vec3(1.0f), 0);
-		astroid3->orientation = glm::vec3(0);
-		astroid3->setMesh(mesh);
-		astroid3->setTexture(texture);
-		astroid3->init(shaders[NORMAL]);
-		astroid3->collisionDistance = 0.75f;
-		//go.push_back(astroid3);
-		Astroid * astroid4 = new Astroid("Astroid", glm::vec3(1,0,0), glm::vec3(1.0f), 0);
-		astroid4->orientation = glm::vec3(0);
-		astroid4->setMesh(mesh);
-		astroid4->setTexture(texture);
-		astroid4->init(shaders[NORMAL]);
-		astroid4->collisionDistance = 0.75f;
-		//go.push_back(astroid4);
-
 
 	halo = go.at(0);
 	halo->collisionDistance = 3.0f;
@@ -270,4 +244,22 @@ void Game::buildGameObjects() {
 		renderer->addObjects(g);
 		octree->add(g);
 	}
+}
+
+GameObject * Game::GetGameObjectFromPosition(glm::vec3 position){
+	float shortestDistance = 1000000000.0f;
+	Astroid * go = nullptr;
+	for(GameObject * g: renderer->gameObjects) {
+		float distanceBetween = glm::distance(g->getPosition(), position);
+		//std::cout << distanceBetween << std::endl;
+		if(distanceBetween < shortestDistance) {
+			shortestDistance = distanceBetween;
+			Astroid * a = dynamic_cast<Astroid*>(g);
+			if ( a != nullptr ) {
+				go = a;
+			}
+        }
+    }
+//	std::cout << go->name << "," << go->id << "\t" << shortestDistance << std::endl;
+	return go;
 }

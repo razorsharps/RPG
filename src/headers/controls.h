@@ -38,7 +38,7 @@ class Controls : public Element {
 		glm::vec3 getCameraPosition();
 		glm::vec3 getPosition();
 		glm::vec3 getDirection();
-
+		glm::vec3 getMousePosition();
 		float getRotationSpeed();
 		float getSpeed();
 		float getSteering();

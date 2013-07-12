@@ -99,6 +99,7 @@ void Controls::update(){
 		}
 	}
 	
+
 	
 	carDirection += vec3(glm::radians(horizontalSteering), glm::radians(verticalSteering), 0);
 
@@ -140,7 +141,28 @@ void Controls::update(){
 	// For the next frame, the "last time" will be "now"
 	lastTime = currentTime;
 }
+glm::vec3 Controls::getMousePosition() {
 
+	int xMouse(0), yMouse(0);
+	glfwGetMousePos(&xMouse,&yMouse);
+	float w = float(1024);
+	float h = float(768);
+    float x = xMouse;
+    float y = h - yMouse;
+	std::cout << yMouse << ":" << y  << std::endl;
+	
+    GLfloat depth;
+    glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+
+	glm::vec4 viewport = glm::vec4(0.0f, 0.0f, w, h);
+	glm::mat4 tmpView =	getViewMatrix();
+	glm::mat4 tmpProj = getProjectionMatrix();
+	glm::vec3 screenPos = glm::vec3(x, y, depth);
+	glm::vec3 worldPos = glm::unProject(screenPos, tmpView, tmpProj, viewport);
+	//std::cout << worldPos.x << ","<< worldPos.y << ","<< worldPos.z << std::endl;
+	return worldPos;
+
+}
 
 glm::mat4 Controls::getViewMatrix(){
 	return ViewMatrix;

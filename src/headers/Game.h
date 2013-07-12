@@ -65,4 +65,5 @@ class Game {
 		void build();
 		void run();
 		void stop();
+		GameObject * GetGameObjectFromPosition(glm::vec3 position);
 };
