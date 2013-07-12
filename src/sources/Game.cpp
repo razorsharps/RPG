@@ -93,7 +93,7 @@ void Game::run() {
 					glm::mat4 RotationMatrix		= eulerAngleYXZ((anAstroid)->orientation.x, (anAstroid)->orientation.y, (anAstroid)->orientation.z);
 					glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
 					glm::vec3 realforward(forward);
-				//	anAstroid->position -= realforward * deltaTime * anAstroid->speed * 0.2f;
+					anAstroid->position -= realforward * deltaTime * anAstroid->speed * 0.2f;
 				}
 			}
 		}
@@ -103,7 +103,7 @@ void Game::run() {
 		std::vector<GameObject*> meuk;
 		octree->gatherObjects(meuk);
 		delete octree;
-		octree = new Octree(glm::vec3(0.0f),105.0f,3);
+		octree = new Octree(glm::vec3(0.0f), 105.0f, 3);
 		std::vector<GameObject*>::iterator iter;
 		for(iter=meuk.begin(); iter != meuk.end(); ++iter) {
 			octree->add(*iter);
@@ -221,47 +221,9 @@ void Game::buildGameObjects() {
 		astroid->init(shaders[NORMAL]);
 		astroid->collisionDistance = 0.75f*scale;
 		astroid->id = i;
-	//	go.push_back(astroid);
+		go.push_back(astroid);
 
 	}
-
-		Astroid * astroid = new Astroid("Astroid", glm::vec3(0,0,1), glm::vec3(1.0f), 0);
-		astroid->orientation = glm::vec3(0);
-		astroid->setMesh(mesh);
-		astroid->setTexture(texture);
-		astroid->init(shaders[NORMAL]);
-		astroid->collisionDistance = 0.75f;
-		go.push_back(astroid);
-	
-		Astroid * astroid1 = new Astroid("Astroid", glm::vec3(0,0,-1), glm::vec3(0.5f), 0);
-		astroid1->orientation = glm::vec3(0);
-		astroid1->setMesh(mesh);
-		astroid1->setTexture(texture);
-		astroid1->init(shaders[NORMAL]);
-		astroid1->collisionDistance = 0.75f;
-		go.push_back(astroid1);
-		Astroid * astroid2= new Astroid("Astroid", glm::vec3(1,0,0), glm::vec3(0.1f), 0);
-		astroid2->orientation = glm::vec3(0);
-		astroid2->setMesh(mesh);
-		astroid2->setTexture(texture);
-		astroid2->init(shaders[NORMAL]);
-		astroid2->collisionDistance = 0.75f;
-	//	go.push_back(astroid2);
-		Astroid * astroid3 = new Astroid("Astroid", glm::vec3(1,0,0), glm::vec3(1.0f), 0);
-		astroid3->orientation = glm::vec3(0);
-		astroid3->setMesh(mesh);
-		astroid3->setTexture(texture);
-		astroid3->init(shaders[NORMAL]);
-		astroid3->collisionDistance = 0.75f;
-		//go.push_back(astroid3);
-		Astroid * astroid4 = new Astroid("Astroid", glm::vec3(1,0,0), glm::vec3(1.0f), 0);
-		astroid4->orientation = glm::vec3(0);
-		astroid4->setMesh(mesh);
-		astroid4->setTexture(texture);
-		astroid4->init(shaders[NORMAL]);
-		astroid4->collisionDistance = 0.75f;
-		//go.push_back(astroid4);
-
 
 	halo = go.at(0);
 	halo->collisionDistance = 3.0f;

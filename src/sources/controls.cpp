@@ -3,11 +3,12 @@
 #include <iostream>
 
 Controls::Controls() {
-	position = glm::vec3( 0,0.1f, -0.15f ); 
+	position = glm::vec3( 0,0.05f, -0.15f ); 
+	cameraPosition = glm::vec3(0.0f);
 	carPosition = glm::vec3(0.0f, 0.0f, 0.0f );
 	carDirection = glm::vec3(0,0,0);
 
-	horizontalAngle = 3.1415f;
+	horizontalAngle = 0.0f;
 	verticalAngle = 0.0f;
 	initialFoV = 45.0f;
 	rotationSpeed = 0.0f;
@@ -36,15 +37,22 @@ void Controls::updateCamera(){
 	temp.y = spaceShip->orientation.x;
 	temp.z = spaceShip->orientation.z;
 
-	glm::vec3 cameraposition = carPosition + glm::quat(temp) * position;
-	ProjectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 100.0f);
-
 	glm::mat4 RotationMatrix		= eulerAngleYXZ(carDirection.x, carDirection.y, carDirection.z);
 	glm::vec4 up = RotationMatrix * glm::vec4(0,1,0,0);
 	glm::vec3 up3(up);
 
+	glm::vec3 cameraOptimalposition = carPosition + glm::quat(temp) * position;
+	ProjectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 100.0f);
+
+	glm::mat4 direction = glm::inverse(glm::lookAt(cameraOptimalposition, cameraPosition, glm::vec3(0.0f,1.0f,0.0f)));
+	glm::vec4 forward	= direction * glm::vec4(0,0,-1,0);
+	glm::vec3 realforward(forward);
+
+	cameraPosition = realforward * 0.1f + carPosition + glm::quat(temp) * position;
+
+
 	ViewMatrix       = glm::lookAt(
-								cameraposition, 	// Camera is here
+								cameraPosition, 	// Camera is here
 								lookAt, 									// and looks here : at the same position, plus "direction"
 								up3                				// Head is up (set to 0,-1,0 to look upside-down)
 						   );
@@ -99,14 +107,13 @@ void Controls::update(){
 		}
 	}
 	
-	
 	carDirection += vec3(glm::radians(horizontalSteering), glm::radians(verticalSteering), 0);
 
 	glm::mat4 RotationMatrix		= eulerAngleYXZ(carDirection.x, carDirection.y, carDirection.z);
 	glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
 	glm::vec3 realforward(forward);
 
-	if(glfwGetKey('W') == GLFW_PRESS || glfwGetKey('S') == GLFW_PRESS == GLFW_PRESS) {
+	if(glfwGetKey('W') == GLFW_PRESS || glfwGetKey('S') == GLFW_PRESS) {
 		if (glfwGetKey('W') == GLFW_PRESS) {
 			rotationSpeed += speedPerTick;
 			acceleration += speedPerTick * 0.06f;
