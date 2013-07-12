@@ -106,7 +106,7 @@ void Game::run() {
 		std::vector<GameObject*> meuk;
 		octree->gatherObjects(meuk);
 		delete octree;
-		octree = new Octree(glm::vec3(0.0f),105.0f,3);
+		octree = new Octree(glm::vec3(0.0f), 105.0f, 3);
 		std::vector<GameObject*>::iterator iter;
 		for(iter=meuk.begin(); iter != meuk.end(); ++iter) {
 			octree->add(*iter);
