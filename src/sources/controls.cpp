@@ -31,17 +31,22 @@ void Controls::updateCamera(){
 	glm::vec3 lookAt = carPosition;
 
 	glm::vec3 temp;
+
 	temp.x = spaceShip->orientation.y;
 	temp.y = spaceShip->orientation.x;
 	temp.z = spaceShip->orientation.z;
 
 	glm::vec3 cameraposition = carPosition + glm::quat(temp) * position;
-
 	ProjectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 100.0f);
+
+	glm::mat4 RotationMatrix		= eulerAngleYXZ(carDirection.x, carDirection.y, carDirection.z);
+	glm::vec4 up = RotationMatrix * glm::vec4(0,1,0,0);
+	glm::vec3 up3(up);
+
 	ViewMatrix       = glm::lookAt(
 								cameraposition, 	// Camera is here
 								lookAt, 									// and looks here : at the same position, plus "direction"
-								vec3(0, 1, 0)                  				// Head is up (set to 0,-1,0 to look upside-down)
+								up3                				// Head is up (set to 0,-1,0 to look upside-down)
 						   );
 
 	// For the next frame, the "last time" will be "now"

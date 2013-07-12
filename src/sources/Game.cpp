@@ -93,7 +93,7 @@ void Game::run() {
 					glm::mat4 RotationMatrix		= eulerAngleYXZ((anAstroid)->orientation.x, (anAstroid)->orientation.y, (anAstroid)->orientation.z);
 					glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
 					glm::vec3 realforward(forward);
-					anAstroid->position -= realforward * deltaTime * anAstroid->speed * 0.2f;
+				//	anAstroid->position -= realforward * deltaTime * anAstroid->speed * 0.2f;
 				}
 			}
 		}
@@ -204,7 +204,7 @@ void Game::buildGameObjects() {
 	Mesh * mesh = new Mesh("src/resources/ball.obj");
 	Texture * texture = new Texture("src/resources/land.bmp");
 
-	for ( int i = 0; i < 1000; ++i ) {		
+	for ( int i = 0; i < 200; ++i ) {		
 		float x       = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float y		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float z		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
@@ -221,19 +221,51 @@ void Game::buildGameObjects() {
 		astroid->init(shaders[NORMAL]);
 		astroid->collisionDistance = 0.75f*scale;
 		astroid->id = i;
-		go.push_back(astroid);
+	//	go.push_back(astroid);
 
 	}
 
-	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
-    std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
-    std::cout << "Vendor: " << glGetString(GL_VENDOR) << std::endl;
-    std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
+		Astroid * astroid = new Astroid("Astroid", glm::vec3(0,0,1), glm::vec3(1.0f), 0);
+		astroid->orientation = glm::vec3(0);
+		astroid->setMesh(mesh);
+		astroid->setTexture(texture);
+		astroid->init(shaders[NORMAL]);
+		astroid->collisionDistance = 0.75f;
+		go.push_back(astroid);
 	
+		Astroid * astroid1 = new Astroid("Astroid", glm::vec3(0,0,-1), glm::vec3(0.5f), 0);
+		astroid1->orientation = glm::vec3(0);
+		astroid1->setMesh(mesh);
+		astroid1->setTexture(texture);
+		astroid1->init(shaders[NORMAL]);
+		astroid1->collisionDistance = 0.75f;
+		go.push_back(astroid1);
+		Astroid * astroid2= new Astroid("Astroid", glm::vec3(1,0,0), glm::vec3(0.1f), 0);
+		astroid2->orientation = glm::vec3(0);
+		astroid2->setMesh(mesh);
+		astroid2->setTexture(texture);
+		astroid2->init(shaders[NORMAL]);
+		astroid2->collisionDistance = 0.75f;
+	//	go.push_back(astroid2);
+		Astroid * astroid3 = new Astroid("Astroid", glm::vec3(1,0,0), glm::vec3(1.0f), 0);
+		astroid3->orientation = glm::vec3(0);
+		astroid3->setMesh(mesh);
+		astroid3->setTexture(texture);
+		astroid3->init(shaders[NORMAL]);
+		astroid3->collisionDistance = 0.75f;
+		//go.push_back(astroid3);
+		Astroid * astroid4 = new Astroid("Astroid", glm::vec3(1,0,0), glm::vec3(1.0f), 0);
+		astroid4->orientation = glm::vec3(0);
+		astroid4->setMesh(mesh);
+		astroid4->setTexture(texture);
+		astroid4->init(shaders[NORMAL]);
+		astroid4->collisionDistance = 0.75f;
+		//go.push_back(astroid4);
+
+
 	halo = go.at(0);
 	halo->collisionDistance = 3.0f;
 	control->spaceShip = halo;
-
 	for(GameObject* g : go) {
 		renderer->addObjects(g);
 		octree->add(g);
