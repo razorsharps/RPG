@@ -35,7 +35,7 @@ class Game {
 
 		Renderer* renderer;
 		GameObject *halo;
-	
+		Astroid* selected;
 		double startTime;
 
 		bool carMoved;

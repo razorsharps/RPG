@@ -154,8 +154,6 @@ glm::vec3 Controls::getMousePosition() {
 	float h = float(768);
     float x = xMouse;
     float y = h - yMouse;
-	std::cout << yMouse << ":" << y  << std::endl;
-	
     GLfloat depth;
     glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
 
@@ -164,7 +162,6 @@ glm::vec3 Controls::getMousePosition() {
 	glm::mat4 tmpProj = getProjectionMatrix();
 	glm::vec3 screenPos = glm::vec3(x, y, depth);
 	glm::vec3 worldPos = glm::unProject(screenPos, tmpView, tmpProj, viewport);
-	//std::cout << worldPos.x << ","<< worldPos.y << ","<< worldPos.z << std::endl;
 	return worldPos;
 
 }
