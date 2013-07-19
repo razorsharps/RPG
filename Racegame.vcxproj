@@ -31,6 +31,7 @@
     <ClCompile Include="src\sources\Mesh.cpp" />
     <ClCompile Include="src\sources\objloader.cpp" />
     <ClCompile Include="src\sources\Renderer.cpp" />
+    <ClCompile Include="src\sources\Rocket.cpp" />
     <ClCompile Include="src\sources\Shader.cpp" />
     <ClCompile Include="src\sources\Environment.cpp" />
     <ClCompile Include="src\sources\Sound.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="src\headers\Key.h" />
     <ClInclude Include="src\headers\Octree.h" />
     <ClInclude Include="src\headers\RenderVisitor.h" />
+    <ClInclude Include="src\headers\Rocket.h" />
     <ClInclude Include="src\headers\Visitor.h" />
     <ClInclude Include="src\headers\UpdateVisitor.h" />
     <ClInclude Include="src\headers\Builder.h" />

@@ -41,3 +41,16 @@ void Renderer::renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, G
 void Renderer::addObjects(GameObject* gameObject) {
 	gameObjects.push_back(gameObject);
 }
+
+void Renderer::removeObject(GameObject* gameObject) {
+	std::vector<GameObject*>::iterator iter = gameObjects.begin();
+
+	while (iter != gameObjects.end())
+	{
+		if ((*iter) == gameObject) {
+			iter = gameObjects.erase(iter);
+			break;
+		} else
+			++iter;
+	}
+}

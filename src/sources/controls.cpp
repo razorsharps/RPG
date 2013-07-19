@@ -3,9 +3,9 @@
 #include <iostream>
 
 Controls::Controls() {
-	position = glm::vec3( 0,0.05f, -0.15f ); 
+	position = glm::vec3(0, 0.02f, -0.15f); 
 	cameraPosition = glm::vec3(0.0f);
-	carPosition = glm::vec3(0.0f, 0.0f, 0.0f );
+	carPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	carDirection = glm::vec3(0,0,0);
 
 	horizontalAngle = 0.0f;
@@ -28,7 +28,6 @@ void Controls::updateCamera(){
 	float deltaTime = float(currentTime - lastTime);
 
 	float FoV = initialFoV - 5;
-	//(*it)->getParent()->getPosition() + (*it)->getOrientationQuat() * (*it)->getPosition();
 	glm::vec3 lookAt = carPosition;
 
 	glm::vec3 temp;
@@ -48,8 +47,7 @@ void Controls::updateCamera(){
 	glm::vec4 forward	= direction * glm::vec4(0,0,-1,0);
 	glm::vec3 realforward(forward);
 
-	cameraPosition = realforward * 0.1f + carPosition + glm::quat(temp) * position;
-
+	cameraPosition = realforward * 0.01f + carPosition + glm::quat(temp) * position;
 
 	ViewMatrix       = glm::lookAt(
 								cameraPosition, 	// Camera is here
@@ -106,7 +104,9 @@ void Controls::update(){
 			verticalSteering += 0.02f;
 		}
 	}
-	carDirection += vec3(glm::radians(horizontalSteering), glm::radians(verticalSteering), 0);
+
+	carDirection.x += glm::radians(horizontalSteering);
+	carDirection.y += glm::radians(verticalSteering);
 
 	glm::mat4 RotationMatrix		= eulerAngleYXZ(carDirection.x, carDirection.y, carDirection.z);
 	glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
@@ -126,8 +126,8 @@ void Controls::update(){
 			rotationSpeed -= speedPerTick;
 			acceleration -= speedPerTick * 0.06f;
 
-			if(acceleration < -1)
-				acceleration = -1;
+			if(acceleration < 0)
+				acceleration = 0;
 
 			carPosition -= realforward * deltaTime * speed * acceleration;
 		}
@@ -146,14 +146,15 @@ void Controls::update(){
 	// For the next frame, the "last time" will be "now"
 	lastTime = currentTime;
 }
-glm::vec3 Controls::getMousePosition() {
 
+glm::vec3 Controls::getMousePosition() {
 	int xMouse(0), yMouse(0);
 	glfwGetMousePos(&xMouse,&yMouse);
 	float w = float(1024);
 	float h = float(768);
     float x = xMouse;
     float y = h - yMouse;
+
     GLfloat depth;
     glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
 
@@ -162,8 +163,8 @@ glm::vec3 Controls::getMousePosition() {
 	glm::mat4 tmpProj = getProjectionMatrix();
 	glm::vec3 screenPos = glm::vec3(x, y, depth);
 	glm::vec3 worldPos = glm::unProject(screenPos, tmpView, tmpProj, viewport);
-	return worldPos;
 
+	return worldPos;
 }
 
 glm::mat4 Controls::getViewMatrix(){

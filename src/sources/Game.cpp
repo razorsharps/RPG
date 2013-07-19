@@ -46,16 +46,21 @@ void Game::run() {
 	// For speed computation
 	double lastTime = Time::getInstance().getTime();
 	double lastFrameTime = lastTime;
+	double shootTime = 2.0f;
 
 	int nbFrames = 0;
 
 	initText2D( "src/resources/Holstein.tga" );
 	
+	Mesh * mesh2 = new Mesh("src/resources/rocket.obj");
+	Texture * texture2 = new Texture("src/resources/white.bmp");
+
 	do{
 		// Measure speed
 		double currentTime = Time::getInstance().getTime();
 		float deltaTime = (float)(currentTime - lastFrameTime); 
 		lastFrameTime = currentTime;
+		shootTime += deltaTime;
 		nbFrames++;
 
 		if ( currentTime - lastTime >= 1.0 ){ // If last prinf() was more than 1sec ago
@@ -83,6 +88,26 @@ void Game::run() {
 		halo->translateObject(control->getPosition());
 		halo->rotateObject(control->getDirection());
 		
+		std::vector<Rocket*>::iterator iter = rockets.begin();
+
+		while (iter != rockets.end())
+		{
+			(*iter)->duration -= deltaTime;
+
+			glm::mat4 RotationMatrix		= eulerAngleYXZ((*iter)->orientation.x, (*iter)->orientation.y, (*iter)->orientation.z);
+			glm::vec4 forward				= RotationMatrix * glm::vec4(0,0,-1,0);
+			glm::vec3 realforward(forward);
+			(*iter)->position -= realforward * deltaTime * 7.0f;
+
+			if ((*iter)->duration <= 0) {
+				renderer->removeObject((*iter));
+				octree->removeObject((*iter));
+				delete *iter;
+				iter = rockets.erase(iter);
+			} else
+			   ++iter;
+		}
+
 		std::vector<GameObject*>::iterator it;
 
 		for(it = renderer->gameObjects.begin()+1; it != renderer->gameObjects.end(); ++it)
@@ -97,16 +122,32 @@ void Game::run() {
 				}
 			}
 		}
-		
+
+		if(glfwGetKey('F') == GLFW_PRESS) {
+			if(shootTime > 0.5f) {
+				shootTime = 0.0f;
+				rocket = new Rocket("Rocket", control->getPosition(), glm::vec3(0.1f), 5.0f);
+				rocket->orientation = control->carDirection;
+				rocket->setMesh(mesh2);
+				rocket->setTexture(texture2);
+				rocket->init(shaders[NORMAL]);
+				rocket->collisionDistance = 0.75f*1.5f;
+				renderer->addObjects(rocket);
+				rockets.push_back(rocket);
+				octree->add(rocket);
+			}
+		}
+
 		renderer->renderObjects(ProjectionMatrix, ViewMatrix, handles[MATRIXID]);
 		
 		std::vector<GameObject*> meuk;
 		octree->gatherObjects(meuk);
 		delete octree;
-		octree = new Octree(glm::vec3(0.0f), 105.0f, 3);
-		std::vector<GameObject*>::iterator iter;
-		for(iter=meuk.begin(); iter != meuk.end(); ++iter) {
-			octree->add(*iter);
+		octree = new Octree(this, glm::vec3(0.0f), 55.0f, 3);
+		std::vector<GameObject*>::iterator myiter;
+		
+		for(myiter = meuk.begin(); myiter != meuk.end(); ++myiter) {
+			octree->add(*myiter);
 		}
 
 		octree->CheckEdges();		
@@ -130,7 +171,8 @@ void Game::run() {
 			sprintf(text,"%.2f sec", startTime + Time::getInstance().getTime());
 			printText2D(text, 10, 550, 25);
 		}
-		sprintf(text,"%d Astroids left!", renderer->gameObjects.size() - 1); //because halo
+
+		sprintf(text,"%d Astroids left!", renderer->gameObjects.size() - 1 - rockets.size()); //because halo and rockets
 		printText2D(text, 10,580, 16);
 		
 		if(selected != nullptr) {
@@ -207,9 +249,9 @@ void Game::setGlParameters() {
 }
 
 void Game::buildGameObjects() {
-	int min = -50;
-	int max = 100;
-	octree = new Octree(glm::vec3(0), 105.0f, 10);
+	int min = -25;
+	int max = 50;
+	octree = new Octree(this, glm::vec3(0), 55.0f, 3);
 	Director dir;
 	ObjectBuilder ob;
 	dir.setBuilder(&ob);
@@ -220,22 +262,22 @@ void Game::buildGameObjects() {
 	Mesh * mesh = new Mesh("src/resources/ball.obj");
 	Texture * texture = new Texture("src/resources/land.bmp");
 
-	for ( int i = 0; i < 200; ++i ) {		
+	for ( int i = 0; i < 100; ++i ) {		
 		float x       = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float y		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float z		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
-		float scale   = 1.0f + (float)rand()/((float)RAND_MAX/3.0f); /* Random size        */
+		float scale   = 0.2f + (float)rand()/((float)RAND_MAX/1.0f); /* Random size        */
 		float rotateX = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateY = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float rotateZ = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
-		float speed   = 0.1f + (float)rand()/((float)RAND_MAX/3.0f); /* Random speed      */
+		float speed   = 0.1f + (float)rand()/((float)RAND_MAX/1.0f); /* Random speed      */
 
 		Astroid * astroid = new Astroid("Astroid", glm::vec3(x,y,z), glm::vec3(scale), speed);
 		astroid->orientation = glm::vec3(rotateX,rotateY,rotateZ);
 		astroid->setMesh(mesh);
 		astroid->setTexture(texture);
 		astroid->init(shaders[NORMAL]);
-		astroid->collisionDistance = 0.75f*scale;
+		astroid->collisionDistance = scale;
 		astroid->id = i;
 		go.push_back(astroid);
 
@@ -265,4 +307,17 @@ GameObject * Game::GetGameObjectFromPosition(glm::vec3 position){
         }
     }
 	return go;
+}
+
+void Game::removeObject(GameObject* gameObject) {
+	std::vector<Rocket*>::iterator iter = rockets.begin();
+
+	while (iter != rockets.end())
+	{
+		if ((*iter) == gameObject) {
+			iter = rockets.erase(iter);
+			break;
+		} else
+			++iter;
+	}
 }

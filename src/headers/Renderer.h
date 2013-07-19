@@ -32,4 +32,5 @@ class Renderer {
 			std::vector<GameObject*> gameObjects;
 			void renderObjects(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint matrixid);
 			void addObjects(GameObject* gameObject);
+			void removeObject(GameObject* gameObject);
 };

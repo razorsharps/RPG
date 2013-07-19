@@ -1,8 +1,10 @@
 #include "../headers/Octree.h"
 #include "../headers/GameObject.h"
+#include "../headers/Rocket.h"
+#include "../headers/Game.h"
 
-Octree::Octree( const glm::vec3 & aCenter, float aRadius, unsigned int aLevel )
-:	center(aCenter), radius(aRadius), level(aLevel)
+Octree::Octree(Game * aGame, const glm::vec3 & aCenter, float aRadius, unsigned int aLevel )
+:	game(aGame), center(aCenter), radius(aRadius), level(aLevel)
 {
 	for ( int i = 0; i < 8; i++ ) {
 		children.push_back( NULL );
@@ -31,7 +33,7 @@ void Octree::add( GameObject * anObject )
 			unsigned int index = minIndex;
 
 			if ( ! children[index]) { // wanted space does not exist yet so add it
-				children[index] = new Octree( glm::vec3( center.x+radius*( (index&1)-0.5f), center.y+radius*( (index&2)/2-0.5f), center.z+radius*( (index&4)/4-0.5f)), radius / 2, level-1 );
+				children[index] = new Octree(game, glm::vec3( center.x+radius*( (index&1)-0.5f), center.y+radius*( (index&2)/2-0.5f), center.z+radius*( (index&4)/4-0.5f)), radius / 2, level-1 );
 			}
 			children[index]->add( anObject ); // add object to space
 		} else { // when does not fit in child, put it here
@@ -71,6 +73,8 @@ void Octree::print( std::string pre )
 void Octree::CheckEdges(){
  //check x
 	for ( unsigned int i = 0; i < objects.size(); i++ ) {
+		Astroid * d = dynamic_cast<Astroid*>(objects[i]);
+		if(d != 0) {
 			if(objects[i]->position.x > center.x+radius ) {
 				objects[i]->position.x = center.x + radius;
 				objects[i]->orientation.x +=3.1415f;
@@ -94,7 +98,7 @@ void Octree::CheckEdges(){
 				objects[i]->position.z = center.z - radius;
 				objects[i]->orientation.z +=3.1415f;
 			}
-	
+		}
 	}
 	for ( unsigned int i = 0; i < children.size(); i++ ) {
 		if ( children[i] ) {
@@ -115,10 +119,34 @@ unsigned int Octree::detectCollisions() {
 
 			if((glm::distance(collider->getPosition(), collidee->getPosition()) < (collider->collisionDistance/2) +( collidee->collisionDistance/2) ) ) { //aanpassen
 				Astroid * d = dynamic_cast<Astroid*>(collider);
+				
 				if( d != 0) {
-					d->accept(cv);
+					Rocket * r = dynamic_cast<Rocket*>(collidee);
+
+					if(r != 0) {
+						removeObject(r);
+						removeObject(d);
+
+						game->renderer->removeObject(r);
+						game->renderer->removeObject(d);
+
+						game->removeObject(r);
+					} else {
+						d->accept(cv);
+					}
 				} else {
-					collider->accept(cv);
+					Rocket * r = dynamic_cast<Rocket*>(collider);
+
+					if(r != 0) {
+						removeObject(r);
+						removeObject(d);
+
+						game->removeObject(r);
+						game->renderer->removeObject(r);
+						game->renderer->removeObject(d);
+					} else {
+						collider->accept(cv);
+					}
 				}
 			}
 		}
@@ -166,4 +194,28 @@ unsigned int Octree::detectCollisions( GameObject * collider ) {
 		}
 	}
 	return count;
+}
+
+void Octree::removeObject(GameObject* gameObject) {
+	std::vector<GameObject*>::iterator iter = objects.begin();
+	bool done = false;
+
+	while (iter != objects.end())
+	{
+		if ((*iter) == gameObject) {
+			iter = objects.erase(iter);
+			done = true;
+			break;
+		} else
+			++iter;
+	}
+
+	if(!done) {
+		for ( int i = 0; i < 8; i++ ) {
+			Octree * child = children[i];
+			if ( child ) {
+				child->removeObject( gameObject );
+			}
+		}
+	}
 }

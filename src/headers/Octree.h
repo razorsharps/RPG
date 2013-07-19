@@ -7,11 +7,12 @@
 #include "../headers/CollisionVisitor.h"
 
 class GameObject;
+class Game;
 
 class Octree
 {
 	public:
-		Octree( const glm::vec3 & aCenter, float aRadius, unsigned int aLevel = 0 );
+		Octree(Game * game, const glm::vec3 & aCenter, float aRadius, unsigned int aLevel = 0 );
 		virtual ~Octree();
 
 		virtual void add( GameObject * anObject );
@@ -20,9 +21,11 @@ class Octree
 		virtual void print(std::string pre = "" );
 		virtual unsigned int detectCollisions();
 		virtual unsigned int detectCollisions( GameObject * collider );
+		void removeObject(GameObject* gameObject);
 		void CheckEdges();
 	
 		CollisionVisitor cv;
+		Game * game;
 
 		glm::vec3 center; // center of the cube
 		float radius; // radius of the cube ( center to side )

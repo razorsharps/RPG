@@ -21,6 +21,7 @@
 #include "../headers/Key.h"
 #include "../headers/Inventory.h"
 #include "../headers/Octree.h"
+#include "../headers/Rocket.h"
 
 class Game {
 	enum {NORMAL = 0};
@@ -33,9 +34,10 @@ class Game {
 		int checkIndex;
 		GLuint TextureIDs;
 
-		Renderer* renderer;
-		GameObject *halo;
 		Astroid* selected;
+		GameObject *halo;
+		Rocket* rocket;
+
 		double startTime;
 
 		bool carMoved;
@@ -47,6 +49,8 @@ class Game {
 		Collision* collision;
 		UpdateVisitor updateVisitor;
 		Octree* octree;
+
+		std::vector<Rocket*> rockets;
 
 		float pie;
 	public:
@@ -65,5 +69,9 @@ class Game {
 		void build();
 		void run();
 		void stop();
+
 		GameObject * GetGameObjectFromPosition(glm::vec3 position);
+		void removeObject(GameObject* gameObject);
+
+		Renderer* renderer;
 };
