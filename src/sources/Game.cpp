@@ -126,12 +126,12 @@ void Game::run() {
 		if(glfwGetKey('F') == GLFW_PRESS) {
 			if(shootTime > 0.5f) {
 				shootTime = 0.0f;
-				rocket = new Rocket("Rocket", control->getPosition(), glm::vec3(0.1f), 5.0f);
+				rocket = new Rocket("Rocket", control->getPosition(), glm::vec3(0.2f), 5.0f);
 				rocket->orientation = control->carDirection;
 				rocket->setMesh(mesh2);
 				rocket->setTexture(texture2);
 				rocket->init(shaders[NORMAL]);
-				rocket->collisionDistance = 0.75f*1.5f;
+				rocket->collisionDistance = 1.0f;
 				renderer->addObjects(rocket);
 				rockets.push_back(rocket);
 				octree->add(rocket);
@@ -149,9 +149,16 @@ void Game::run() {
 		for(myiter = meuk.begin(); myiter != meuk.end(); ++myiter) {
 			octree->add(*myiter);
 		}
+		
+		for(GameObject* go : collisionObjects) {
+			renderer->removeObject(go);
+		}
+
+		collisionObjects.clear();
 
 		octree->CheckEdges();		
 		octree->detectCollisions();
+
 		if(glfwGetMouseButton( GLFW_MOUSE_BUTTON_LEFT ) == GLFW_PRESS ) {
 			Astroid * a = dynamic_cast<Astroid*>( GetGameObjectFromPosition(control->getMousePosition()));
 			if ( a != nullptr )
@@ -185,6 +192,7 @@ void Game::run() {
 			printText2D(text, 550, 550, 15);
 		
 		}
+
 		glfwSwapBuffers();
 	}
 
@@ -261,8 +269,10 @@ void Game::buildGameObjects() {
 
 	Mesh * mesh = new Mesh("src/resources/ball.obj");
 	Texture * texture = new Texture("src/resources/land.bmp");
+	explosionObject = new Mesh("src/resources/ball.obj");
+	collisionTexture = new Texture("src/resources/white.bmp");
 
-	for ( int i = 0; i < 100; ++i ) {		
+	for ( int i = 0; i < 40; ++i ) {		
 		float x       = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float y		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
 		float z		  = min  + (float)rand()/((float)RAND_MAX/max); /* Random position	 */
@@ -272,19 +282,18 @@ void Game::buildGameObjects() {
 		float rotateZ = 0.0  + (float)rand()/((float)RAND_MAX/(3.1415*180)); /* Random orientation */
 		float speed   = 0.1f + (float)rand()/((float)RAND_MAX/1.0f); /* Random speed      */
 
-		Astroid * astroid = new Astroid("Astroid", glm::vec3(x,y,z), glm::vec3(scale), speed);
+		Astroid * astroid = new Astroid("Astroid", glm::vec3(x,y,z), glm::vec3(scale), 0);
 		astroid->orientation = glm::vec3(rotateX,rotateY,rotateZ);
 		astroid->setMesh(mesh);
 		astroid->setTexture(texture);
 		astroid->init(shaders[NORMAL]);
-		astroid->collisionDistance = scale;
+		astroid->collisionDistance = scale / 2.2f;
 		astroid->id = i;
 		go.push_back(astroid);
-
 	}
 
 	halo = go.at(0);
-	halo->collisionDistance = 3.0f;
+	halo->collisionDistance = 1.0f;
 	control->spaceShip = halo;
 	for(GameObject* g : go) {
 		renderer->addObjects(g);
@@ -307,6 +316,16 @@ GameObject * Game::GetGameObjectFromPosition(glm::vec3 position){
         }
     }
 	return go;
+}
+
+void Game::addCollisionObject(glm::vec3 pos) {
+	collisionObject = new GameObject("CollisionObject", pos, glm::vec3(0.08f));
+	collisionObject->setMesh(explosionObject);
+	collisionObject->setTexture(collisionTexture);
+	collisionObject->init(shaders[NORMAL]);
+
+	collisionObjects.push_back(collisionObject);
+	renderer->addObjects(collisionObject);
 }
 
 void Game::removeObject(GameObject* gameObject) {

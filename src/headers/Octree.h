@@ -23,6 +23,7 @@ class Octree
 		virtual unsigned int detectCollisions( GameObject * collider );
 		void removeObject(GameObject* gameObject);
 		void CheckEdges();
+		void checkNarrowCollision(GameObject* go1, GameObject* go2);
 	
 		CollisionVisitor cv;
 		Game * game;

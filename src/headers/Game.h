@@ -74,4 +74,12 @@ class Game {
 		void removeObject(GameObject* gameObject);
 
 		Renderer* renderer;
+
+		GameObject* collisionObject;
+		std::vector<GameObject*> collisionObjects;
+
+		Mesh * explosionObject;
+		Texture * collisionTexture;
+
+		void addCollisionObject(glm::vec3 pos);
 };

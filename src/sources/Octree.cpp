@@ -148,6 +148,12 @@ unsigned int Octree::detectCollisions() {
 						collider->accept(cv);
 					}
 				}
+
+				if(collider->name == "SpaceShip" && collidee->name == "Astroid") {
+					checkNarrowCollision(collider, collidee);
+				} else if (collider->name == "Astroid" && collidee->name == "SpaceShip") {
+					checkNarrowCollision(collidee, collider);
+				}
 			}
 		}
 
@@ -216,6 +222,20 @@ void Octree::removeObject(GameObject* gameObject) {
 			if ( child ) {
 				child->removeObject( gameObject );
 			}
+		}
+	}
+}
+
+void Octree::checkNarrowCollision(GameObject* spaceship, GameObject* astroid) {
+	glm::vec3 temp;
+	temp.x = spaceship->orientation.y;
+	temp.y = spaceship->orientation.x;
+	temp.z = spaceship->orientation.z;
+
+	for(glm::vec3 pos : spaceship->mesh->vertices) {
+		glm::vec3 tmp = spaceship->position + glm::quat(temp) * pos * glm::vec3(0.02f);
+		if(glm::distance(tmp, astroid->position) < astroid->collisionDistance) {
+			game->addCollisionObject(tmp);
 		}
 	}
 }

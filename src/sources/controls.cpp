@@ -3,7 +3,7 @@
 #include <iostream>
 
 Controls::Controls() {
-	position = glm::vec3(0, 0.02f, -0.15f); 
+	position = glm::vec3(0, 0.2f, -1.5f); 
 	cameraPosition = glm::vec3(0.0f);
 	carPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	carDirection = glm::vec3(0,0,0);
@@ -117,8 +117,8 @@ void Controls::update(){
 			rotationSpeed += speedPerTick;
 			acceleration += speedPerTick * 0.06f;
 
-			if(acceleration > 1)
-				acceleration = 1;
+			if(acceleration > 0.6f)
+				acceleration = 0.6f;
 
 			carPosition -= realforward * deltaTime * speed * acceleration;
 		}
